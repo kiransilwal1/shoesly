@@ -32,12 +32,11 @@ class SecondaryButton extends StatelessWidget {
             (style as LeadingIconStyle).leadingIconImagePath,
             width: 24,
             height: 24,
-            color: Colors.white,
           ),
           const SizedBox(width: 8),
           Text(
             (style as LeadingIconStyle).text,
-            style: AppTheme.headline300.copyWith(color: Colors.white),
+            style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),
           ),
         ],
       );
@@ -62,7 +61,8 @@ class SecondaryButton extends StatelessWidget {
       content = Text(
         (style as LabelButtonStyle).text,
         textAlign: TextAlign.center,
-        style: AppTheme.headline300.copyWith(color: AppTheme.neutral500),
+        style: AppTheme.headline400
+            .copyWith(color: AppTheme.neutral500, fontWeight: FontWeight.w600),
       );
     } else {
       throw ArgumentError('Invalid ButtonStyle');
@@ -72,12 +72,12 @@ class SecondaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppTheme.neutral0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-        ),
+            backgroundColor: AppTheme.neutral0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+            elevation: 1),
         child: content,
       ),
     );

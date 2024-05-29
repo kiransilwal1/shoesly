@@ -66,8 +66,7 @@ class ProductReviewPage extends StatelessWidget {
               children: [
                 for (String text in filterText)
                   MinimalButton(
-                      isDisabled: !(filterText.indexOf(text) ==
-                          index), // Index is always 0 for now
+                      isDisabled: !(filterText.indexOf(text) == index),
                       style: LabelButtonStyle(text: text))
               ],
             ),

@@ -4,7 +4,7 @@ import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
-import 'package:shoesly/features/discover/presentation/widgets/product_card.dart';
+import 'package:shoesly/core/widgets/product_card.dart';
 
 class DiscoverPage extends StatelessWidget {
   DiscoverPage({super.key});
@@ -45,8 +45,7 @@ class DiscoverPage extends StatelessWidget {
                 children: [
                   for (String text in filterText)
                     MinimalButton(
-                        isDisabled: !(filterText.indexOf(text) ==
-                            index), // Index is always 0 for now
+                        isDisabled: !(filterText.indexOf(text) == index),
                         style: LabelButtonStyle(text: text))
                 ],
               ),
@@ -54,7 +53,6 @@ class DiscoverPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            // const ProductCard(),
             Expanded(
               child: GridView.builder(
                 itemCount: 100,
@@ -63,7 +61,12 @@ class DiscoverPage extends StatelessWidget {
                   mainAxisExtent: 250,
                 ),
                 itemBuilder: (_, index) {
-                  return const SizedBox(height: 300, child: ProductCard());
+                  return const SizedBox(
+                      height: 300,
+                      child: ProductCard(
+                        width: 150,
+                        height: 150,
+                      ));
                 },
               ),
             ),

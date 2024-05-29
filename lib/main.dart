@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
+import 'package:shoesly/features/cart/presentation/pages/cart_page.dart';
 import 'package:shoesly/features/discover/presentation/pages/discover_page.dart';
+import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
 import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
 import 'package:shoesly/features/product_filter/presentation/pages/product_filter.dart';
 import 'package:shoesly/features/product_review/presentation/pages/product_review.dart';
@@ -15,15 +17,10 @@ class Shoesly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
     return MaterialApp(
       title: 'Shoesly',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
-      home: ProductFilterPage(),
+      home: OrderSummary(),
     );
   }
 }

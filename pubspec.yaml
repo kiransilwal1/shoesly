@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.5
   flutter_svg: ^2.0.10+1
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,11 @@ flutter:
     - assets/icons/tick-circle.png
     - assets/icons/nike.svg
     - assets/icons/tick.svg
+    - assets/icons/black-color.png
+    - assets/icons/red-color.png
+    - assets/icons/tick-circle.svg
+    - assets/icons/trash.svg
+    - assets/icons/arrow-right.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -93,6 +99,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Urbanist-Regular.ttf
         - asset: assets/fonts/Urbanist-Bold.ttf
+        - asset: assets/fonts/Urbanist-SemiBold.ttf
+          weight: 600
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

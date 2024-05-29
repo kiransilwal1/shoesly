@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
@@ -138,8 +139,7 @@ class ProductDetail extends StatelessWidget {
                                   color: Colors.grey.withOpacity(0.1),
                                   spreadRadius: 5,
                                   blurRadius: 7,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
+                                  offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -244,7 +244,7 @@ class ProductDetail extends StatelessWidget {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppTheme.neutral200,
-                            width: 2.0, // Adjust this value as needed
+                            width: 2.0,
                             style: BorderStyle.solid,
                           ),
                         ),
@@ -329,13 +329,13 @@ class ProductDetail extends StatelessWidget {
       backgroundColor: AppTheme.neutral500.withOpacity(0.3),
       builder: (context) {
         return Container(
-          height: 285,
+          height: 350,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -348,7 +348,6 @@ class ProductDetail extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              // Your BottomSheet content here
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: Column(
@@ -365,7 +364,7 @@ class ProductDetail extends StatelessWidget {
                         ),
                         MinimalButton(
                           isDisabled: false,
-                          style: IconOnlyStyle(
+                          style: const IconOnlyStyle(
                               iconImagePath: 'assets/icons/cross.png'),
                           onPressed: () {
                             Navigator.pop(context);
@@ -413,7 +412,9 @@ class ProductDetail extends StatelessWidget {
                                 isDisabled: false,
                                 style:
                                     const LabelButtonStyle(text: 'ADD TO CART'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  _showBottomSheetWithCart(context);
+                                },
                               )
                             ],
                           ),
@@ -427,8 +428,66 @@ class ProductDetail extends StatelessWidget {
           ),
         );
       },
-      barrierColor: AppTheme.neutral500
-          .withOpacity(0.3), // Set the background color with 30% opacity
+      barrierColor: AppTheme.neutral500.withOpacity(0.3),
+    );
+  }
+
+  void _showBottomSheetWithCart(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.neutral500.withOpacity(0.3),
+      builder: (context) {
+        return Container(
+          height: 350,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/tick-circle.svg',
+                  height: 100,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      'Added to cart',
+                      style: AppTheme.headline700,
+                    ),
+                    Text(
+                      '1 Item Total',
+                      style:
+                          AppTheme.body200.copyWith(color: AppTheme.neutral400),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SecondaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'BACK'),
+                      onPressed: () {},
+                    ),
+                    PrimaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'TO CART'),
+                      onPressed: () {},
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      barrierColor: AppTheme.neutral500.withOpacity(0.3),
     );
   }
 }
@@ -496,7 +555,7 @@ class _CustomTextFieldWithButtonsState
         ),
         hintText: 'Enter number',
         suffixIcon: Container(
-          width: 150, // Adjust width as necessary
+          width: 150,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
