@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
+import 'package:shoesly/features/discover/presentation/pages/discover_page.dart';
 
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 
@@ -51,7 +52,12 @@ class OrderSummary extends StatelessWidget {
                 PrimaryButton(
                   isDisabled: false,
                   style: const LabelButtonStyle(text: 'PAYMENT'),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DiscoverPage()),
+                    );
+                  },
                 )
               ],
             ),

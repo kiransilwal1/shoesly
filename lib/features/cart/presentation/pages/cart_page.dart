@@ -3,9 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-
-import 'package:shoesly/core/widgets/product_card.dart';
-
+import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 
 class CartPage extends StatelessWidget {
@@ -52,7 +50,12 @@ class CartPage extends StatelessWidget {
               PrimaryButton(
                 isDisabled: false,
                 style: const LabelButtonStyle(text: 'CHECK OUT'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => OrderSummary()),
+                  );
+                },
               )
             ],
           ),
@@ -60,9 +63,13 @@ class CartPage extends StatelessWidget {
       ),
       appBar: AppBar(
         toolbarHeight: 60,
-        leading: const MinimalButton(
-            isDisabled: false,
-            style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png')),
+        leading: MinimalButton(
+          isDisabled: false,
+          style: const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           'Cart',
           style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),

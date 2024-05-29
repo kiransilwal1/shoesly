@@ -6,6 +6,7 @@ import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/secondary_buttons.dart';
+import 'package:shoesly/features/cart/presentation/pages/cart_page.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/reviews.dart';
@@ -17,7 +18,6 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.width);
     return Scaffold(
       bottomSheet: Container(
         height: 90,
@@ -63,17 +63,20 @@ class ProductDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 55,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MinimalButton(
                       isDisabled: false,
-                      style:
-                          IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+                      style: const IconOnlyStyle(
+                          iconImagePath: 'assets/icons/back.png'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                    MinimalButton(
+                    const MinimalButton(
                       isDisabled: false,
                       style:
                           IconOnlyStyle(iconImagePath: 'assets/icons/bag.png'),
@@ -473,12 +476,19 @@ class ProductDetail extends StatelessWidget {
                     SecondaryButton(
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'BACK'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     PrimaryButton(
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'TO CART'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartPage()),
+                        );
+                      },
                     )
                   ],
                 )

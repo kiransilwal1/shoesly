@@ -20,7 +20,7 @@ class Shoesly extends StatelessWidget {
     return MaterialApp(
       title: 'Shoesly',
       debugShowCheckedModeBanner: false,
-      home: OrderSummary(),
+      home: DiscoverPage(),
     );
   }
 }

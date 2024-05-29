@@ -5,6 +5,8 @@ import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 import 'package:shoesly/core/widgets/product_card.dart';
+import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
+import 'package:shoesly/features/product_filter/presentation/pages/product_filter.dart';
 
 class DiscoverPage extends StatelessWidget {
   DiscoverPage({super.key});
@@ -58,14 +60,23 @@ class DiscoverPage extends StatelessWidget {
                 itemCount: 100,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: (size.width ~/ 180),
-                  mainAxisExtent: 250,
+                  mainAxisExtent: 280,
                 ),
                 itemBuilder: (_, index) {
-                  return const SizedBox(
+                  return SizedBox(
                       height: 300,
-                      child: ProductCard(
-                        width: 150,
-                        height: 150,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductDetail()),
+                          );
+                        },
+                        child: const ProductCard(
+                          width: 150,
+                          height: 150,
+                        ),
                       ));
                 },
               ),
@@ -73,13 +84,19 @@ class DiscoverPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: const Padding(
-        padding: EdgeInsets.all(32.0),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(32.0),
         child: PrimaryButton(
-            isDisabled: false,
-            style: LeadingIconStyle(
-                text: 'Filter',
-                leadingIconImagePath: 'assets/icons/filter.png')),
+          isDisabled: false,
+          style: const LeadingIconStyle(
+              text: 'Filter', leadingIconImagePath: 'assets/icons/filter.png'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProductFilterPage()),
+            );
+          },
+        ),
       ),
     );
   }
