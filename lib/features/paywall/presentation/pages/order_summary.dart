@@ -77,101 +77,107 @@ class OrderSummary extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Information',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const ExpandableWidget(
-                title: 'Payment Method',
-                description: 'Credit Card',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 15,
-              ),
-              const ExpandableWidget(
-                title: 'Location',
-                description: 'Semarang, Indonesia',
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Order Detail',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const OrderDetailWidget(
-                itemTitle: 'Jordan 1 Retro High Tie Dye',
-                itemDescription: 'Nike . Red Grey . 40',
-                itemQuantity: 1,
-                itemPrice: '\$235,00',
-              ),
-              const OrderDetailWidget(
-                itemTitle: 'Jordan 1 Retro High Tie Dye',
-                itemDescription: 'Nike . Red Grey . 40',
-                itemQuantity: 1,
-                itemPrice: '\$235,00',
-              ),
-              const OrderDetailWidget(
-                itemTitle: 'Jordan 1 Retro High Tie Dye',
-                itemDescription: 'Nike . Red Grey . 40',
-                itemQuantity: 1,
-                itemPrice: '\$235,00',
-              ),
-              const OrderDetailWidget(
-                itemTitle: 'Jordan 1 Retro High Tie Dye',
-                itemDescription: 'Nike . Red Grey . 40',
-                itemQuantity: 1,
-                itemPrice: '\$235,00',
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Payment Detail',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const PaymentDetailRowWidget(
-                title: 'Sub Total',
-                amount: '\$705.00',
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const PaymentDetailRowWidget(
-                title: 'Shipping',
-                amount: '\$20,00',
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 16,
-              ),
-              const PaymentDetailRowWidget(
-                title: 'Total Order',
-                amount: '\$725.00',
-              )
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Information',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                const ExpandableWidget(
+                  title: 'Payment Method',
+                  description: 'Credit Card',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 15,
+                ),
+                const ExpandableWidget(
+                  title: 'Location',
+                  description: 'Semarang, Indonesia',
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Order Detail',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                const OrderDetailWidget(
+                  itemTitle: 'Jordan 1 Retro High Tie Dye',
+                  itemDescription: 'Nike . Red Grey . 40',
+                  itemQuantity: 1,
+                  itemPrice: '\$235,00',
+                ),
+                const OrderDetailWidget(
+                  itemTitle: 'Jordan 1 Retro High Tie Dye',
+                  itemDescription: 'Nike . Red Grey . 40',
+                  itemQuantity: 1,
+                  itemPrice: '\$235,00',
+                ),
+                const OrderDetailWidget(
+                  itemTitle: 'Jordan 1 Retro High Tie Dye',
+                  itemDescription: 'Nike . Red Grey . 40',
+                  itemQuantity: 1,
+                  itemPrice: '\$235,00',
+                ),
+                const OrderDetailWidget(
+                  itemTitle: 'Jordan 1 Retro High Tie Dye',
+                  itemDescription: 'Nike . Red Grey . 40',
+                  itemQuantity: 1,
+                  itemPrice: '\$235,00',
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Payment Detail',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                const PaymentDetailRowWidget(
+                  title: 'Sub Total',
+                  amount: '\$705.00',
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const PaymentDetailRowWidget(
+                  title: 'Shipping',
+                  amount: '\$20,00',
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const PaymentDetailRowWidget(
+                  title: 'Total Order',
+                  amount: '\$725.00',
+                ),
+                const SizedBox(
+                  height: 80,
+                )
+              ],
+            ),
           ),
         ));
   }

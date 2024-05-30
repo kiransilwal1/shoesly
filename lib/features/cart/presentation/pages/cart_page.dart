@@ -93,10 +93,12 @@ class CartListView extends StatefulWidget {
 }
 
 class _CartListViewState extends State<CartListView> {
-  List<String> _dummyData = List.generate(10, (index) => 'Item $index');
+  List<String> _dummyData = List.generate(1, (index) => 'Item $index');
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    print(size.width);
     return ListView.builder(
       itemCount: _dummyData.length,
       itemExtent: 120,
@@ -142,6 +144,8 @@ class _CartListViewState extends State<CartListView> {
   }
 }
 
+//TODO: The minimum width size supported is 351 but 370ish for the two columns grid display
+
 class CartProductWidget extends StatelessWidget {
   const CartProductWidget({
     super.key,
@@ -171,41 +175,46 @@ class CartProductWidget extends StatelessWidget {
         const SizedBox(
           width: 15,
         ),
-        SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Jordan 1 Retro High Tie Dye',
-                  style:
-                      AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-                ),
-                Text(
-                  'Nike . Red Grey . 40',
-                  style: AppTheme.body100.copyWith(color: Colors.grey[600]),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '\$235.00',
-                        style: AppTheme.headline600
-                            .copyWith(color: AppTheme.neutral500),
-                      ),
-                      CartAdd(),
-                    ],
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Jordan 1 Retro High Tie Dye',
+                      softWrap: true,
+                      style: AppTheme.headline400
+                          .copyWith(color: AppTheme.neutral500),
+                    ),
                   ),
-                )
-              ],
+                  Text(
+                    'Nike . Red Grey . 40',
+                    style: AppTheme.body100.copyWith(color: Colors.grey[600]),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '\$235.00',
+                          style: AppTheme.headline600
+                              .copyWith(color: AppTheme.neutral500),
+                        ),
+                        CartAdd(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

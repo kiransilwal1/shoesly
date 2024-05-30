@@ -1,15 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
-import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/features/cart/presentation/pages/cart_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoesly/core/constants/constants.dart';
+import 'package:shoesly/features/discover/data/datasources/shoe_remote_datasource.dart';
+import 'package:shoesly/features/discover/data/repositories/shoe_repo_impl.dart';
+import 'package:shoesly/features/discover/domain/usecases/get_all_shoe.dart';
+import 'package:shoesly/features/discover/presentation/bloc/discover_bloc.dart';
 import 'package:shoesly/features/discover/presentation/pages/discover_page.dart';
-import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
-import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
-import 'package:shoesly/features/product_filter/presentation/pages/product_filter.dart';
-import 'package:shoesly/features/product_review/presentation/pages/product_review.dart';
+import 'package:shoesly/firebase_options.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  runApp(const Shoesly());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+  );
+  await Supabase.initialize(
+    url: Constants.kApiUrl,
+    anonKey: Constants.kKey,
+  );
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (_) => DiscoverBloc(
+          getShoe: GetShoes(
+            shoeRepo: ShoeRepoImpl(
+              shoeRemoteDataSource: ShoeRemoteDataSourceImpl(
+                  db: SupabaseClient(Constants.kApiUrl, Constants.kKey)),
+            ),
+          ),
+        ),
+      )
+    ],
+    child: const Shoesly(),
+  ));
 }
 
 class Shoesly extends StatelessWidget {
@@ -21,23 +47,6 @@ class Shoesly extends StatelessWidget {
       title: 'Shoesly',
       debugShowCheckedModeBanner: false,
       home: DiscoverPage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-          child: MinimalButton(
-              isDisabled: true,
-              style: LeadingIconStyle(
-                  text: 'label',
-                  leadingIconImagePath: 'assets/icons/add-cirlce.png'))),
     );
   }
 }

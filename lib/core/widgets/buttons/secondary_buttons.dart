@@ -70,13 +70,13 @@ class SecondaryButton extends StatelessWidget {
 
     return IntrinsicWidth(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
             backgroundColor: AppTheme.neutral0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 30),
             elevation: 1),
         child: content,
       ),

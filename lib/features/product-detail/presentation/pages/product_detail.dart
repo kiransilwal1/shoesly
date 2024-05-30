@@ -7,6 +7,7 @@ import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/secondary_buttons.dart';
 import 'package:shoesly/features/cart/presentation/pages/cart_page.dart';
+import 'package:shoesly/features/product_review/presentation/pages/product_review.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/reviews.dart';
@@ -304,14 +305,22 @@ class ProductDetail extends StatelessWidget {
                 height: 16,
               ),
               const Reviews(),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(32.0),
+                    padding: const EdgeInsets.all(32.0),
                     child: SecondaryButton(
                       isDisabled: false,
-                      style: LabelButtonStyle(text: 'SEE ALL REVIEWS'),
+                      style: const LabelButtonStyle(text: 'SEE ALL REVIEWS'),
+                      onPressed: () {
+                        print('Navigating to review');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductReviewPage()),
+                        );
+                      },
                     ),
                   )
                 ],
@@ -571,15 +580,15 @@ class _CustomTextFieldWithButtonsState
             children: [
               MinimalButton(
                 isDisabled: false,
-                style: IconOnlyStyle(
+                style: const IconOnlyStyle(
                   iconImagePath: 'assets/icons/minus-cirlce.png',
                 ),
                 onPressed: _decrementValue,
               ),
               MinimalButton(
                 isDisabled: false,
-                style:
-                    IconOnlyStyle(iconImagePath: 'assets/icons/add-circle.png'),
+                style: const IconOnlyStyle(
+                    iconImagePath: 'assets/icons/add-circle.png'),
                 onPressed: _incrementValue,
               ),
             ],

@@ -46,9 +46,13 @@ class ProductReviewPage extends StatelessWidget {
             ),
           )
         ],
-        leading: const MinimalButton(
-            isDisabled: false,
-            style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png')),
+        leading: MinimalButton(
+          isDisabled: false,
+          style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           'Review (1045)',
           style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),

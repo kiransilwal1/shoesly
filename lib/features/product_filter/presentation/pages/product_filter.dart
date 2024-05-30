@@ -64,126 +64,130 @@ class ProductFilterPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Brands',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    BrandListView(),
-                    BrandListView(),
-                    BrandListView(),
-                    BrandListView(),
-                    BrandListView(),
-                    BrandListView(),
-                  ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Brands',
+                  style: AppTheme.headline400,
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Price Range',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              //TODO: Create custom slider. Syncfusion slider check
-              PriceRangeSilder(),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Sort By',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
-                height: 60,
-                child: SingleChildScrollView(
+                const SizedBox(
+                  height: 24,
+                ),
+                const SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      for (String buttonText in sortButtonText)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: SecondaryButton(
-                              isDisabled: false,
-                              style: LabelButtonStyle(text: buttonText)),
-                        )
+                      BrandListView(),
+                      BrandListView(),
+                      BrandListView(),
+                      BrandListView(),
+                      BrandListView(),
+                      BrandListView(),
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Gender',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
-                height: 60,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (String buttonText in genderText)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: SecondaryButton(
-                              isDisabled: false,
-                              style: LabelButtonStyle(text: buttonText)),
-                        )
-                    ],
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Price Range',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                //TODO: Create custom slider. Syncfusion slider check
+                PriceRangeSilder(),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Sort By',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                SizedBox(
+                  height: 60,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (String buttonText in sortButtonText)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            child: SecondaryButton(
+                                isDisabled: false,
+                                style: LabelButtonStyle(text: buttonText)),
+                          )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Color',
-                style: AppTheme.headline400,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
-                height: 60,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (String buttonText in colorText)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: SecondaryButton(
-                              isDisabled: false,
-                              style: LeadingIconStyle(
-                                  text: buttonText,
-                                  leadingIconImagePath:
-                                      'assets/icons/red-color.png')),
-                        )
-                    ],
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Gender',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                SizedBox(
+                  height: 60,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (String buttonText in genderText)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            child: SecondaryButton(
+                                isDisabled: false,
+                                style: LabelButtonStyle(text: buttonText)),
+                          )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Color',
+                  style: AppTheme.headline400,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                SizedBox(
+                  height: 60,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (String buttonText in colorText)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            child: SecondaryButton(
+                                isDisabled: false,
+                                style: LeadingIconStyle(
+                                    text: buttonText,
+                                    leadingIconImagePath:
+                                        'assets/icons/red-color.png')),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ));
   }

@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({Key? key, required this.height, required this.width});
+  const ProductCard(
+      {Key? key,
+      required this.height,
+      required this.width,
+      required this.imageUrl,
+      required this.iconUrl,
+      required this.title,
+      required this.averageRating,
+      required this.ratingCounts,
+      required this.price});
   final double height;
   final double width;
+  final String imageUrl;
+  final String iconUrl;
+  final String title;
+  final double averageRating;
+  final int ratingCounts;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +42,8 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset('assets/icons/nike.png'),
-                Image.asset(
-                  'assets/products/product.png',
-                  height: 85,
-                )
+                SvgPicture.network(iconUrl),
+                CachedNetworkImage(imageUrl: imageUrl)
               ],
             ),
           ),
@@ -42,7 +56,7 @@ class ProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Jordan 1 Retro High Tie Dye',
+                title.length > 50 ? '${title.substring(0, 50)}...' : title,
                 style: AppTheme.body100,
               ),
               const SizedBox(
@@ -58,14 +72,16 @@ class ProductCard extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    '4.5',
+                    averageRating.toStringAsFixed(2),
                     style: AppTheme.headline300.copyWith(fontSize: 11),
                   ),
                   const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    '(1045 Reviews)',
+                    ratingCounts > 1
+                        ? '$ratingCounts Reviews'
+                        : '$ratingCounts Review',
                     style: AppTheme.body100.copyWith(
                       fontSize: 11,
                       color: AppTheme.neutral300,
@@ -77,7 +93,7 @@ class ProductCard extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                '\$235,00',
+                '\$$price',
                 style: AppTheme.headline300,
               ),
             ],
