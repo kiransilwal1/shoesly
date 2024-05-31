@@ -68,7 +68,7 @@ class MinimalButton extends StatelessWidget {
     }
 
     return TextButton(
-      onPressed: isDisabled ? null : onPressed,
+      onPressed: onPressed,
       child: content,
     );
   }

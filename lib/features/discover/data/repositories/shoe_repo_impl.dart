@@ -21,4 +21,28 @@ class ShoeRepoImpl implements ShoeRepo {
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Shoe>>> filterShoes({
+    String? shoeBrand,
+    double? minPrice,
+    double? maxPrice,
+    String? sortBy,
+    String? gender,
+    String? color,
+  }) async {
+    try {
+      final shoes = await shoeRemoteDataSource.filterShoes(
+        color: color,
+        gender: gender,
+        maxPrice: maxPrice,
+        minPrice: minPrice,
+        shoeBrand: shoeBrand,
+        sortBy: sortBy,
+      );
+      return right(shoes);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

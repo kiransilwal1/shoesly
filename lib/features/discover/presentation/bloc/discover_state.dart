@@ -17,3 +17,13 @@ final class DiscoverSuccess extends DiscoverState {
 }
 
 final class DiscoverLoading extends DiscoverState {}
+
+final class ShoeFilterSuccess extends DiscoverState {}
+
+final class ShoeFilterIntialState extends DiscoverState {}
+
+final class ShoeFilterFailure extends DiscoverState {
+  final String errorMessage;
+
+  ShoeFilterFailure({required this.errorMessage});
+}

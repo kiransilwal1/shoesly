@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
@@ -6,6 +7,7 @@ import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/secondary_buttons.dart';
 
 import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../bloc/discover_bloc.dart';
 
 class ProductFilterPage extends StatelessWidget {
   ProductFilterPage({super.key});
@@ -40,7 +42,9 @@ class ProductFilterPage extends StatelessWidget {
                 PrimaryButton(
                   isDisabled: false,
                   style: const LabelButtonStyle(text: 'APPLY'),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<DiscoverBloc>().add(FilterShoes());
+                  },
                 )
               ],
             ),
