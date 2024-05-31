@@ -14,23 +14,18 @@ class ShoeModel extends Shoe {
       required super.brandImageUrl});
 
   factory ShoeModel.fromJson(Map<String, dynamic> json) {
-    int count = json['review'].length;
-    double sum = 0;
-    for (var items in json['review']) {
-      sum = sum + items['rating'];
-    }
-    double avg = sum / count;
+    print(json);
     return ShoeModel(
         createdAt: DateTime.parse(json['created_at']),
         description: json['description'],
-        price: json['price'],
+        price: (json['price']).toDouble(),
         salePrice: json['saleprice'].toDouble(),
         thumbnailImageUrl: json['thumbnail_image_url'],
         id: json['id'].toString(),
-        brandName: json['brand']['id'],
-        reviewCount: count,
-        averageRating: avg,
-        brandImageUrl: json['brand']['image']);
+        brandName: json['brand_id'],
+        reviewCount: json['review_count'],
+        averageRating: json['average_rating'].toDouble(),
+        brandImageUrl: json['image']);
   }
 
   Map<String, dynamic> toJson() {

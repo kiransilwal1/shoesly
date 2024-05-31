@@ -2,8 +2,6 @@ part of 'discover_bloc.dart';
 
 sealed class DiscoverEvent {}
 
-final class FetchAllShoes extends DiscoverEvent {}
-
 final class FilterShoes extends DiscoverEvent {
   final String? shoeBrand;
   final double? minPrice;
@@ -20,3 +18,5 @@ final class FilterShoes extends DiscoverEvent {
       this.gender,
       this.color});
 }
+
+final class FilterButtonPressed extends DiscoverEvent {}

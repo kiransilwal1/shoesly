@@ -3,14 +3,14 @@ import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/core/usecase/usecase.dart';
 import 'package:shoesly/features/discover/domain/repositories/shoe_repo.dart';
 
-import '../entities/shoes.dart';
+import '../entities/discover.dart';
 
-class GetFilterShoes implements UseCase<List<Shoe>, FilterParams> {
+class GetFilterShoes implements UseCase<Discover, FilterParams> {
   final ShoeRepo shoeRepo;
 
   GetFilterShoes({required this.shoeRepo});
   @override
-  Future<Either<Failure, List<Shoe>>> call(FilterParams params) async {
+  Future<Either<Failure, Discover>> call(FilterParams params) async {
     return await shoeRepo.filterShoes(
         color: params.color,
         gender: params.gender,

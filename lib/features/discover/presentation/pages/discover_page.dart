@@ -34,7 +34,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
   @override
   void initState() {
     super.initState();
-    context.read<DiscoverBloc>().add(FetchAllShoes());
+    context.read<DiscoverBloc>().add(FilterShoes(shoeBrand: 'All'));
   }
 
   @override
@@ -89,7 +89,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                               for (String text in brands)
                                 MinimalButton(
                                   isDisabled:
-                                      text == state.shoes.first.brandName
+                                      text == state.filterParams.shoeBrand
                                           ? false
                                           : true,
                                   style: LabelButtonStyle(text: text),
@@ -161,15 +161,19 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           color: Colors.grey,
                         ),
                       ),
+                      const SizedBox(
+                        height: 59,
+                      ),
                       SizedBox(
                         height: 0.7 * size.height,
                         child: GridView.builder(
                           itemCount: 10,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: (size.width ~/ 180),
-                            mainAxisExtent: 150,
-                          ),
+                                  crossAxisCount: (size.width ~/ 180),
+                                  mainAxisExtent: 150,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 20),
                           itemBuilder: (_, index) {
                             // TODO: Calculating ratings on the app side due to availability of paid firebase plan
 

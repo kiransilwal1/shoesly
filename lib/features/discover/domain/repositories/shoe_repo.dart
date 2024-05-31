@@ -1,11 +1,10 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:shoesly/features/discover/domain/entities/discover.dart';
 
 import '../../../../core/error/failures.dart';
-import '../entities/shoes.dart';
 
 abstract interface class ShoeRepo {
-  Future<Either<Failure, List<Shoe>>> getAllShoes();
-  Future<Either<Failure, List<Shoe>>> filterShoes({
+  Future<Either<Failure, Discover>> filterShoes({
     String? shoeBrand,
     double? minPrice,
     double? maxPrice,

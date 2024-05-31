@@ -12,8 +12,9 @@ final class DiscoverFailure extends DiscoverState {
 
 final class DiscoverSuccess extends DiscoverState {
   final List<Shoe> shoes;
+  final FilterParams filterParams;
 
-  DiscoverSuccess({required this.shoes});
+  DiscoverSuccess({required this.shoes, required this.filterParams});
 }
 
 final class DiscoverLoading extends DiscoverState {}

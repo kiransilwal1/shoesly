@@ -30,12 +30,6 @@ void main() async {
               shoeRepo: ShoeRepoImpl(
                   shoeRemoteDataSource: ShoeRemoteDataSourceImpl(
                       db: SupabaseClient(Constants.kApiUrl, Constants.kKey)))),
-          getShoe: GetShoes(
-            shoeRepo: ShoeRepoImpl(
-              shoeRemoteDataSource: ShoeRemoteDataSourceImpl(
-                  db: SupabaseClient(Constants.kApiUrl, Constants.kKey)),
-            ),
-          ),
         ),
       )
     ],
