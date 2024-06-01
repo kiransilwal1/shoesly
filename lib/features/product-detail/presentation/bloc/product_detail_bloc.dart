@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:shoesly/features/product-detail/domain/entities/shoe_details_entity.dart';
 import 'package:shoesly/features/product-detail/domain/usecases/get_productdetail_usecase.dart';
 
@@ -15,6 +16,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
         super(ProductDetailInitial()) {
     on<ProductDetailEvent>((event, emit) => emit(ProductDetailInitial()));
     on<ProductClickEvent>(_getProductDetail);
+    on<ProductVariationSwipeEvent>(_swipeProduct);
   }
 
   FutureOr<void> _getProductDetail(
@@ -22,5 +24,10 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     final res = await _productDetailUseCase(event.shoeId);
     res.fold((l) => emit(ProductDetailFailure(errorMessage: l.message)),
         (r) => emit(ProductDetailSuccess(shoeDetailsEntity: r)));
+  }
+
+  FutureOr<void> _swipeProduct(
+      ProductVariationSwipeEvent event, Emitter<ProductDetailState> emit) {
+    emit(ProductDetailSuccess(shoeDetailsEntity: event.shoeVariations));
   }
 }

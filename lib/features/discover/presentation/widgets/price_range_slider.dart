@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:shoesly/core/widgets/thumb_selector.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class PriceRangeSlider extends StatefulWidget {
   const PriceRangeSlider({
-    super.key,
+    Key? key,
     required this.minPrice,
     required this.maxPrice,
     required this.onPriceRangeChanged,
-  });
+  }) : super(key: key);
 
   final double minPrice;
   final double maxPrice;
@@ -19,41 +19,85 @@ class PriceRangeSlider extends StatefulWidget {
 }
 
 class _PriceRangeSliderState extends State<PriceRangeSlider> {
-  late RangeValues _currentRangeValues;
+  late double _currentMinValue;
+  late double _currentMaxValue;
 
   @override
   void initState() {
     super.initState();
-    _currentRangeValues = RangeValues(
-      widget.minPrice,
-      widget.minPrice + (widget.maxPrice - widget.minPrice) / 2,
-    );
+    _currentMinValue = widget.minPrice;
+    _currentMaxValue = widget.maxPrice;
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: 32),
-        RangeSlider(
-          values: _currentRangeValues,
-          min: widget.minPrice,
-          max: widget.maxPrice,
-          divisions: 100,
-          activeColor: AppTheme.neutral500,
-          inactiveColor: AppTheme.neutral100,
-          labels: RangeLabels(
-            _currentRangeValues.start.round().toString(),
-            _currentRangeValues.end.round().toString(),
+        SizedBox(
+          height: 80, // Adjust height according to your needs
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              //TODO: Thumb Separation can be maintained so that label do not overlap
+              SliderTheme(
+                data: const SliderThemeData(
+                    rangeThumbShape: ThumbSilderBandW(),
+                    minThumbSeparation: 30),
+                child: RangeSlider(
+                  values: RangeValues(_currentMinValue, _currentMaxValue),
+                  min: widget.minPrice,
+                  max: widget.maxPrice,
+                  activeColor: AppTheme.neutral500,
+                  inactiveColor: AppTheme.neutral100,
+                  onChanged: (RangeValues values) {
+                    setState(() {
+                      _currentMinValue = values.start;
+                      _currentMaxValue = values.end;
+                      widget.onPriceRangeChanged(
+                          _currentMinValue, _currentMaxValue);
+                    });
+                  },
+                ),
+              ),
+              Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$${widget.minPrice.toStringAsFixed(0)}',
+                        style: AppTheme.headline200
+                            .copyWith(color: AppTheme.neutral300),
+                      ),
+                      Text(
+                        '\$${widget.maxPrice.toStringAsFixed(0)}',
+                        style: AppTheme.headline200
+                            .copyWith(color: AppTheme.neutral300),
+                      )
+                    ],
+                  ),
+                  //TODO: Need to Findout the exact padding so that the label is linearly displaced. currently 100 px used.
+                  Positioned(
+                      left: (size.width - 100) /
+                          (widget.maxPrice - widget.minPrice) *
+                          (_currentMinValue - widget.minPrice),
+                      child: Text(
+                        '\$${_currentMinValue.toStringAsFixed(0)}',
+                        style: AppTheme.headline200,
+                      )),
+                  Positioned(
+                      left: (size.width - 90) /
+                          (widget.maxPrice - widget.minPrice) *
+                          (_currentMaxValue - widget.minPrice),
+                      child: Text(
+                        '\$${_currentMaxValue.toStringAsFixed(0)}',
+                        style: AppTheme.headline200,
+                      ))
+                ],
+              ),
+            ],
           ),
-          onChanged: (RangeValues values) {
-            setState(() {
-              _currentRangeValues = values;
-              widget.onPriceRangeChanged(
-                  values.start, values.end); // Notify parent
-            });
-          },
         ),
       ],
     );

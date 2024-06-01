@@ -92,7 +92,7 @@ class ProductFilterPage extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      //TODO: The design needs to be changed
+                      //TODO: The design needs to be changed according to the actual design
                       _priceRangeSelector(state),
                       const SizedBox(
                         height: 30,
@@ -237,6 +237,7 @@ class ProductFilterPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          //TODO: Need to remove hard coded reset
           SecondaryButton(
             isDisabled: false,
             style: const LabelButtonStyle(text: 'RESET (4)'),

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:shoesly/features/product-detail/domain/entities/shoe_details_entity.dart';
 
 class ShoeVariationModel extends ShoeVariations {
@@ -8,19 +6,31 @@ class ShoeVariationModel extends ShoeVariations {
       {required super.id,
       required super.colorCode,
       required super.size,
-      required super.imageUrl});
+      required super.imageUrl,
+      required super.colorName,
+      required super.salePrice,
+      required super.description,
+      required super.price});
 
   ShoeVariationModel copyWith({
     int? id,
     String? colorCode,
     double? size,
     String? imageUrl,
+    String? colorName,
+    double? salePrice,
+    String? description,
+    double? price,
   }) {
     return ShoeVariationModel(
       id: id ?? this.id,
       colorCode: colorCode ?? this.colorCode,
       size: size ?? this.size,
       imageUrl: imageUrl ?? this.imageUrl,
+      colorName: colorName ?? this.colorName,
+      salePrice: salePrice ?? this.salePrice,
+      description: description ?? this.description,
+      price: price ?? this.price,
     );
   }
 
@@ -30,16 +40,23 @@ class ShoeVariationModel extends ShoeVariations {
       'colorCode': colorCode,
       'size': size,
       'imageUrl': imageUrl,
+      'colorName': colorName,
+      'salePrice': salePrice,
+      'description': description,
+      'price': price,
     };
   }
 
   factory ShoeVariationModel.fromMap(Map<String, dynamic> map) {
-    debugPrint(map.toString());
     return ShoeVariationModel(
       id: map['id'] as int,
       colorCode: map['colorcode'] as String,
       size: map['size'] as double,
       imageUrl: map['image'] as String,
+      colorName: map['colorname'] as String,
+      salePrice: map['saleprice'] as double,
+      description: map['description'] as String,
+      price: map['price'] as double,
     );
   }
 
@@ -50,7 +67,7 @@ class ShoeVariationModel extends ShoeVariations {
 
   @override
   String toString() {
-    return 'ShoeVariationModel(id: $id, colorCode: $colorCode, size: $size, imageUrl: $imageUrl)';
+    return 'ShoeVariationModel(id: $id, colorCode: $colorCode, size: $size, imageUrl: $imageUrl, colorName: $colorName, salePrice: $salePrice, description: $description, price: $price)';
   }
 
   @override
@@ -60,11 +77,22 @@ class ShoeVariationModel extends ShoeVariations {
     return other.id == id &&
         other.colorCode == colorCode &&
         other.size == size &&
-        other.imageUrl == imageUrl;
+        other.imageUrl == imageUrl &&
+        other.colorName == colorName &&
+        other.salePrice == salePrice &&
+        other.description == description &&
+        other.price == price;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ colorCode.hashCode ^ size.hashCode ^ imageUrl.hashCode;
+    return id.hashCode ^
+        colorCode.hashCode ^
+        size.hashCode ^
+        imageUrl.hashCode ^
+        colorName.hashCode ^
+        salePrice.hashCode ^
+        description.hashCode ^
+        price.hashCode;
   }
 }

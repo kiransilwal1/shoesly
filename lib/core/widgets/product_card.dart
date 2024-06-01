@@ -93,7 +93,7 @@ class ProductCard extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                '\$$price',
+                '\$${price.toStringAsFixed(2)}',
                 style: AppTheme.headline300,
               ),
             ],

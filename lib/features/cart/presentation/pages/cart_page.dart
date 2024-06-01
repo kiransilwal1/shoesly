@@ -1,85 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
-import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
-import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../../../../core/theme/app_theme.dart';
+import '../../../../core/widgets/alert.dart';
+import '../../../paywall/presentation/pages/order_summary.dart';
+import '../../domain/entities/cart.dart';
+import '../bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
-  CartPage({super.key});
-
-  final List<String> sortButtonText = [
-    'Most Recent',
-    'Lowest Price',
-    'Highest Price'
-  ];
-
-  final List<String> genderText = ['Man', 'Woman', 'Unisex'];
-  final List<String> colorText = ['Black', 'White', 'Red'];
+  CartPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomSheet: Container(
-        height: 90,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'GRAND TOTAL',
-                    style:
-                        AppTheme.body100.copyWith(color: AppTheme.neutral300),
-                  ),
-                  Text(
-                    '\$705.00',
-                    style: AppTheme.headline600
-                        .copyWith(color: AppTheme.neutral500),
-                  ),
-                ],
-              ),
-              PrimaryButton(
-                isDisabled: false,
-                style: const LabelButtonStyle(text: 'CHECK OUT'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OrderSummary()),
+    Size size = MediaQuery.of(context).size;
+    return BlocConsumer<CartBloc, CartState>(
+      listener: (context, state) {
+        if (state is CartFailure) {
+          showErrorPopup(context, state.errorMessage, 'BACK');
+        }
+      },
+      builder: (context, state) {
+        if (state is CartLoaded) {
+          return StreamBuilder<Cart>(
+            stream: state.cartItems,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final cart = snapshot.data!;
+                if (cart.items.isEmpty) {
+                  return const Scaffold(
+                    body: Center(child: Text('Cart is empty')),
                   );
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-      appBar: AppBar(
-        toolbarHeight: 60,
-        leading: MinimalButton(
-          isDisabled: false,
-          style: const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          'Cart',
-          style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
-        child: CartListView(),
-      ),
+                }
+                double totalPrice = cart.items
+                    .map((item) => item.price)
+                    .reduce((sum, price) => sum + price);
+                return Scaffold(
+                  bottomSheet: Container(
+                    height: 90,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'GRAND TOTAL',
+                              ),
+                              Text(
+                                '\$$totalPrice',
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderSummary()),
+                              );
+                            },
+                            child: const Text('CHECK OUT'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  appBar: AppBar(
+                    toolbarHeight: 60,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    title: const Text(
+                      'Cart',
+                    ),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  body: const Padding(
+                    padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
+                    child: CartListView(),
+                  ),
+                );
+              } else {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator.adaptive()),
+                );
+              }
+            },
+          );
+        } else {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator.adaptive()),
+          );
+        }
+      },
     );
   }
 }
@@ -97,7 +119,6 @@ class _CartListViewState extends State<CartListView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.width);
     return ListView.builder(
       itemCount: _dummyData.length,
       itemExtent: 120,

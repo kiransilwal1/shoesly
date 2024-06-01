@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../core/widgets/shimmers/horizontal_buttons_shimmer.dart';
+import '../../../../core/widgets/shimmers/horizontal_circular.dart';
+
 class FilterPageShimmer extends StatelessWidget {
   const FilterPageShimmer({
     super.key,
@@ -29,29 +32,10 @@ class FilterPageShimmer extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                for (int i = 0; i < 5; i++)
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey,
-                        ),
-                        height: 100,
-                        width: 40,
-                      ),
-                    ),
-                  )
-              ],
-            ),
+          const ShimmerCircularHorizontal(
+            height: 100,
+            width: 40,
+            count: 5,
           ),
           const SizedBox(
             height: 48,
@@ -92,30 +76,7 @@ class FilterPageShimmer extends StatelessWidget {
           const SizedBox(
             height: 36,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                for (int i = 0; i < 5; i++)
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.grey,
-                        ),
-                        height: 40,
-                        width: 100,
-                      ),
-                    ),
-                  )
-              ],
-            ),
-          ),
+          const ShimmerButtonHorizontal(),
           const SizedBox(
             height: 36,
           ),

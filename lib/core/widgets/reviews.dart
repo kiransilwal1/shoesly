@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shoesly/core/widgets/rating_star.dart';
 
 import '../theme/app_theme.dart';
 
@@ -52,13 +52,17 @@ class Reviews extends StatelessWidget {
                 height: 8,
               ),
               Row(
-                children: [
-                  for (int i = 0; i < rating; i++)
-                    SizedBox(
-                      height: 12,
-                      child: Image.asset('assets/icons/star.png'),
-                    )
-                ],
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(5, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(1, 0, 1, 0),
+                    child: CurvedStar(
+                      size: 10.0,
+                      rating: rating.toDouble(),
+                      index: index + 1,
+                    ),
+                  );
+                }),
               ),
               const SizedBox(
                 height: 16,

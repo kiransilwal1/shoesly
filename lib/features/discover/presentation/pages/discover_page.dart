@@ -8,11 +8,14 @@ import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 import 'package:shoesly/core/widgets/product_card.dart';
+import 'package:shoesly/features/cart/presentation/bloc/cart_bloc.dart';
 
 import 'package:shoesly/features/discover/presentation/bloc/discover_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
 import 'package:shoesly/features/discover/presentation/pages/product_filter.dart';
+
+import '../../../cart/presentation/pages/cart_page.dart';
 
 class DiscoverPage extends StatefulWidget {
   DiscoverPage({Key? key}) : super(key: key);
@@ -67,7 +70,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
                       style: AppTheme.headline700,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<CartBloc>().add(LoadCart());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartPage()),
+                        );
+                      },
                       icon:
                           SvgPicture.asset('assets/icons/bag.svg', height: 24),
                     ),
@@ -82,6 +91,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
               ],
             ),
           ),
+
+          //TODO: Display something when there is empty results for some filters.
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(32.0),
             child: PrimaryButton(

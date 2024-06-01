@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/color_entites.dart';
+import '../bloc/filter_count_bloc.dart';
 
 class ColorSelector extends StatefulWidget {
   const ColorSelector({
@@ -31,6 +33,7 @@ class _ColorSelectorState extends State<ColorSelector> {
               onTap: () {
                 setState(() {
                   _selectedColor = (_selectedColor == color) ? null : color;
+                  context.read<FilterCountBloc>().add(AddFilterEvent(1));
                   widget.onColorSelected(_selectedColor);
                 });
               },

@@ -10,5 +10,6 @@ class ShoeDetailModel extends ShoeDetailsEntity {
       required super.imageUrl,
       required super.description,
       required super.reviews,
+      required super.selectedShoe,
       required super.shoeVariations});
 }

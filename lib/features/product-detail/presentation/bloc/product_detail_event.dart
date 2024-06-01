@@ -7,3 +7,9 @@ final class ProductClickEvent extends ProductDetailEvent {
 
   ProductClickEvent({required this.shoeId});
 }
+
+final class ProductVariationSwipeEvent extends ProductDetailEvent {
+  final ShoeDetailsEntity shoeVariations;
+
+  ProductVariationSwipeEvent(this.shoeVariations);
+}
