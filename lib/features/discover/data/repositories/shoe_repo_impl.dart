@@ -3,9 +3,9 @@ import 'package:shoesly/core/error/exceptions.dart';
 
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/discover/data/datasources/shoe_remote_datasource.dart';
+import 'package:shoesly/features/discover/data/models/discover_mode.dart';
 import 'package:shoesly/features/discover/domain/entities/discover.dart';
-
-import 'package:shoesly/features/discover/domain/entities/shoes.dart';
+import 'package:shoesly/features/discover/domain/entities/filter_entity.dart';
 
 import '../../domain/repositories/shoe_repo.dart';
 
@@ -33,6 +33,16 @@ class ShoeRepoImpl implements ShoeRepo {
         sortBy: sortBy,
       );
       return right(shoes);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, FilterEntity>> filterParams() async {
+    try {
+      final filterParams = await shoeRemoteDataSource.getFilterParams();
+      return right(filterParams);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

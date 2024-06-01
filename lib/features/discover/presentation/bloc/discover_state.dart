@@ -11,7 +11,7 @@ final class DiscoverFailure extends DiscoverState {
 }
 
 final class DiscoverSuccess extends DiscoverState {
-  final List<Shoe> shoes;
+  final List<ShoeEntity.Shoe> shoes;
   final FilterParams filterParams;
 
   DiscoverSuccess({required this.shoes, required this.filterParams});
@@ -21,7 +21,27 @@ final class DiscoverLoading extends DiscoverState {}
 
 final class ShoeFilterSuccess extends DiscoverState {}
 
-final class ShoeFilterIntialState extends DiscoverState {}
+final class FilterLoading extends DiscoverState {}
+
+final class FilterFailure extends DiscoverState {
+  final String errorMessage;
+
+  FilterFailure(this.errorMessage);
+}
+
+final class FilterParamSuccess extends DiscoverState {
+  final List<Brand> brands;
+  final double minPrice;
+  final double maxPrice;
+  final List<ColorEntity> colorCodes;
+
+  FilterParamSuccess({
+    required this.brands,
+    required this.minPrice,
+    required this.maxPrice,
+    required this.colorCodes,
+  });
+}
 
 final class ShoeFilterFailure extends DiscoverState {
   final String errorMessage;

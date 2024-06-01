@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
@@ -5,16 +6,25 @@ import '../theme/app_theme.dart';
 class Reviews extends StatelessWidget {
   const Reviews({
     super.key,
+    required this.name,
+    required this.rating,
+    required this.description,
+    required this.imageUrl,
   });
+  final String name;
+  final int rating;
+  final String description;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 20,
-          backgroundColor: Colors.black,
+          backgroundColor: AppTheme.neutral100,
+          foregroundImage: NetworkImage(imageUrl),
         ),
         const SizedBox(
           width: 16,
@@ -28,7 +38,7 @@ class Reviews extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Nolan Carder',
+                    name,
                     style: AppTheme.headline300,
                   ),
                   Text(
@@ -43,7 +53,7 @@ class Reviews extends StatelessWidget {
               ),
               Row(
                 children: [
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < rating; i++)
                     SizedBox(
                       height: 12,
                       child: Image.asset('assets/icons/star.png'),
@@ -54,7 +64,7 @@ class Reviews extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                'Perfect for keeping your feet dry and warm in damp conditions.',
+                description,
                 style: AppTheme.body100.copyWith(color: AppTheme.neutral500),
               )
             ],

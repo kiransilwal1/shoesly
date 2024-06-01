@@ -88,39 +88,6 @@ class ProductReviewPage extends StatelessWidget {
                     SizedBox(
                       height: 16,
                     ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Reviews(),
                   ],
                 ),
               ),

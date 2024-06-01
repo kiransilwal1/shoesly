@@ -5,8 +5,6 @@ import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 
 void showErrorPopup(BuildContext context, String text, String buttonText,
     [String? title, Function()? onTap]) {
-  bool buttonPressed = false; // Track if the button is pressed
-
   onTap ??= () {
     // Close the dialog
     Navigator.of(context).pop();

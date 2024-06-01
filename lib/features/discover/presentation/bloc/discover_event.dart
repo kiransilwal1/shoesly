@@ -19,4 +19,6 @@ final class FilterShoes extends DiscoverEvent {
       this.color});
 }
 
-final class FilterButtonPressed extends DiscoverEvent {}
+final class FilterPressed extends DiscoverEvent {}
+
+final class FilterApply extends DiscoverEvent {}
