@@ -2,22 +2,24 @@ part of 'cart_bloc.dart';
 
 sealed class CartEvent {}
 
-class AddToCartEvent extends CartEvent {
+final class AddToCartEvent extends CartEvent {
+  final ShoeVariations shoe;
+  final int quantity;
+
+  AddToCartEvent({required this.shoe, required this.quantity});
+}
+
+final class RemoveFromCartEvent extends CartEvent {
   final ShoeVariations shoe;
 
-  AddToCartEvent(this.shoe);
+  RemoveFromCartEvent({required this.shoe});
 }
 
-class LoadCart extends CartEvent {}
-
-class RemoveFromCartEvent extends CartEvent {
+final class SwipeToDeleteEvent extends CartEvent {
   final ShoeVariations shoe;
+  final int quantity;
 
-  RemoveFromCartEvent(this.shoe);
+  SwipeToDeleteEvent({required this.shoe, required this.quantity});
 }
 
-class CartUpdatedEvent extends CartEvent {
-  final Cart cart;
-
-  CartUpdatedEvent(this.cart);
-}
+final class GetCartEvent extends CartEvent {}

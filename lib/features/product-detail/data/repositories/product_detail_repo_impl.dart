@@ -12,7 +12,7 @@ class ProductDetailRepoImpl implements ProductDetailRepo {
 
   @override
   Future<Either<Failure, ShoeDetailsEntity>> getShoeDetailEntity(
-      {required int shoeId}) async {
+      {required String shoeId}) async {
     try {
       final productDetail =
           await productDetailDataSource.getShoeDetail(id: shoeId);

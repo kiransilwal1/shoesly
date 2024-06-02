@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/features/product-detail/presentation/bloc/product_detail_bloc.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/shoe_details_entity.dart';
 
@@ -36,7 +34,7 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
   @override
   Widget build(BuildContext context) {
     List<String> colorString =
-        widget.shoes.shoeVariations.map((e) => e.colorCode).toList();
+        widget.shoes.shoeVariations.map((e) => e.colorCode).toSet().toList();
     int variationCount = widget.shoes.shoeVariations.length;
     return Container(
       height: widget.size.width * 0.8,
@@ -55,12 +53,12 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {
-                  context.read<ProductDetailBloc>().add(
-                        ProductVariationSwipeEvent(
-                          widget.shoes.copyWith(
-                              selectedShoe: widget.shoes.shoeVariations[index]),
-                        ),
-                      );
+                  // context.read<ProductDetailBloc>().add(
+                  //       ProductVariationSwipeEvent(
+                  //         widget.shoes.copyWith(
+                  //             selectedShoe: widget.shoes.shoeVariations[index]),
+                  //       ),
+                  //     );
                   setState(() {
                     _currentPage = index;
                     widget.onSwiped(widget.shoes.shoeVariations[index]);

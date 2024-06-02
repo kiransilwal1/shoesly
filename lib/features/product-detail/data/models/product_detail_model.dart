@@ -4,6 +4,7 @@ class ShoeDetailModel extends ShoeDetailsEntity {
   ShoeDetailModel(
       {required super.id,
       required super.title,
+      required super.brandName,
       required super.averageRating,
       required super.reviewCount,
       required super.salePrice,

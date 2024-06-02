@@ -11,7 +11,7 @@ class ReviewModel extends Review {
       required super.userDescription});
 
   Review copyWith({
-    int? id,
+    String? id,
     String? imageUrl,
     String? userName,
     int? userRating,
@@ -40,10 +40,10 @@ class ReviewModel extends Review {
 
   factory ReviewModel.fromMap(Map<String, dynamic> map) {
     return ReviewModel(
-      id: map['id'] as int,
-      imageUrl: map['imageUrl'] ??
+      id: map['id'] as String,
+      imageUrl: map['product_user']['photourl'] ??
           'https://firebasestorage.googleapis.com/v0/b/shoesly-54cf7.appspot.com/o/ussopprofile.jpeg?alt=media&token=172f804d-c41e-4a54-bc4a-3f37bf8b50b8',
-      userName: map['name'] as String,
+      userName: map['product_user']['name'] as String,
       userRating: map['rating'],
       userDescription: map['comment'] as String,
     );

@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoesly/core/constants/constants.dart';
-import 'package:shoesly/features/cart/data/datasources/local_datasource.dart';
+import 'package:shoesly/features/cart/data/datasources/cart_local_data_source.dart';
 import 'package:shoesly/features/cart/data/repositories/cart_repo_impl.dart';
-import 'package:shoesly/features/cart/domain/usecases/add_to_cart.dart';
-import 'package:shoesly/features/cart/domain/usecases/get_cart.dart';
-import 'package:shoesly/features/cart/domain/usecases/remove_from_cart.dart';
+import 'package:shoesly/features/cart/domain/usecases/add_to_cart_usecase.dart';
+import 'package:shoesly/features/cart/domain/usecases/get_cart_usecase.dart';
+import 'package:shoesly/features/cart/domain/usecases/remove_from_cart_usecase.dart';
+import 'package:shoesly/features/cart/domain/usecases/swipe_to_delete_usecase.dart';
 import 'package:shoesly/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:shoesly/features/discover/data/datasources/shoe_remote_datasource.dart';
 import 'package:shoesly/features/discover/data/repositories/shoe_repo_impl.dart';
@@ -29,6 +31,8 @@ void main() async {
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
   );
+  final sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.clear();
   await Supabase.initialize(
     url: Constants.kApiUrl,
     anonKey: Constants.kKey,
@@ -77,23 +81,23 @@ void main() async {
         create: (_) => ProductReviewBloc(),
       ),
       BlocProvider(
-        create: (_) => CartBloc(
-            addToCart: AddToCart(
-              cartRepository: CartRepositoryImpl(
-                localDataSource: CartDataSourceImpl(),
-              ),
-            ),
-            removeFromCart: RemoveFromCart(
-              cartRepository: CartRepositoryImpl(
-                localDataSource: CartDataSourceImpl(),
-              ),
-            ),
-            getCart: GetCart(
-              repository: CartRepositoryImpl(
-                localDataSource: CartDataSourceImpl(),
-              ),
-            )),
-      )
+          create: (_) => CartBloc(
+              swipeToDeleteUseCase: SwipeToDeleteUseCase(
+                  cartRepo: CartRepoImpl(
+                      cartLocalDataSource: CartLocalDataSourceImpl(
+                          sharedPreferences: sharedPreferences))),
+              removeFromCartUseCase: RemoveFromCartUseCase(
+                  cartRepo: CartRepoImpl(
+                      cartLocalDataSource: CartLocalDataSourceImpl(
+                          sharedPreferences: sharedPreferences))),
+              getCartUsecase: GetCartUsecase(
+                  cartRepo: CartRepoImpl(
+                      cartLocalDataSource: CartLocalDataSourceImpl(
+                          sharedPreferences: sharedPreferences))),
+              addToCartUsecase: AddToCartUsecase(
+                  cartRepo: CartRepoImpl(
+                      cartLocalDataSource: CartLocalDataSourceImpl(
+                          sharedPreferences: sharedPreferences)))))
     ],
     child: const Shoesly(),
   ));

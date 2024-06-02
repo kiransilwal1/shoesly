@@ -5,6 +5,6 @@ import '../../../../core/error/failures.dart';
 
 abstract class ProductDetailRepo {
   Future<Either<Failure, ShoeDetailsEntity>> getShoeDetailEntity({
-    required int shoeId,
+    required String shoeId,
   });
 }

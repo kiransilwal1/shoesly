@@ -13,7 +13,7 @@ class ShoeVariationModel extends ShoeVariations {
       required super.price});
 
   ShoeVariationModel copyWith({
-    int? id,
+    String? id,
     String? colorCode,
     double? size,
     String? imageUrl,
@@ -49,14 +49,14 @@ class ShoeVariationModel extends ShoeVariations {
 
   factory ShoeVariationModel.fromMap(Map<String, dynamic> map) {
     return ShoeVariationModel(
-      id: map['id'] as int,
+      id: map['id'] as String,
       colorCode: map['colorcode'] as String,
-      size: map['size'] as double,
+      size: map['size'].toDouble() as double,
       imageUrl: map['image'] as String,
       colorName: map['colorname'] as String,
-      salePrice: map['saleprice'] as double,
-      description: map['description'] as String,
-      price: map['price'] as double,
+      salePrice: map['product']['sale_price'].toDouble() as double,
+      description: map['product']['description'] as String,
+      price: map['product']['price'].toDouble() as double,
     );
   }
 

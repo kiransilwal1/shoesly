@@ -27,213 +27,223 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocConsumer<ProductDetailBloc, ProductDetailState>(
+    return BlocListener<CartBloc, CartState>(
       listener: (context, state) {
-        if (state is ProductDetailFailure) {
+        if (state is CartFailure) {
+          debugPrint(state.toString());
           showErrorPopup(context, state.errorMessage, 'BACK');
         }
       },
-      builder: (context, state) {
-        if (state is ProductDetailSuccess) {
-          ShoeVariations _selectedShoe =
-              state.shoeDetailsEntity.shoeVariations.first;
-          final List<int> sizes = state.shoeDetailsEntity.shoeVariations
-              .map((e) => e.size.toInt())
-              .toList();
-          return Scaffold(
-            bottomSheet: Container(
-              height: 90,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'PRICE',
-                          style: AppTheme.body100
-                              .copyWith(color: AppTheme.neutral300),
-                        ),
-                        Text(
-                          '\$${state.shoeDetailsEntity.selectedShoe.price.toStringAsFixed(2)}',
-                          style: AppTheme.headline600
-                              .copyWith(color: AppTheme.neutral500),
-                        ),
-                      ],
-                    ),
-                    PrimaryButton(
-                      isDisabled: false,
-                      style: const LabelButtonStyle(text: 'ADD TO CART'),
-                      onPressed: () {
-                        _showBottomSheet(context: context, shoe: _selectedShoe);
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ),
-            body: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 44, 30, 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 55,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: BlocConsumer<ProductDetailBloc, ProductDetailState>(
+        listener: (context, state) {
+          if (state is ProductDetailFailure) {
+            showErrorPopup(context, state.errorMessage, 'BACK');
+          }
+        },
+        builder: (context, state) {
+          if (state is ProductDetailSuccess) {
+            ShoeVariations _selectedShoe =
+                state.shoeDetailsEntity.shoeVariations.first;
+            final List<int> sizes = state.shoeDetailsEntity.shoeVariations
+                .map((e) => e.size.toInt())
+                .toList();
+            return Scaffold(
+              bottomSheet: Container(
+                height: 90,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MinimalButton(
-                            isDisabled: false,
-                            style: const IconOnlyStyle(
-                                iconImagePath: 'assets/icons/back.png'),
-                            onPressed: () {
-                              context
-                                  .read<DiscoverBloc>()
-                                  .add(FilterShoes(shoeBrand: 'All'));
-                              Navigator.pop(context);
-                            },
+                          Text(
+                            'PRICE',
+                            style: AppTheme.body100
+                                .copyWith(color: AppTheme.neutral300),
                           ),
-                          const MinimalButton(
-                            isDisabled: false,
-                            style: IconOnlyStyle(
-                                iconImagePath: 'assets/icons/bag.png'),
+                          Text(
+                            '\$${state.shoeDetailsEntity.selectedShoe.price.toStringAsFixed(2)}',
+                            style: AppTheme.headline600
+                                .copyWith(color: AppTheme.neutral500),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ProductDetailThumbnail(
-                        mainImageUrl: state.shoeDetailsEntity.imageUrl,
-                        size: size,
-                        shoes: state.shoeDetailsEntity,
-                        onSwiped: (ShoeVariations shoe) {
-                          _selectedShoe = shoe;
-                          debugPrint('Selected shoe $shoe');
-                        }),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      state.shoeDetailsEntity.title,
-                      style: AppTheme.headline600,
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    RatingView(
-                      averageRating: state.shoeDetailsEntity.averageRating,
-                      reviewCount: state.shoeDetailsEntity.reviewCount,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Size',
-                      style: AppTheme.headline400,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SizeOptionsView(sizes: sizes),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Description',
-                      style: AppTheme.headline400,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      state.shoeDetailsEntity.description,
-                      style:
-                          AppTheme.body200.copyWith(color: AppTheme.neutral400),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Review (${state.shoeDetailsEntity.reviewCount.toString()})',
-                      style: AppTheme.headline400,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Column(
-                      children: [
-                        for (var review
-                            in state.shoeDetailsEntity.reviews.sublist(0, 3))
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                            child: Reviews(
-                              description: review.userDescription,
-                              name: review.userName,
-                              rating: review.userRating,
-                              imageUrl: review.imageUrl,
-                            ),
-                          )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: SecondaryButton(
-                            isDisabled: false,
-                            style:
-                                const LabelButtonStyle(text: 'SEE ALL REVIEWS'),
-                            onPressed: () {
-                              context.read<ProductReviewBloc>().add(
-                                    FilterReviewEvent(
-                                        globalReviews:
-                                            state.shoeDetailsEntity.reviews,
-                                        averageRating: state
-                                            .shoeDetailsEntity.averageRating,
-                                        reviews:
-                                            state.shoeDetailsEntity.reviews,
-                                        filterValue: 0),
-                                  );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductReviewPage()),
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    )
-                  ],
+                      PrimaryButton(
+                        isDisabled: false,
+                        style: const LabelButtonStyle(text: 'ADD TO CART'),
+                        onPressed: () {
+                          _showBottomSheet(
+                              context: context, shoe: _selectedShoe);
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        } else {
-          return const Scaffold(
-            body: ProductDetailShimmer(),
-          );
-        }
-      },
+              body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 44, 30, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MinimalButton(
+                              isDisabled: false,
+                              style: const IconOnlyStyle(
+                                  iconImagePath: 'assets/icons/back.png'),
+                              onPressed: () {
+                                context
+                                    .read<DiscoverBloc>()
+                                    .add(FilterShoes(shoeBrand: 'All'));
+                                Navigator.pop(context);
+                              },
+                            ),
+                            const MinimalButton(
+                              isDisabled: false,
+                              style: IconOnlyStyle(
+                                  iconImagePath: 'assets/icons/bag.png'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ProductDetailThumbnail(
+                          mainImageUrl: state.shoeDetailsEntity.imageUrl,
+                          size: size,
+                          shoes: state.shoeDetailsEntity,
+                          onSwiped: (ShoeVariations shoe) {
+                            _selectedShoe = shoe;
+                            debugPrint('Selected shoe $shoe');
+                          }),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        '${state.shoeDetailsEntity.brandName} ${state.shoeDetailsEntity.title}',
+                        style: AppTheme.headline600,
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      RatingView(
+                        averageRating: state.shoeDetailsEntity.averageRating,
+                        reviewCount: state.shoeDetailsEntity.reviewCount,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Size',
+                        style: AppTheme.headline400,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizeOptionsView(sizes: sizes.toSet().toList()),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Description',
+                        style: AppTheme.headline400,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        state.shoeDetailsEntity.description,
+                        style: AppTheme.body200
+                            .copyWith(color: AppTheme.neutral400),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Review (${state.shoeDetailsEntity.reviewCount.toString()})',
+                        style: AppTheme.headline400,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Column(
+                        children: [
+                          for (var review
+                              in state.shoeDetailsEntity.reviews.sublist(0, 3))
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                              child: Reviews(
+                                description: review.userDescription,
+                                name: review.userName,
+                                rating: review.userRating,
+                                imageUrl: review.imageUrl,
+                              ),
+                            )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: SecondaryButton(
+                              isDisabled: false,
+                              style: const LabelButtonStyle(
+                                  text: 'SEE ALL REVIEWS'),
+                              onPressed: () {
+                                context.read<ProductReviewBloc>().add(
+                                      FilterReviewEvent(
+                                          globalReviews:
+                                              state.shoeDetailsEntity.reviews,
+                                          averageRating: state
+                                              .shoeDetailsEntity.averageRating,
+                                          reviews:
+                                              state.shoeDetailsEntity.reviews,
+                                          filterValue: 0),
+                                    );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProductReviewPage()),
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const Scaffold(
+              body: ProductDetailShimmer(),
+            );
+          }
+        },
+      ),
     );
   }
 
   void _showBottomSheet(
-      {required BuildContext context, required ShoeVariations shoe, double}) {
+      {required BuildContext context, required ShoeVariations shoe}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.neutral500.withOpacity(0.3),
@@ -312,7 +322,7 @@ class ProductDetail extends StatelessWidget {
                                         .copyWith(color: AppTheme.neutral300),
                                   ),
                                   Text(
-                                    shoe.salePrice.toString(),
+                                    shoe.salePrice.toStringAsFixed(2),
                                     style: AppTheme.headline600
                                         .copyWith(color: AppTheme.neutral500),
                                   ),
@@ -323,10 +333,8 @@ class ProductDetail extends StatelessWidget {
                                 style:
                                     const LabelButtonStyle(text: 'ADD TO CART'),
                                 onPressed: () {
-                                  context
-                                      .read<CartBloc>()
-                                      .add(AddToCartEvent(shoe));
-                                  _showBottomSheetWithCart(context);
+                                  context.read<CartBloc>().add(
+                                      AddToCartEvent(shoe: shoe, quantity: 1));
                                 },
                               )
                             ],

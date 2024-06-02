@@ -3,7 +3,6 @@ import 'package:shoesly/core/error/exceptions.dart';
 
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/discover/data/datasources/shoe_remote_datasource.dart';
-import 'package:shoesly/features/discover/data/models/discover_mode.dart';
 import 'package:shoesly/features/discover/domain/entities/discover.dart';
 import 'package:shoesly/features/discover/domain/entities/filter_entity.dart';
 

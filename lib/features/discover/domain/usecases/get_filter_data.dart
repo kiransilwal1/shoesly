@@ -1,4 +1,4 @@
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/core/usecase/usecase.dart';
 import 'package:shoesly/features/discover/domain/entities/filter_entity.dart';

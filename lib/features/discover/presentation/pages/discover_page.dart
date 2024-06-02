@@ -9,12 +9,10 @@ import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/primary_buttons.dart';
 import 'package:shoesly/core/widgets/product_card.dart';
 import 'package:shoesly/features/cart/presentation/bloc/cart_bloc.dart';
-
 import 'package:shoesly/features/discover/presentation/bloc/discover_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
 import 'package:shoesly/features/discover/presentation/pages/product_filter.dart';
-
 import '../../../cart/presentation/pages/cart_page.dart';
 
 class DiscoverPage extends StatefulWidget {
@@ -35,6 +33,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
     'JORDAN',
     'NIKE'
   ];
+
+  //TODO: Database table is designed such that each shoevariation can have different price from the actual shoe.
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        context.read<CartBloc>().add(LoadCart());
+                        context.read<CartBloc>().add(GetCartEvent());
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => CartPage()),
@@ -152,23 +152,28 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 height: 300,
                 child: GestureDetector(
                   onTap: () {
-                    context.read<ProductDetailBloc>().add(ProductClickEvent(
-                        shoeId: int.parse(state.shoes[index].id)));
+                    context
+                        .read<ProductDetailBloc>()
+                        .add(ProductClickEvent(shoeId: state.shoes[index].id));
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ProductDetail()),
                     );
                   },
-                  child: ProductCard(
-                    width: 150,
-                    height: 150,
-                    imageUrl: state.shoes[index].thumbnailImageUrl,
-                    iconUrl: state.shoes[index].brandImageUrl,
-                    title: state.shoes[index].description,
-                    averageRating: state.shoes[index].averageRating,
-                    price: state.shoes[index].salePrice,
-                    ratingCounts: state.shoes[index].reviewCount,
-                  ),
+                  child: state is ShoeFilterFailure
+                      ? const Center(
+                          child: Text('No product found'),
+                        )
+                      : ProductCard(
+                          width: 150,
+                          height: 150,
+                          imageUrl: state.shoes[index].thumbnailImageUrl,
+                          iconUrl: state.shoes[index].brandImageUrl,
+                          title: state.shoes[index].description,
+                          averageRating: state.shoes[index].averageRating,
+                          price: state.shoes[index].salePrice,
+                          ratingCounts: state.shoes[index].reviewCount,
+                        ),
                 ),
               );
             },

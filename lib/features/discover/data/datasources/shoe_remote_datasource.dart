@@ -38,7 +38,7 @@ class ShoeRemoteDataSourceImpl implements ShoeRemoteDataSource {
   }) async {
     try {
       debugPrint(shoeBrand);
-      final shoes = await db.rpc('get_shoes_by_filter', params: {
+      final shoes = await db.rpc('get_shoes_by_filter_v2', params: {
         'shoebrand': shoeBrand,
         'minprice': minPrice ?? 0,
         'maxprice': maxPrice ?? 1000000
@@ -76,14 +76,15 @@ class ShoeRemoteDataSourceImpl implements ShoeRemoteDataSource {
     }
   }
 
+  //TODO: this will fetch params that can be used to filter the shoes.
   @override
   Future<FilterModel> getFilterParams() async {
     try {
-      final brands = await db.rpc('get_brand_with_count');
+      final brands = await db.rpc('get_brand_with_count_v2');
       List<BrandModel> brandModels = [];
       for (var brand in brands) {
         brandModels.add(BrandModel(
-            brandName: brand['brand_id'],
+            brandName: brand['brandname'],
             image: brand['brand_image_url'],
             id: brand['brand_id'],
             count: brand['item_count']));

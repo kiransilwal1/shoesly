@@ -4,16 +4,16 @@ sealed class CartState {}
 
 final class CartInitial extends CartState {}
 
-final class CartLoaded extends CartState {
-  final Stream<Cart> cartItems;
+final class CartLoadedState extends CartState {
+  final Cart cart;
 
-  CartLoaded(this.cartItems);
+  CartLoadedState({required this.cart});
 }
-
-final class CartLoading extends CartState {}
 
 final class CartFailure extends CartState {
   final String errorMessage;
 
   CartFailure({required this.errorMessage});
 }
+
+final class CartEmpty extends CartState {}

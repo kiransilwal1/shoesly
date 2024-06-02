@@ -1,14 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../../core/theme/app_theme.dart';
+import 'package:shoesly/core/theme/app_theme.dart';
+import 'package:shoesly/core/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
+import 'package:shoesly/features/cart/domain/entities/cart_items.dart';
+import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
 import '../../../../core/widgets/alert.dart';
-import '../../../paywall/presentation/pages/order_summary.dart';
-import '../../domain/entities/cart.dart';
+import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
-  CartPage({Key? key});
+  CartPage({super.key});
+
+  final List<String> sortButtonText = [
+    'Most Recent',
+    'Lowest Price',
+    'Highest Price'
+  ];
+
+  final List<String> genderText = ['Man', 'Woman', 'Unisex'];
+  final List<String> colorText = ['Black', 'White', 'Red'];
 
   @override
   Widget build(BuildContext context) {
@@ -20,81 +33,75 @@ class CartPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is CartLoaded) {
-          return StreamBuilder<Cart>(
-            stream: state.cartItems,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final cart = snapshot.data!;
-                if (cart.items.isEmpty) {
-                  return const Scaffold(
-                    body: Center(child: Text('Cart is empty')),
-                  );
-                }
-                double totalPrice = cart.items
-                    .map((item) => item.price)
-                    .reduce((sum, price) => sum + price);
-                return Scaffold(
-                  bottomSheet: Container(
-                    height: 90,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'GRAND TOTAL',
-                              ),
-                              Text(
-                                '\$$totalPrice',
-                              ),
-                            ],
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OrderSummary()),
-                              );
-                            },
-                            child: const Text('CHECK OUT'),
-                          )
-                        ],
-                      ),
+        if (state is CartLoadedState) {
+          if (state.cart.cartItems.isEmpty) {
+            return const Scaffold(
+              body: Center(child: Text('Please add some items to cart first.')),
+            );
+          }
+          return Scaffold(
+            bottomSheet: Container(
+              height: 90,
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'GRAND TOTAL',
+                          style: AppTheme.body100
+                              .copyWith(color: AppTheme.neutral300),
+                        ),
+                        Text(
+                          state.cart.totalCartPrice.toStringAsFixed(2),
+                          style: AppTheme.headline600
+                              .copyWith(color: AppTheme.neutral500),
+                        ),
+                      ],
                     ),
-                  ),
-                  appBar: AppBar(
-                    toolbarHeight: 60,
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
+                    PrimaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'CHECK OUT'),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrderSummary()),
+                        );
                       },
-                    ),
-                    title: const Text(
-                      'Cart',
-                    ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                  ),
-                  body: const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
-                    child: CartListView(),
-                  ),
-                );
-              } else {
-                return const Scaffold(
-                  body: Center(child: CircularProgressIndicator.adaptive()),
-                );
-              }
-            },
+                    )
+                  ],
+                ),
+              ),
+            ),
+            appBar: AppBar(
+              toolbarHeight: 60,
+              leading: MinimalButton(
+                isDisabled: false,
+                style:
+                    const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: Text(
+                'Cart',
+                style:
+                    AppTheme.headline400.copyWith(color: AppTheme.neutral500),
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
+              child: CartListView(itemList: state.cart.cartItems),
+            ),
           );
         } else {
           return const Scaffold(
@@ -107,7 +114,8 @@ class CartPage extends StatelessWidget {
 }
 
 class CartListView extends StatefulWidget {
-  const CartListView({super.key});
+  const CartListView({super.key, required this.itemList});
+  final List<CartItems> itemList;
 
   @override
   State<CartListView> createState() => _CartListViewState();
@@ -119,8 +127,9 @@ class _CartListViewState extends State<CartListView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(size.width);
     return ListView.builder(
-      itemCount: _dummyData.length,
+      itemCount: widget.itemList.length,
       itemExtent: 120,
       itemBuilder: (context, index) {
         return Dismissible(
@@ -153,11 +162,10 @@ class _CartListViewState extends State<CartListView> {
             ),
           ),
           onDismissed: (direction) {
-            setState(() {
-              _dummyData.removeAt(index);
-            });
+            context.read<CartBloc>().add(SwipeToDeleteEvent(
+                shoe: widget.itemList[index].variations, quantity: 1));
           },
-          child: const CartProductWidget(),
+          child: CartProductWidget(item: widget.itemList[index]),
         );
       },
     );
@@ -169,7 +177,10 @@ class _CartListViewState extends State<CartListView> {
 class CartProductWidget extends StatelessWidget {
   const CartProductWidget({
     super.key,
+    required this.item,
   });
+
+  final CartItems item;
 
   @override
   Widget build(BuildContext context) {
@@ -186,10 +197,7 @@ class CartProductWidget extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Image.asset(
-              'assets/products/product.png',
-              width: 80,
-            ),
+            child: CachedNetworkImage(imageUrl: item.variations.imageUrl),
           ),
         ),
         const SizedBox(
@@ -206,14 +214,17 @@ class CartProductWidget extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      'Jordan 1 Retro High Tie Dye',
+                      item.variations.description
+                          .split(" ")
+                          .sublist(0, 3)
+                          .join(" "),
                       softWrap: true,
                       style: AppTheme.headline400
                           .copyWith(color: AppTheme.neutral500),
                     ),
                   ),
                   Text(
-                    'Nike . Red Grey . 40',
+                    '${item.variations.description.split(" ")[0]} . ${item.variations.colorName} . ${item.variations.size}',
                     style: AppTheme.body100.copyWith(color: Colors.grey[600]),
                   ),
                   Expanded(
@@ -222,7 +233,7 @@ class CartProductWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '\$235.00',
+                          item.variations.salePrice.toStringAsFixed(2),
                           style: AppTheme.headline600
                               .copyWith(color: AppTheme.neutral500),
                         ),

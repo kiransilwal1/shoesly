@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/review_model.dart';
 
 abstract interface class ProductDetailDataSource {
-  Future<ShoeDetailModel> getShoeDetail({required int id});
+  Future<ShoeDetailModel> getShoeDetail({required String id});
 }
 
 class ProductDetailDataSourceImpl implements ProductDetailDataSource {
@@ -14,35 +14,39 @@ class ProductDetailDataSourceImpl implements ProductDetailDataSource {
 
   ProductDetailDataSourceImpl({required this.db});
   @override
-  Future<ShoeDetailModel> getShoeDetail({required int id}) async {
+  Future<ShoeDetailModel> getShoeDetail({required String id}) async {
     try {
       final reviews = await db
-          .from('review')
-          .select('*, shoe_review!inner(*)')
-          .eq('shoe_review.shoe_id', id)
+          .from('product_reviews')
+          .select('*')
+          .eq('product_id', id)
+          .select('*,product_user!inner(*)')
           .order('rating', ascending: false);
       List<ReviewModel> reviewModels =
           reviews.map((e) => ReviewModel.fromMap(e)).toList();
 
       final variations = await db
-          .from('shoevariation')
-          .select('*, shoe_shoevariation!inner(*)')
-          .eq('shoe_shoevariation.shoe_id', id)
-          .order('id', ascending: true);
+          .from('product_variations')
+          .select('*')
+          .eq('product_id', id)
+          .select('*,product!inner(*)');
       List<ShoeVariationModel> variationModel =
           variations.map((e) => ShoeVariationModel.fromMap(e)).toList();
       int reviewCount = reviews.length;
       double averageRating = calculateAverageRating(reviewModels);
-      final shoe = await db.from('shoe').select().eq('id', id);
+      final shoe = await db
+          .from('product')
+          .select()
+          .eq('id', id)
+          .select('*,product_brand!inner(*)');
       ShoeDetailModel shoeDetail = ShoeDetailModel(
         id: id,
-        imageUrl: shoe[0]['thumbnail_image_url'],
-        title: shoe[0]['description'].split(" ").length > 3
-            ? shoe[0]['description'].split(" ").sublist(0, 3).join(' ')
-            : shoe[0]['description'].split(" ").join(" "),
+        imageUrl: shoe[0]['image'],
+        brandName: shoe[0]['product_brand']['name'],
+        title: shoe[0]['title'],
         averageRating: averageRating,
         reviewCount: reviewCount,
-        salePrice: shoe[0]['saleprice'],
+        salePrice: shoe[0]['sale_price'].toDouble(),
         description: shoe[0]['description'],
         reviews: reviewModels,
         shoeVariations: variationModel,
