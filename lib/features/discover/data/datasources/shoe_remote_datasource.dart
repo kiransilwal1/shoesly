@@ -5,7 +5,7 @@ import 'package:shoesly/features/discover/data/models/filter_model.dart';
 import 'package:shoesly/features/discover/domain/usecases/get_filtered_shoes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/brand_model.dart';
+import '../../../../core/models/brand_model.dart';
 import '../models/color_model.dart';
 import '../models/shoe_model.dart';
 

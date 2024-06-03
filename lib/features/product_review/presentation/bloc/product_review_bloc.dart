@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../product-detail/domain/entities/shoe_details_entity.dart';
+import '../../../product_detail_v2/domain/entities/product_review.dart';
 
 part 'product_review_event.dart';
 part 'product_review_state.dart';
@@ -23,7 +22,7 @@ class ProductReviewBloc extends Bloc<ProductReviewEvent, ProductReviewState> {
           averageRating: event.averageRating,
           filterValue: event.filterValue));
     } else {
-      List<Review> reviews = event.globalReviews
+      List<ProductReview> reviews = event.globalReviews
           .where((element) => element.userRating == event.filterValue)
           .toList();
 

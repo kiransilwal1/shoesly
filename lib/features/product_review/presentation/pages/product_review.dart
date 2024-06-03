@@ -4,9 +4,9 @@ import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/reviews.dart';
+import 'package:shoesly/features/product_detail_v2/domain/entities/product_review.dart';
 
 import '../../../../core/widgets/alert.dart';
-import '../../../product-detail/domain/entities/shoe_details_entity.dart';
 import '../bloc/product_review_bloc.dart';
 
 class ProductReviewPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class ProductReviewPage extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          '${state.averageRating}',
+                          '${state.averageRating.toStringAsFixed(2)}',
                           style: AppTheme.headline300.copyWith(
                               color: AppTheme.neutral500, fontSize: 14),
                         )
@@ -110,7 +110,7 @@ class ProductReviewPage extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
-                          for (Review userReview in state.reviews)
+                          for (ProductReview userReview in state.reviews)
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
                               child: Reviews(

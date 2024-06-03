@@ -1,6 +1,6 @@
 import 'package:shoesly/features/discover/domain/entities/color_entites.dart';
 
-import 'brands.dart';
+import '../../../../core/entities/brands.dart';
 
 class FilterEntity {
   final List<Brand> brands;

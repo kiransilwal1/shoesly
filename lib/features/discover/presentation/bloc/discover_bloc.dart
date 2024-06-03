@@ -7,7 +7,7 @@ import 'package:shoesly/features/discover/domain/usecases/get_filter_data.dart';
 
 import 'package:shoesly/features/discover/domain/usecases/get_filtered_shoes.dart';
 
-import '../../domain/entities/brands.dart';
+import '../../../../core/entities/brands.dart';
 import '../../domain/entities/shoes.dart' as ShoeEntity;
 
 part 'discover_event.dart';

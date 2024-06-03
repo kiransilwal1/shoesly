@@ -1,20 +1,20 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoesly/core/product_discover_bloc/product_discover_bloc.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/buttons/secondary_buttons.dart';
 import 'package:shoesly/features/discover/domain/entities/color_entites.dart';
+
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
-import '../bloc/discover_bloc.dart';
-import '../widgets/brand_selector.dart';
-import '../widgets/chip_selector.dart';
+import '../../../discover/presentation/bloc/discover_bloc.dart';
+import '../../../discover/presentation/widgets/brand_selector.dart';
+import '../../../discover/presentation/widgets/chip_selector.dart';
 import '../widgets/color_selector.dart';
-import '../widgets/price_range_slider.dart';
-import '../widgets/shimmer_filter_page.dart';
+import '../../../discover/presentation/widgets/price_range_slider.dart';
+import '../../../discover/presentation/widgets/shimmer_filter_page.dart';
 
 class ProductFilterPage extends StatelessWidget {
   ProductFilterPage({super.key});
@@ -128,7 +128,7 @@ class ProductFilterPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      _colorSelector(state),
+                      _colorSelector(colorCodes: state.colorCodes),
                       const SizedBox(height: 80),
                     ],
                   ),
@@ -143,13 +143,13 @@ class ProductFilterPage extends StatelessWidget {
     );
   }
 
-  SizedBox _colorSelector(FilterParamSuccess state) {
+  SizedBox _colorSelector({required List<ColorEntity> colorCodes}) {
     return SizedBox(
       height: 60,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: ColorSelector(
-          colorList: state.colorCodes,
+          colorList: colorCodes,
           onColorSelected: (ColorEntity? selectedColor) {
             _selectedColor = selectedColor;
           },
@@ -165,8 +165,12 @@ class ProductFilterPage extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: ChipSelector(
             chipText: sortButtonText,
-            onTextSelected: (String? selectedGender) {
-              _selectedGender = selectedGender;
+            onTextSelected: (String? selectedSortBy) {
+              if (selectedSortBy == 'Most Recent') {
+                _selectedSortBy == 'created_at';
+              } else {
+                _selectedSortBy = selectedSortBy;
+              }
             },
           )),
     );
@@ -179,8 +183,8 @@ class ProductFilterPage extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: ChipSelector(
             chipText: genderText,
-            onTextSelected: (String? selectedSorting) {
-              _selectedSortBy = selectedSorting;
+            onTextSelected: (String? selectedGender) {
+              _selectedGender = selectedGender;
             },
           )),
     );
@@ -247,8 +251,8 @@ class ProductFilterPage extends StatelessWidget {
             isDisabled: false,
             style: const LabelButtonStyle(text: 'APPLY'),
             onPressed: () {
-              context.read<DiscoverBloc>().add(
-                    FilterShoes(
+              context.read<ProductDiscoverBloc>().add(
+                    FilterButtonPressed(
                         shoeBrand: _selectedId ?? 'All',
                         color: _selectedColor == null
                             ? 'All'

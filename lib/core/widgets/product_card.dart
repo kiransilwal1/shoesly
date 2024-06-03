@@ -43,7 +43,10 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SvgPicture.network(iconUrl),
-                CachedNetworkImage(imageUrl: imageUrl)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
+                  child: CachedNetworkImage(imageUrl: imageUrl),
+                )
               ],
             ),
           ),
@@ -54,13 +57,14 @@ class ProductCard extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                title.length > 50 ? '${title.substring(0, 50)}...' : title,
+                title,
                 style: AppTheme.body100,
               ),
               const SizedBox(
-                height: 12,
+                height: 5,
               ),
               Row(
                 children: [
@@ -90,7 +94,7 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 8,
+                height: 5,
               ),
               Text(
                 '\$${price.toStringAsFixed(2)}',

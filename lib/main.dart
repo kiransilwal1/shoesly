@@ -16,14 +16,32 @@ import 'package:shoesly/features/discover/data/repositories/shoe_repo_impl.dart'
 import 'package:shoesly/features/discover/domain/usecases/get_filter_data.dart';
 import 'package:shoesly/features/discover/domain/usecases/get_filtered_shoes.dart';
 import 'package:shoesly/features/discover/presentation/bloc/discover_bloc.dart';
-import 'package:shoesly/features/discover/presentation/pages/discover_page.dart';
 import 'package:shoesly/features/product-detail/data/datasources/product_detail_data_source.dart';
 import 'package:shoesly/features/product-detail/data/repositories/product_detail_repo_impl.dart';
 import 'package:shoesly/features/product-detail/domain/usecases/get_productdetail_usecase.dart';
 import 'package:shoesly/features/product-detail/presentation/bloc/product_detail_bloc.dart';
+import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
+import 'package:shoesly/features/product_cart/data/repositories/cart_repo_impl.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
+import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
+import 'package:shoesly/features/product_detail_v2/data/datasources/product_detail_remote.dart';
+import 'package:shoesly/features/product_detail_v2/data/repositories/product_detail_repo_impl.dart';
+import 'package:shoesly/features/product_detail_v2/domain/usecases/product_detail_load_usecase.dart';
+import 'package:shoesly/features/product_detail_v2/presentation/bloc/product_detail_v2_bloc.dart';
+import 'package:shoesly/features/product_discover/data/datasources/product_remote_datasource.dart';
+import 'package:shoesly/features/product_discover/data/repositories/product_repo_impl.dart';
+import 'package:shoesly/features/product_discover/domain/usecases/product_discover_usecase.dart';
+
+import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
+import 'package:shoesly/features/product_filter/data/datasources/product_filter_datasource.dart';
+import 'package:shoesly/features/product_filter/data/repositories/product_filter_repo_impl.dart';
+import 'package:shoesly/features/product_filter/domain/usecases/collect_filter_brands.dart';
+import 'package:shoesly/features/product_filter/domain/usecases/filter_page_usecase.dart';
 import 'package:shoesly/features/product_review/presentation/bloc/product_review_bloc.dart';
 import 'package:shoesly/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'core/product_discover_bloc/product_discover_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +57,24 @@ void main() async {
   );
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider(
+          create: (_) => ProductDetailV2Bloc(
+                  productDetailLoadUseCase: ProductDetailLoadUseCase(
+                      productDetailRepo: ProductDetailRepoImplV2(
+                          productDetailRemote: ProudctDetailRemote(
+                              db: SupabaseClient(
+                Constants.kApiUrl,
+                Constants.kKey,
+              )))))),
+      BlocProvider(
+        create: (_) => ProductCartBloc(
+          productAddToCart: ProductAddToCartUseCase(
+            cartRepo: ProductCartRepoImpl(
+              cartLocalData: ProductCartLocalDataImpl(sharedPreferences),
+            ),
+          ),
+        ),
+      ),
       BlocProvider(
         create: (_) => DiscoverBloc(
           getFilterShoes: GetFilterShoes(
@@ -81,6 +117,38 @@ void main() async {
         create: (_) => ProductReviewBloc(),
       ),
       BlocProvider(
+        create: (_) => ProductDiscoverBloc(
+          productDiscoverUsecase: ProductDiscoverUsecase(
+            productRepo: ProductRepoImpl(
+              productRemoteDataSource: ProductRemoteDataSourceImpl(
+                db: SupabaseClient(
+                  Constants.kApiUrl,
+                  Constants.kKey,
+                ),
+              ),
+            ),
+          ),
+          brandFilterCollectionUsecase: BrandFilterCollectionUsecase(
+              productFilterRepo: ProductFilterRepoImpl(
+                  productFilterRemoteDatasource:
+                      ProductFilterRemoteDatasourceImpl(
+            db: SupabaseClient(
+              Constants.kApiUrl,
+              Constants.kKey,
+            ),
+          ))),
+          filterPageUsecase: FilterPageUsecase(
+              productFilterRepo: ProductFilterRepoImpl(
+                  productFilterRemoteDatasource:
+                      ProductFilterRemoteDatasourceImpl(
+            db: SupabaseClient(
+              Constants.kApiUrl,
+              Constants.kKey,
+            ),
+          ))),
+        ),
+      ),
+      BlocProvider(
           create: (_) => CartBloc(
               swipeToDeleteUseCase: SwipeToDeleteUseCase(
                   cartRepo: CartRepoImpl(
@@ -111,7 +179,7 @@ class Shoesly extends StatelessWidget {
     return MaterialApp(
       title: 'Shoesly',
       debugShowCheckedModeBanner: false,
-      home: DiscoverPage(),
+      home: ProductDiscoverPage(),
     );
   }
 }

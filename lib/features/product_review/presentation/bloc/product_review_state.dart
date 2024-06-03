@@ -9,8 +9,8 @@ class ProductReviewInitial extends ProductReviewState {}
 final class FilterReviewLoading extends ProductReviewState {}
 
 final class FilterReviewSuccess extends ProductReviewState {
-  final List<Review> reviews;
-  final List<Review> globalReviews;
+  final List<ProductReview> reviews;
+  final List<ProductReview> globalReviews;
   final double averageRating;
   final int filterValue;
 

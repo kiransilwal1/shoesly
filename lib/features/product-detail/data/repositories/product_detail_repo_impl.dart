@@ -1,4 +1,4 @@
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:shoesly/core/error/exceptions.dart';
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/product-detail/data/datasources/product_detail_data_source.dart';
@@ -20,6 +20,5 @@ class ProductDetailRepoImpl implements ProductDetailRepo {
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
-    throw UnimplementedError();
   }
 }

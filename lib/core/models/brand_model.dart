@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../domain/entities/brands.dart';
+import '../entities/brands.dart';
 
 class BrandModel extends Brand {
   BrandModel(
@@ -34,7 +34,7 @@ class BrandModel extends Brand {
 
   factory BrandModel.fromMap(Map<String, dynamic> map) {
     return BrandModel(
-      brandName: map['brand_id'] as String,
+      brandName: map['brandname'] as String,
       count: map['item_count'] as int,
       image: map['brand_image_url'] as String,
       id: map['brand_id'] as String,

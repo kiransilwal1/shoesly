@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../domain/entities/brands.dart';
+import '../../../../core/entities/brands.dart';
 
 class BrandSelectorView extends StatefulWidget {
   const BrandSelectorView({

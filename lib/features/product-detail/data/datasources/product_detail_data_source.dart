@@ -1,9 +1,10 @@
 import 'package:shoesly/core/error/exceptions.dart';
-import 'package:shoesly/features/product-detail/data/models/product_detail_model.dart';
+
 import 'package:shoesly/features/product-detail/data/models/shoe_variation_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/review_model.dart';
+import '../models/shoe_detail_model.dart';
 
 abstract interface class ProductDetailDataSource {
   Future<ShoeDetailModel> getShoeDetail({required String id});

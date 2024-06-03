@@ -12,7 +12,7 @@ import 'package:shoesly/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:shoesly/features/discover/presentation/bloc/discover_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:shoesly/features/product-detail/presentation/pages/product_detail.dart';
-import 'package:shoesly/features/discover/presentation/pages/product_filter.dart';
+import 'package:shoesly/features/product_filter/presentation/pages/product_filter.dart';
 import '../../../cart/presentation/pages/cart_page.dart';
 
 class DiscoverPage extends StatefulWidget {

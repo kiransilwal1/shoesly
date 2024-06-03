@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 
@@ -20,15 +21,15 @@ class PrimaryButton extends StatelessWidget {
     if (style is IconOnlyStyle) {
       content = Image.asset(
         (style as IconOnlyStyle).iconImagePath,
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
         color: Colors.white,
       );
     } else if (style is LeadingIconStyle) {
       content = Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
+          SvgPicture.asset(
             (style as LeadingIconStyle).leadingIconImagePath,
             width: 24,
             height: 24,
@@ -75,7 +76,7 @@ class PrimaryButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 30),
         ),
         child: content,
       ),

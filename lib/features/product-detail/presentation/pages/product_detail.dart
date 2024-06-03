@@ -203,16 +203,16 @@ class ProductDetail extends StatelessWidget {
                               style: const LabelButtonStyle(
                                   text: 'SEE ALL REVIEWS'),
                               onPressed: () {
-                                context.read<ProductReviewBloc>().add(
-                                      FilterReviewEvent(
-                                          globalReviews:
-                                              state.shoeDetailsEntity.reviews,
-                                          averageRating: state
-                                              .shoeDetailsEntity.averageRating,
-                                          reviews:
-                                              state.shoeDetailsEntity.reviews,
-                                          filterValue: 0),
-                                    );
+                                // context.read<ProductReviewBloc>().add(
+                                //       FilterReviewEvent(
+                                //           globalReviews:
+                                //               state.shoe.reviews,
+                                //           averageRating: state
+                                //               .shoeDetailsEntity.averageRating,
+                                //           reviews:
+                                //               state.shoeDetailsEntity.reviews,
+                                //           filterValue: 0),
+                                //     );
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
