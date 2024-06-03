@@ -10,6 +10,7 @@ import 'package:shoesly/features/cart/domain/usecases/remove_from_cart_usecase.d
 import 'package:shoesly/features/cart/domain/usecases/swipe_to_delete_usecase.dart';
 import 'package:shoesly/features/product-detail/domain/entities/shoe_details_entity.dart';
 
+import '../../../product_detail_v2/domain/entities/product_variation.dart';
 import '../../domain/entities/cart.dart';
 
 part 'cart_event.dart';

@@ -9,10 +9,13 @@ import 'package:shoesly/features/product_detail_v2/presentation/widgets/shimmer_
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/button_styles.dart';
+import '../../../../core/widgets/buttons/minimal_buttons.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../../../../core/widgets/buttons/secondary_buttons.dart';
 import '../../../../core/widgets/reviews.dart';
+import '../../../cart/presentation/pages/cart_page.dart';
 import '../../../product-detail/presentation/widgets/product_rating.dart';
+import '../../../product-detail/presentation/widgets/text_field_plus_minus.dart';
 import '../../../product_review/presentation/bloc/product_review_bloc.dart';
 import '../../../product_review/presentation/pages/product_review.dart';
 import '../../domain/entities/product_review.dart';
@@ -63,8 +66,9 @@ class ProductDetailPage extends StatelessWidget {
                 isDisabled: false,
                 style: const LabelButtonStyle(text: 'ADD TO CART'),
                 onPressed: () {
-                  // _showBottomSheet(
-                  //     context: context, shoe: _selectedShoe);
+                  if (_selectedShoe != null) {
+                    _showBottomSheet(context: context, shoe: _selectedShoe!);
+                  }
                 },
               )
             ],
@@ -107,6 +111,7 @@ class ProductDetailPage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is ProductDetailV2Success) {
+            _selectedShoe = state.productDetailEntity.productVariations.first;
             double rating = state.productDetailEntity.productReveiws
                     .map((m) => m.userRating)
                     .reduce((a, b) => a + b) /
@@ -241,6 +246,185 @@ class ProductDetailPage extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  void _showBottomSheet({
+    required BuildContext context,
+    required ProductVariation shoe,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.neutral500.withOpacity(0.3),
+      builder: (context) {
+        return Container(
+          height: 350,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: AppTheme.neutral500.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Add to cart',
+                          style: AppTheme.headline600
+                              .copyWith(color: AppTheme.neutral500),
+                        ),
+                        MinimalButton(
+                          isDisabled: false,
+                          style: const IconOnlyStyle(
+                              iconImagePath: 'assets/icons/cross.png'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Quantity',
+                          style: AppTheme.headline300
+                              .copyWith(color: AppTheme.neutral500),
+                        ),
+                        const TextFieldWithPlusMinus(),
+                        Container(
+                          height: 90,
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'PRICE',
+                                    style: AppTheme.body100
+                                        .copyWith(color: AppTheme.neutral300),
+                                  ),
+                                  Text(
+                                    shoe.price.toStringAsFixed(2),
+                                    style: AppTheme.headline600
+                                        .copyWith(color: AppTheme.neutral500),
+                                  ),
+                                ],
+                              ),
+                              PrimaryButton(
+                                isDisabled: false,
+                                style:
+                                    const LabelButtonStyle(text: 'ADD TO CART'),
+                                onPressed: () {
+                                  // context.read<CartBloc>().add(
+                                  //     AddToCartEvent(shoe: shoe, quantity: 1));
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      barrierColor: AppTheme.neutral500.withOpacity(0.3),
+    );
+  }
+
+  void _showBottomSheetWithCart(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.neutral500.withOpacity(0.3),
+      builder: (context) {
+        return Container(
+          height: 350,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/tick-circle.svg',
+                  height: 100,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      'Added to cart',
+                      style: AppTheme.headline700,
+                    ),
+                    Text(
+                      '1 Item Total',
+                      style:
+                          AppTheme.body200.copyWith(color: AppTheme.neutral400),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SecondaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'BACK'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    PrimaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'TO CART'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartPage()),
+                        );
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      barrierColor: AppTheme.neutral500.withOpacity(0.3),
     );
   }
 }

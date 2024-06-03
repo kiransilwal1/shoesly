@@ -10,6 +10,7 @@ class ProductVariationModel extends ProductVariation {
       required super.image,
       required super.size,
       required super.createdAt,
+      required super.price,
       required super.productId});
 
   ProductVariationModel copyWith({
@@ -19,6 +20,7 @@ class ProductVariationModel extends ProductVariation {
     String? image,
     double? size,
     DateTime? createdAt,
+    double? price,
     String? productId,
   }) {
     return ProductVariationModel(
@@ -29,6 +31,7 @@ class ProductVariationModel extends ProductVariation {
       size: size ?? this.size,
       createdAt: createdAt ?? this.createdAt,
       productId: productId ?? this.productId,
+      price: price ?? this.price,
     );
   }
 
@@ -53,6 +56,7 @@ class ProductVariationModel extends ProductVariation {
       size: map['size'].toDouble() as double,
       createdAt: DateTime.parse(map['created_at']),
       productId: map['product_id'] as String,
+      price: map['price'],
     );
   }
 
@@ -64,7 +68,7 @@ class ProductVariationModel extends ProductVariation {
 
   @override
   String toString() {
-    return 'ProductVariationModel(id: $id, colorCode: $colorCode, colorName: $colorName, image: $image, size: $size, createdAt: $createdAt, productId: $productId)';
+    return 'ProductVariationModel(id: $id, colorCode: $colorCode, colorName: $colorName, image: $image, size: $size, createdAt: $createdAt, productId: $productId,price: $price)';
   }
 
   @override
@@ -77,6 +81,7 @@ class ProductVariationModel extends ProductVariation {
         other.image == image &&
         other.size == size &&
         other.createdAt == createdAt &&
+        other.price == price &&
         other.productId == productId;
   }
 
@@ -88,6 +93,7 @@ class ProductVariationModel extends ProductVariation {
         image.hashCode ^
         size.hashCode ^
         createdAt.hashCode ^
+        price.hashCode ^
         productId.hashCode;
   }
 }
