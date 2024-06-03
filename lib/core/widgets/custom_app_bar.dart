@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 
 import '../theme/app_theme.dart';
-import '../../features/cart/presentation/pages/cart_page.dart';
+import '../../features/product_cart/presentation/pages/cart_page.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({

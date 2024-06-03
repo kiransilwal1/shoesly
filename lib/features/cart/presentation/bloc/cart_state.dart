@@ -1,19 +1,19 @@
-part of 'cart_bloc.dart';
+// part of 'cart_bloc.dart';
 
-sealed class CartState {}
+// sealed class CartState {}
 
-final class CartInitial extends CartState {}
+// final class CartInitial extends CartState {}
 
-final class CartLoadedState extends CartState {
-  final Cart cart;
+// final class CartLoadedState extends CartState {
+//   final Cart cart;
 
-  CartLoadedState({required this.cart});
-}
+//   CartLoadedState({required this.cart});
+// }
 
-final class CartFailure extends CartState {
-  final String errorMessage;
+// final class CartFailure extends CartState {
+//   final String errorMessage;
 
-  CartFailure({required this.errorMessage});
-}
+//   CartFailure({required this.errorMessage});
+// }
 
-final class CartEmpty extends CartState {}
+// final class CartEmpty extends CartState {}

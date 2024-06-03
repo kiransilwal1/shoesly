@@ -10,6 +10,10 @@ final class AddToCart extends ProductCartEvent {
   AddToCart({required this.product});
 }
 
-final class RemoveFromCart extends ProductCartEvent {}
+final class RemoveFromCart extends ProductCartEvent {
+  final ProductVariation product;
+
+  RemoveFromCart({required this.product});
+}
 
 final class ViewCartEvent extends ProductCartEvent {}

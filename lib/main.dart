@@ -151,25 +151,7 @@ void main() async {
             ),
           ))),
         ),
-      ),
-      BlocProvider(
-          create: (_) => CartBloc(
-              swipeToDeleteUseCase: SwipeToDeleteUseCase(
-                  cartRepo: CartRepoImpl(
-                      cartLocalDataSource: CartLocalDataSourceImpl(
-                          sharedPreferences: sharedPreferences))),
-              removeFromCartUseCase: RemoveFromCartUseCase(
-                  cartRepo: CartRepoImpl(
-                      cartLocalDataSource: CartLocalDataSourceImpl(
-                          sharedPreferences: sharedPreferences))),
-              getCartUsecase: GetCartUsecase(
-                  cartRepo: CartRepoImpl(
-                      cartLocalDataSource: CartLocalDataSourceImpl(
-                          sharedPreferences: sharedPreferences))),
-              addToCartUsecase: AddToCartUsecase(
-                  cartRepo: CartRepoImpl(
-                      cartLocalDataSource: CartLocalDataSourceImpl(
-                          sharedPreferences: sharedPreferences)))))
+      )
     ],
     child: const Shoesly(),
   ));

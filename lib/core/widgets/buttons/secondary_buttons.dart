@@ -6,12 +6,14 @@ class SecondaryButton extends StatelessWidget {
   final bool isDisabled;
   final AllButtonStyles style;
   final VoidCallback? onPressed;
+  final double? padding;
 
   const SecondaryButton({
     Key? key,
     required this.isDisabled,
     required this.style,
     this.onPressed,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -76,7 +78,8 @@ class SecondaryButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 30),
+            padding:
+                EdgeInsets.symmetric(vertical: 24, horizontal: padding ?? 30),
             elevation: 1),
         child: content,
       ),

@@ -14,7 +14,7 @@ import '../../../../core/widgets/buttons/minimal_buttons.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../../../../core/widgets/buttons/secondary_buttons.dart';
 import '../../../../core/widgets/reviews.dart';
-import '../../../cart/presentation/pages/cart_page.dart';
+import '../../../product_cart/presentation/pages/cart_page.dart';
 import '../../../product-detail/presentation/widgets/product_rating.dart';
 import '../../../product-detail/presentation/widgets/text_field_plus_minus.dart';
 import '../../../product_review/presentation/bloc/product_review_bloc.dart';

@@ -1,25 +1,25 @@
-part of 'cart_bloc.dart';
+// part of 'cart_bloc.dart';
 
-sealed class CartEvent {}
+// sealed class CartEvent {}
 
-final class AddToCartEvent extends CartEvent {
-  final ShoeVariations shoe;
-  final int quantity;
+// final class AddToCartEvent extends CartEvent {
+//   final ShoeVariations shoe;
+//   final int quantity;
 
-  AddToCartEvent({required this.shoe, required this.quantity});
-}
+//   AddToCartEvent({required this.shoe, required this.quantity});
+// }
 
-final class RemoveFromCartEvent extends CartEvent {
-  final ShoeVariations shoe;
+// final class RemoveFromCartEvent extends CartEvent {
+//   final ShoeVariations shoe;
 
-  RemoveFromCartEvent({required this.shoe});
-}
+//   RemoveFromCartEvent({required this.shoe});
+// }
 
-final class SwipeToDeleteEvent extends CartEvent {
-  final ShoeVariations shoe;
-  final int quantity;
+// final class SwipeToDeleteEvent extends CartEvent {
+//   final ShoeVariations shoe;
+//   final int quantity;
 
-  SwipeToDeleteEvent({required this.shoe, required this.quantity});
-}
+//   SwipeToDeleteEvent({required this.shoe, required this.quantity});
+// }
 
-final class GetCartEvent extends CartEvent {}
+// final class GetCartEvent extends CartEvent {}

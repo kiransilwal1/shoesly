@@ -9,11 +9,21 @@ import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
 import 'package:shoesly/features/product_detail_v2/domain/entities/product_variation.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
-import '../../../product_cart/presentation/bloc/product_cart_bloc.dart';
-import '../bloc/cart_bloc.dart';
+import '../bloc/product_cart_bloc.dart';
+import '../widgets/shimmer_cart_page.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  void initState() {
+    context.read<ProductCartBloc>().add(ViewCartEvent());
+  }
 
   final List<String> sortButtonText = [
     'Most Recent',
@@ -22,6 +32,7 @@ class CartPage extends StatelessWidget {
   ];
 
   final List<String> genderText = ['Man', 'Woman', 'Unisex'];
+
   final List<String> colorText = ['Black', 'White', 'Red'];
 
   @override
@@ -107,9 +118,7 @@ class CartPage extends StatelessWidget {
             ),
           );
         } else {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator.adaptive()),
-          );
+          return const ShimmerCartPage();
         }
       },
     );

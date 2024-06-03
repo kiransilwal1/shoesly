@@ -20,10 +20,11 @@ class ProductCartBloc extends Bloc<ProductCartEvent, ProductCartState> {
         _viewCartUseCase = viewCartUseCase,
         super(ProductCartInitial()) {
     on<ProductCartEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(ProductCartInitial());
     });
     on<AddToCart>(_addToCart);
     on<ViewCartEvent>(_viewCart);
+    on<RemoveFromCart>(_removeFromCart);
   }
 
   FutureOr<void> _addToCart(
@@ -35,8 +36,12 @@ class ProductCartBloc extends Bloc<ProductCartEvent, ProductCartState> {
 
   FutureOr<void> _viewCart(
       ViewCartEvent event, Emitter<ProductCartState> emit) async {
+    emit(ProductCartInitial());
     final res = await _viewCartUseCase(NoParams());
     res.fold((l) => emit(ProductCartFailure(errorMessage: l.message)),
         (r) => emit(ProductCartSuccess(cart: r)));
   }
+
+  FutureOr<void> _removeFromCart(
+      RemoveFromCart event, Emitter<ProductCartState> emit) {}
 }
