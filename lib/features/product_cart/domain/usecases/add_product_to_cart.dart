@@ -1,28 +1,28 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/core/usecase/usecase.dart';
-import 'package:shoesly/core/entities/product_variations.dart';
 
+import '../../../product_detail_v2/domain/entities/product_variation.dart';
 import '../entities/cart.dart';
 import '../repositories/cart_repo.dart';
 
-class ProductAddToCartUseCase implements UseCase<Cart, ProductVariations> {
+class ProductAddToCartUseCase implements UseCase<Cart, ProductVariation> {
   final ProductCartRepo cartRepo;
 
   ProductAddToCartUseCase({required this.cartRepo});
   @override
-  Future<Either<Failure, Cart>> call(ProductVariations params) async {
+  Future<Either<Failure, Cart>> call(ProductVariation params) async {
     return await cartRepo.addToCart(
-        id: params.id,
-        title: params.title,
-        averageRating: params.averageRating,
-        price: params.price,
-        reviewCount: params.reviewCount,
-        brandImageUrl: params.brandImageUrl,
-        productImageUrl: params.productImageUrl,
-        variationImageUrl: params.variationImageUrl,
-        availableColors: params.availableColors,
-        availableSizes: params.availableSizes,
-        variationId: params.variationId);
+      id: params.id,
+      colorCode: params.colorCode,
+      colorName: params.colorName,
+      createdAt: params.createdAt,
+      image: params.image,
+      price: params.price,
+      productId: params.productId,
+      size: params.size,
+      brandname: params.brandname,
+      title: params.title,
+    );
   }
 }

@@ -1,5 +1,5 @@
+import '../../../product_detail_v2/data/models/product_variation_model.dart';
 import '../../domain/entities/cart.dart';
-import 'product_variation_model.dart';
 
 class CartModel extends Cart {
   CartModel({required List<ProductVariationModel> products})
@@ -9,7 +9,7 @@ class CartModel extends Cart {
     List<ProductVariationModel>? products,
   }) {
     return CartModel(
-      products: products ?? this.products,
+      products: products ?? this.products as List<ProductVariationModel>,
     );
   }
 

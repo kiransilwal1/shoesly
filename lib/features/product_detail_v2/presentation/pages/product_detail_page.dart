@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 import 'package:shoesly/features/product_detail_v2/domain/entities/product_variation.dart';
 
 import 'package:shoesly/features/product_detail_v2/presentation/widgets/product_detail_thumbnail.dart';
@@ -342,8 +343,10 @@ class ProductDetailPage extends StatelessWidget {
                                 style:
                                     const LabelButtonStyle(text: 'ADD TO CART'),
                                 onPressed: () {
-                                  // context.read<CartBloc>().add(
-                                  //     AddToCartEvent(shoe: shoe, quantity: 1));
+                                  context
+                                      .read<ProductCartBloc>()
+                                      .add(AddToCart(product: shoe));
+                                  _showBottomSheetWithCart(context);
                                 },
                               )
                             ],

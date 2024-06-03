@@ -6,8 +6,8 @@ import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/domain/entities/cart.dart';
 
+import '../../../product_detail_v2/data/models/product_variation_model.dart';
 import '../../domain/repositories/cart_repo.dart';
-import '../models/product_variation_model.dart';
 
 class ProductCartRepoImpl implements ProductCartRepo {
   final ProductCartLocalData cartLocalData;
@@ -16,31 +16,31 @@ class ProductCartRepoImpl implements ProductCartRepo {
 
   @override
   Future<Either<Failure, Cart>> addToCart({
-    required id,
-    required title,
-    required averageRating,
-    required price,
-    required reviewCount,
-    required brandImageUrl,
-    required productImageUrl,
-    required variationImageUrl,
-    required availableSizes,
-    required availableColors,
-    required variationId,
+    required String id,
+    required String colorCode,
+    required String colorName,
+    required String image,
+    required double size,
+    required DateTime createdAt,
+    required String productId,
+    required double price,
+    required String brandname,
+    required String title,
   }) async {
     try {
       ProductVariationModel productModel = ProductVariationModel(
-          id: id,
-          title: title,
-          averageRating: averageRating,
-          price: price,
-          reviewCount: reviewCount,
-          brandImageUrl: brandImageUrl,
-          productImageUrl: productImageUrl,
-          availableColors: availableColors,
-          availableSizes: availableSizes,
-          variationImageUrl: variationImageUrl,
-          variationId: variationId);
+        id: id,
+        colorCode: colorCode,
+        colorName: colorName,
+        image: image,
+        size: size,
+        createdAt: createdAt,
+        price: price,
+        productId: productId,
+        brandname: brandname,
+        title: title,
+      );
+
       return right(await cartLocalData.addToCart(productModel));
     } catch (e) {
       return left(Failure(e.toString()));
@@ -49,17 +49,16 @@ class ProductCartRepoImpl implements ProductCartRepo {
 
   @override
   Future<Either<Failure, List<Product>>> bulkAddToCart({
-    required id,
-    required title,
-    required averageRating,
-    required price,
-    required reviewCount,
-    required brandImageUrl,
-    required productImageUrl,
-    required variationImageUrl,
-    required availableSizes,
-    required availableColors,
-    required variationId,
+    required String id,
+    required String colorCode,
+    required String colorName,
+    required String image,
+    required double size,
+    required DateTime createdAt,
+    required String productId,
+    required double price,
+    required String brandname,
+    required String title,
     required int quantity,
   }) {
     // TODO: implement bulkAddToCart
@@ -68,17 +67,16 @@ class ProductCartRepoImpl implements ProductCartRepo {
 
   @override
   Future<Either<Failure, List<Product>>> bulkDeleteFromCart(
-      {required id,
-      required title,
-      required averageRating,
-      required price,
-      required reviewCount,
-      required brandImageUrl,
-      required productImageUrl,
-      required variationImageUrl,
-      required availableSizes,
-      required availableColors,
-      required variationId,
+      {required String id,
+      required String colorCode,
+      required String colorName,
+      required String image,
+      required double size,
+      required DateTime createdAt,
+      required String productId,
+      required double price,
+      required String brandname,
+      required String title,
       required int quantity}) {
     // TODO: implement bulkDeleteFromCart
     throw UnimplementedError();
@@ -86,19 +84,28 @@ class ProductCartRepoImpl implements ProductCartRepo {
 
   @override
   Future<Either<Failure, List<Product>>> deleteFromCart({
-    required id,
-    required title,
-    required averageRating,
-    required price,
-    required reviewCount,
-    required brandImageUrl,
-    required productImageUrl,
-    required variationImageUrl,
-    required availableSizes,
-    required availableColors,
-    required variationId,
+    required String id,
+    required String colorCode,
+    required String colorName,
+    required String image,
+    required double size,
+    required DateTime createdAt,
+    required String productId,
+    required String brandname,
+    required String title,
+    required double price,
   }) {
     // TODO: implement deleteFromCart
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, Cart>> getCart() async {
+    try {
+      final cart = await cartLocalData.getCart();
+      return right(cart);
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 }

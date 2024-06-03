@@ -23,6 +23,7 @@ import 'package:shoesly/features/product-detail/presentation/bloc/product_detail
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/data/repositories/cart_repo_impl.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 import 'package:shoesly/features/product_detail_v2/data/datasources/product_detail_remote.dart';
 import 'package:shoesly/features/product_detail_v2/data/repositories/product_detail_repo_impl.dart';
@@ -31,7 +32,6 @@ import 'package:shoesly/features/product_detail_v2/presentation/bloc/product_det
 import 'package:shoesly/features/product_discover/data/datasources/product_remote_datasource.dart';
 import 'package:shoesly/features/product_discover/data/repositories/product_repo_impl.dart';
 import 'package:shoesly/features/product_discover/domain/usecases/product_discover_usecase.dart';
-
 import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 import 'package:shoesly/features/product_filter/data/datasources/product_filter_datasource.dart';
 import 'package:shoesly/features/product_filter/data/repositories/product_filter_repo_impl.dart';
@@ -68,9 +68,13 @@ void main() async {
               )))))),
       BlocProvider(
         create: (_) => ProductCartBloc(
+          viewCartUseCase: ViewCartUseCase(
+              productCartRepo: ProductCartRepoImpl(
+                  cartLocalData:
+                      ProductCartLocalDataImpl(db: sharedPreferences))),
           productAddToCart: ProductAddToCartUseCase(
             cartRepo: ProductCartRepoImpl(
-              cartLocalData: ProductCartLocalDataImpl(sharedPreferences),
+              cartLocalData: ProductCartLocalDataImpl(db: sharedPreferences),
             ),
           ),
         ),

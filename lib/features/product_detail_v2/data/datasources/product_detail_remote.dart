@@ -16,7 +16,11 @@ class ProudctDetailRemote implements ProductDetailRemote {
   @override
   Future<ProductDetailModel> loadProductDetail({required String id}) async {
     try {
-      final product = await db.from('product').select('*').eq('id', id);
+      final product = await db
+          .from('product')
+          .select('*')
+          .eq('id', id)
+          .select('*,product_brand!inner(*)');
       final ProductModel productModel = ProductModel.fromMap(product.first);
       // Since product variations have price. need to do manual stuffs. Will be easier in cart.
       // IF in futre, the variations of different product ought to have different price, then it shall be handled from database.
@@ -33,6 +37,8 @@ class ProudctDetailRemote implements ProductDetailRemote {
               createdAt: DateTime.parse(e['created_at']),
               price: productModel.price,
               productId: e['product_id'],
+              title: productModel.title,
+              brandname: product.first['product_brand']['name'],
             ),
           )
           .toList();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 
 import '../theme/app_theme.dart';
-import '../../features/cart/presentation/bloc/cart_bloc.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
               height: 24,
             ),
             onPressed: () {
-              context.read<CartBloc>().add(GetCartEvent());
+              context.read<ProductCartBloc>().add(ViewCartEvent());
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CartPage()),

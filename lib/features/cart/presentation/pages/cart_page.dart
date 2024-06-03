@@ -5,10 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/features/cart/domain/entities/cart_items.dart';
 import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
+import 'package:shoesly/features/product_detail_v2/domain/entities/product_variation.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../../../product_cart/presentation/bloc/product_cart_bloc.dart';
 import '../bloc/cart_bloc.dart';
 
 class CartPage extends StatelessWidget {
@@ -26,19 +27,21 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocConsumer<CartBloc, CartState>(
+    return BlocConsumer<ProductCartBloc, ProductCartState>(
       listener: (context, state) {
-        if (state is CartFailure) {
+        if (state is ProductCartFailure) {
           showErrorPopup(context, state.errorMessage, 'BACK');
         }
       },
       builder: (context, state) {
-        if (state is CartLoadedState) {
-          if (state.cart.cartItems.isEmpty) {
+        if (state is ProductCartSuccess) {
+          if (state.cart.products.isEmpty) {
             return const Scaffold(
               body: Center(child: Text('Please add some items to cart first.')),
             );
           }
+          double grandTotal =
+              state.cart.products.fold(0, (sum, item) => sum + item.price);
           return Scaffold(
             bottomSheet: Container(
               height: 90,
@@ -59,7 +62,7 @@ class CartPage extends StatelessWidget {
                               .copyWith(color: AppTheme.neutral300),
                         ),
                         Text(
-                          state.cart.totalCartPrice.toStringAsFixed(2),
+                          grandTotal.toStringAsFixed(2),
                           style: AppTheme.headline600
                               .copyWith(color: AppTheme.neutral500),
                         ),
@@ -99,8 +102,8 @@ class CartPage extends StatelessWidget {
               elevation: 0,
             ),
             body: Padding(
-              padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
-              child: CartListView(itemList: state.cart.cartItems),
+              padding: const EdgeInsets.fromLTRB(30, 24, 30, 100),
+              child: CartListView(itemList: state.cart.products),
             ),
           );
         } else {
@@ -115,25 +118,32 @@ class CartPage extends StatelessWidget {
 
 class CartListView extends StatefulWidget {
   const CartListView({super.key, required this.itemList});
-  final List<CartItems> itemList;
+  final List<ProductVariation> itemList;
 
   @override
   State<CartListView> createState() => _CartListViewState();
 }
 
 class _CartListViewState extends State<CartListView> {
-  List<String> _dummyData = List.generate(1, (index) => 'Item $index');
+  late List<ProductVariation> uniqueItems;
+
+  @override
+  void initState() {
+    super.initState();
+    uniqueItems = widget.itemList.toSet().toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.width);
+    debugPrint(uniqueItems.length.toString());
     return ListView.builder(
-      itemCount: widget.itemList.length,
+      itemCount: uniqueItems.length,
       itemExtent: 120,
       itemBuilder: (context, index) {
         return Dismissible(
-          key: Key('item_$index'),
+          key: Key(
+              'item_${uniqueItems[index].id}'), // Use a unique identifier from ProductVariation
           direction: DismissDirection.endToStart,
           background: Container(
             alignment: Alignment.centerRight,
@@ -162,28 +172,35 @@ class _CartListViewState extends State<CartListView> {
             ),
           ),
           onDismissed: (direction) {
-            context.read<CartBloc>().add(SwipeToDeleteEvent(
-                shoe: widget.itemList[index].variations, quantity: 1));
+            setState(() {
+              uniqueItems.removeAt(index);
+            });
+            // context.read<CartBloc>().add(SwipeToDeleteEvent(
+            //     shoe: uniqueItems[index].variations, quantity: 1));
           },
-          child: CartProductWidget(item: widget.itemList[index]),
+          child: CartProductWidget(
+            item: uniqueItems[index],
+            itemList: widget.itemList, // Use the original itemList for counting
+          ),
         );
       },
     );
   }
 }
 
-//TODO: The minimum width size supported is 351 but 370ish for the two columns grid display
-
 class CartProductWidget extends StatelessWidget {
   const CartProductWidget({
     super.key,
     required this.item,
+    required this.itemList,
   });
-
-  final CartItems item;
+  final List<ProductVariation> itemList;
+  final ProductVariation item;
 
   @override
   Widget build(BuildContext context) {
+    int count = itemList.where((obj) => obj == item).length;
+    debugPrint(count.toString());
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +214,7 @@ class CartProductWidget extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: CachedNetworkImage(imageUrl: item.variations.imageUrl),
+            child: CachedNetworkImage(imageUrl: item.image),
           ),
         ),
         const SizedBox(
@@ -214,17 +231,14 @@ class CartProductWidget extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      item.variations.description
-                          .split(" ")
-                          .sublist(0, 3)
-                          .join(" "),
+                      item.title,
                       softWrap: true,
                       style: AppTheme.headline400
                           .copyWith(color: AppTheme.neutral500),
                     ),
                   ),
                   Text(
-                    '${item.variations.description.split(" ")[0]} . ${item.variations.colorName} . ${item.variations.size}',
+                    '${item.brandname} . ${item.colorName} . ${item.size}',
                     style: AppTheme.body100.copyWith(color: Colors.grey[600]),
                   ),
                   Expanded(
@@ -233,11 +247,14 @@ class CartProductWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          item.variations.salePrice.toStringAsFixed(2),
+                          item.price.toStringAsFixed(2),
                           style: AppTheme.headline600
                               .copyWith(color: AppTheme.neutral500),
                         ),
-                        CartAdd(),
+                        CartAdd(
+                          product: item,
+                          productCount: count,
+                        ),
                       ],
                     ),
                   ),
@@ -252,29 +269,33 @@ class CartProductWidget extends StatelessWidget {
 }
 
 class CartAdd extends StatefulWidget {
+  CartAdd({super.key, required this.product, required this.productCount});
+
   @override
   _CartAddState createState() => _CartAddState();
+  final ProductVariation product;
+  int productCount;
 }
 
 class _CartAddState extends State<CartAdd> {
-  int _counter = 0;
-
   void _incrementCounter() {
+    context.read<ProductCartBloc>().add(AddToCart(product: widget.product));
     setState(() {
-      _counter++;
+      widget.productCount++;
     });
   }
 
   void _decrementCounter() {
     setState(() {
-      if (_counter > 0) {
-        _counter--;
+      if (widget.productCount > 0) {
+        widget.productCount--;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.productCount);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -285,11 +306,11 @@ class _CartAddState extends State<CartAdd> {
             'assets/icons/minus-cirlce.png',
             width: 24,
             height: 24,
-            color: _counter > 0 ? AppTheme.neutral500 : Colors.grey,
+            color: widget.productCount > 0 ? AppTheme.neutral500 : Colors.grey,
           ),
         ),
         Text(
-          '$_counter',
+          '${widget.productCount}',
           style: const TextStyle(fontSize: 20),
         ),
         IconButton(

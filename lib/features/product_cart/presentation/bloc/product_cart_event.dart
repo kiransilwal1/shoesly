@@ -5,9 +5,11 @@ sealed class ProductCartEvent {
 }
 
 final class AddToCart extends ProductCartEvent {
-  final ProductVariations product;
+  final ProductVariation product;
 
   AddToCart({required this.product});
 }
 
 final class RemoveFromCart extends ProductCartEvent {}
+
+final class ViewCartEvent extends ProductCartEvent {}
