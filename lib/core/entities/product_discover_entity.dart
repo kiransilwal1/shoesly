@@ -6,6 +6,8 @@ class Product {
   final int reviewCount;
   final String brandImageUrl;
   final String productImageUrl;
+  final String brandId;
+  final DateTime createdAt;
   Product({
     required this.id,
     required this.title,
@@ -14,5 +16,7 @@ class Product {
     required this.reviewCount,
     required this.brandImageUrl,
     required this.productImageUrl,
+    required this.brandId,
+    required this.createdAt,
   });
 }

@@ -4,7 +4,7 @@ import '../../../../core/entities/product_discover_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/cart.dart';
 
-abstract class ProductCartRepo {
+abstract interface class ProductCartRepo {
   Future<Either<Failure, Cart>> addToCart({
     required String id,
     required String colorCode,
@@ -16,6 +16,7 @@ abstract class ProductCartRepo {
     required double price,
     required String brandname,
     required String title,
+    required String brandImageUrl,
   });
   Future<Either<Failure, List<Product>>> deleteFromCart({
     required String id,
@@ -28,6 +29,7 @@ abstract class ProductCartRepo {
     required double price,
     required String brandname,
     required String title,
+    required String brandImageUrl,
   });
   Future<Either<Failure, List<Product>>> bulkDeleteFromCart(
       {required String id,
@@ -40,6 +42,7 @@ abstract class ProductCartRepo {
       required double price,
       required String brandname,
       required String title,
+      required String brandImageUrl,
       required int quantity});
   Future<Either<Failure, List<Product>>> bulkAddToCart(
       {required String id,
@@ -52,6 +55,7 @@ abstract class ProductCartRepo {
       required double price,
       required String brandname,
       required String title,
+      required String brandImageUrl,
       required int quantity});
 
   Future<Either<Failure, Cart>> getCart();

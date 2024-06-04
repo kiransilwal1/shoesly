@@ -6,7 +6,8 @@ import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
-import 'package:shoesly/features/product_detail_v2/domain/entities/product_variation.dart';
+import 'package:shoesly/core/entities/product_variation.dart';
+import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../bloc/product_cart_bloc.dart';
@@ -101,7 +102,11 @@ class _CartPageState extends State<CartPage> {
                 style:
                     const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProductDiscoverPage()),
+                  );
                 },
               ),
               title: Text(

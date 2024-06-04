@@ -5,10 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/error/cache_exceptions.dart';
 
-import '../../../product_detail_v2/data/models/product_variation_model.dart';
+import '../../../../core/models/product_variation_model.dart';
 import '../models/cart_model.dart';
 
-abstract class ProductCartLocalData {
+abstract interface class ProductCartLocalData {
   Future<CartModel> addToCart(ProductVariationModel productModel);
   Future<CartModel> deleteFromCart(ProductVariationModel productModel);
   Future<CartModel> bulkAddToCart(

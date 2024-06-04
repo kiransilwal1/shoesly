@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/core/product_discover_bloc/product_discover_bloc.dart';
+import 'package:shoesly/features/product_discover/presentation/bloc/product_discover_bloc.dart';
 import '../../../../core/widgets/buttons/button_styles.dart';
 import '../../../../core/widgets/buttons/minimal_buttons.dart';
 
@@ -58,9 +58,11 @@ class _FilterByBrandState extends State<FilterByBrand> {
                             setState(() {
                               selectedBrand = text;
                             });
-                            context
-                                .read<ProductDiscoverBloc>()
-                                .add(FilterButtonPressed(shoeBrand: text));
+                            context.read<ProductDiscoverBloc>().add(
+                                FilterButtonPressed(
+                                    shoeBrand: text,
+                                    globalData: state.globalProductData,
+                                    stateData: state.productData));
 
                             // _scrollToPosition(
                             //     _scrollController.position.maxScrollExtent /

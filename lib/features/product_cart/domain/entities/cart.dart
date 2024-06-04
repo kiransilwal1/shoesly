@@ -1,4 +1,4 @@
-import 'package:shoesly/features/product_detail_v2/domain/entities/product_variation.dart';
+import 'package:shoesly/core/entities/product_variation.dart';
 
 class Cart {
   List<ProductVariation> products;

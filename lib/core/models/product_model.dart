@@ -10,7 +10,9 @@ class ProductModel extends Product {
       required super.price,
       required super.reviewCount,
       required super.brandImageUrl,
-      required super.productImageUrl});
+      required super.productImageUrl,
+      required super.brandId,
+      required super.createdAt});
 
   Product copyWith({
     String? id,
@@ -20,6 +22,8 @@ class ProductModel extends Product {
     int? reviewCount,
     String? brandImageUrl,
     String? productImageUrl,
+    DateTime? createdAt,
+    String? brandId,
   }) {
     return Product(
       id: id ?? this.id,
@@ -29,6 +33,8 @@ class ProductModel extends Product {
       reviewCount: reviewCount ?? this.reviewCount,
       brandImageUrl: brandImageUrl ?? this.brandImageUrl,
       productImageUrl: productImageUrl ?? this.productImageUrl,
+      brandId: brandId ?? this.brandId,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -41,6 +47,7 @@ class ProductModel extends Product {
       'reviewCount': reviewCount,
       'brandImageUrl': brandImageUrl,
       'productImageUrl': productImageUrl,
+      'brand_id': brandId,
     };
   }
 
@@ -53,6 +60,8 @@ class ProductModel extends Product {
       reviewCount: map['review_count'] as int,
       brandImageUrl: map['brand_image_url'] as String,
       productImageUrl: map['product_url'] as String,
+      brandId: map['brand_id'] as String,
+      createdAt: DateTime.parse(map['created_at']),
     );
   }
 
@@ -63,7 +72,7 @@ class ProductModel extends Product {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, title: $title, averageRating: $averageRating, price: $price, reviewCount: $reviewCount, brandImageUrl: $brandImageUrl, productImageUrl: $productImageUrl)';
+    return 'ProductModel(id: $id, title: $title, averageRating: $averageRating, price: $price, reviewCount: $reviewCount, brandImageUrl: $brandImageUrl, productImageUrl: $productImageUrl brandId:$brandId,created_at:$createdAt)';
   }
 
   @override
@@ -76,6 +85,8 @@ class ProductModel extends Product {
         other.price == price &&
         other.reviewCount == reviewCount &&
         other.brandImageUrl == brandImageUrl &&
+        other.brandId == brandId &&
+        other.createdAt == createdAt &&
         other.productImageUrl == productImageUrl;
   }
 
@@ -87,6 +98,8 @@ class ProductModel extends Product {
         price.hashCode ^
         reviewCount.hashCode ^
         brandImageUrl.hashCode ^
+        brandId.hashCode ^
+        createdAt.hashCode ^
         productImageUrl.hashCode;
   }
 }

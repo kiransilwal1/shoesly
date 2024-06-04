@@ -5,7 +5,7 @@ import 'package:shoesly/core/usecase/usecase.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
 
-import '../../../product_detail_v2/domain/entities/product_variation.dart';
+import '../../../../core/entities/product_variation.dart';
 import '../../domain/entities/cart.dart';
 part 'product_cart_event.dart';
 part 'product_cart_state.dart';

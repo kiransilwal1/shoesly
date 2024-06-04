@@ -14,8 +14,9 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
+      padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
       child: AppBar(
+        scrolledUnderElevation: 0.0,
         titleSpacing: 0,
         title: Align(
           alignment: Alignment.bottomLeft,

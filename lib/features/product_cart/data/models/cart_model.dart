@@ -1,4 +1,4 @@
-import '../../../product_detail_v2/data/models/product_variation_model.dart';
+import '../../../../core/models/product_variation_model.dart';
 import '../../domain/entities/cart.dart';
 
 class CartModel extends Cart {

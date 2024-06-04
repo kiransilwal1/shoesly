@@ -4,7 +4,7 @@ import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/core/widgets/reviews.dart';
-import 'package:shoesly/features/product_detail_v2/domain/entities/product_review.dart';
+import 'package:shoesly/features/product_detail/domain/entities/product_review.dart';
 
 import '../../../../core/widgets/alert.dart';
 import '../bloc/product_review_bloc.dart';
@@ -12,7 +12,7 @@ import '../bloc/product_review_bloc.dart';
 class ProductReviewPage extends StatelessWidget {
   ProductReviewPage({super.key});
 
-  final List<int> filterText = [0, 1, 2, 3, 4, 5];
+  final List<int> filterText = [0, 5, 4, 3, 2, 1];
   final int index = 0;
 
   @override
@@ -28,46 +28,50 @@ class ProductReviewPage extends StatelessWidget {
         print(state);
         if (state is FilterReviewSuccess) {
           return Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 100,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          'assets/icons/star.png',
-                          height: 16,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          '${state.averageRating.toStringAsFixed(2)}',
-                          style: AppTheme.headline300.copyWith(
-                              color: AppTheme.neutral500, fontSize: 14),
-                        )
-                      ],
+            appBar: PreferredSize(
+              preferredSize: Size(0, 50),
+              child: AppBar(
+                scrolledUnderElevation: 0.0,
+                toolbarHeight: 90,
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                    child: Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            'assets/icons/star.png',
+                            height: 16,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            '${state.averageRating.toStringAsFixed(2)}',
+                            style: AppTheme.headline300.copyWith(
+                                color: AppTheme.neutral500, fontSize: 14),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
-              leading: MinimalButton(
-                isDisabled: false,
-                style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                  )
+                ],
+                leading: MinimalButton(
+                  isDisabled: false,
+                  style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                title: Text(
+                  'Review (${state.reviews.length})',
+                  style:
+                      AppTheme.headline400.copyWith(color: AppTheme.neutral500),
+                ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
               ),
-              title: Text(
-                'Review (${state.reviews.length})',
-                style:
-                    AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
             ),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -103,27 +107,49 @@ class ProductReviewPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          for (ProductReview userReview in state.reviews)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                              child: Reviews(
-                                  name: userReview.userName,
-                                  rating: userReview.userRating,
-                                  description: userReview.userDescription,
-                                  imageUrl: userReview.imageUrl),
-                            )
-                        ],
+                state.reviews.isNotEmpty
+                    ? Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: [
+                                for (ProductReview userReview in state.reviews)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                                    child: Reviews(
+                                        name: userReview.userName,
+                                        rating: userReview.userRating,
+                                        description: userReview.userDescription,
+                                        imageUrl: userReview.imageUrl),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/404.gif',
+                                height: size.width * 0.4,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'No Ratings!',
+                                style: AppTheme.headline600,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           );

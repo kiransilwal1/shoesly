@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../product_detail_v2/domain/entities/product_review.dart';
+import '../../../product_detail/domain/entities/product_review.dart';
 
 part 'product_review_event.dart';
 part 'product_review_state.dart';

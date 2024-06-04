@@ -6,7 +6,7 @@ import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/domain/entities/cart.dart';
 
-import '../../../product_detail_v2/data/models/product_variation_model.dart';
+import '../../../../core/models/product_variation_model.dart';
 import '../../domain/repositories/cart_repo.dart';
 
 class ProductCartRepoImpl implements ProductCartRepo {
@@ -26,6 +26,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
     required double price,
     required String brandname,
     required String title,
+    required String brandImageUrl,
   }) async {
     try {
       ProductVariationModel productModel = ProductVariationModel(
@@ -39,6 +40,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
         productId: productId,
         brandname: brandname,
         title: title,
+        brandimage: brandImageUrl,
       );
 
       return right(await cartLocalData.addToCart(productModel));
@@ -59,6 +61,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
     required double price,
     required String brandname,
     required String title,
+    required String brandImageUrl,
     required int quantity,
   }) {
     // TODO: implement bulkAddToCart
@@ -77,6 +80,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
       required double price,
       required String brandname,
       required String title,
+      required String brandImageUrl,
       required int quantity}) {
     // TODO: implement bulkDeleteFromCart
     throw UnimplementedError();
@@ -93,6 +97,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
     required String productId,
     required String brandname,
     required String title,
+    required String brandImageUrl,
     required double price,
   }) {
     // TODO: implement deleteFromCart

@@ -79,7 +79,7 @@ class SecondaryButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             padding:
-                EdgeInsets.symmetric(vertical: 24, horizontal: padding ?? 30),
+                EdgeInsets.symmetric(vertical: 14, horizontal: padding ?? 30),
             elevation: 1),
         child: content,
       ),
