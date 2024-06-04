@@ -17,3 +17,5 @@ final class RemoveFromCart extends ProductCartEvent {
 }
 
 final class ViewCartEvent extends ProductCartEvent {}
+
+final class BulkAddEvent extends ProductCartEvent {}

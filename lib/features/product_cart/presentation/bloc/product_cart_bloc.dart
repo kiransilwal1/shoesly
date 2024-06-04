@@ -25,6 +25,7 @@ class ProductCartBloc extends Bloc<ProductCartEvent, ProductCartState> {
     on<AddToCart>(_addToCart);
     on<ViewCartEvent>(_viewCart);
     on<RemoveFromCart>(_removeFromCart);
+    on<BulkAddEvent>(_bulkAddToCart);
   }
 
   FutureOr<void> _addToCart(
@@ -44,4 +45,7 @@ class ProductCartBloc extends Bloc<ProductCartEvent, ProductCartState> {
 
   FutureOr<void> _removeFromCart(
       RemoveFromCart event, Emitter<ProductCartState> emit) {}
+
+  FutureOr<void> _bulkAddToCart(
+      BulkAddEvent event, Emitter<ProductCartState> emit) {}
 }
