@@ -93,13 +93,11 @@ Core folder contains all the classes, objects and codes that are shared across t
 ## Libraries and tools used:
 
 
-   cupertino_icons: ^1.0.2
+
    flutter_bloc: ^8.1.5
    flutter_svg: ^2.0.10+1
    expandable: ^5.0.1
-   firebase_core: ^2.24.2
    fpdart: ^1.1.0
-   cloud_firestore: ^4.14.0
    cached_network_image: ^3.3.1
    path_provider: ^2.1.2
    supabase_flutter: ^2.5.4
@@ -108,6 +106,24 @@ Core folder contains all the classes, objects and codes that are shared across t
    internet_connection_checker_plus: ^2.1.0
    get_it: ^7.7.0
 
-  * The app uses Flutter bloc for state management. Bloc and cubits are extenisvely used across all the features to manage the state of the App. 
+  * **flutter_bloc:** The app uses Flutter bloc for state management. Bloc and cubits are extenisvely used across all the features to manage the state of the App. 
   
-  * Flutter SVG is used to render SVG icons.
+  * **flutter_svg** Flutter SVG is used to render SVG icons.
+
+  * **Expandable** is used to expand widgets to show more details.
+
+  * **fpdart** is used to encapsulate exceptions with erors and failures
+
+  * **Cached_network_image** is used for caching network image.
+
+  * **Path provider** to navigate between root folders.
+
+  * **supabase_flutter** instead of using firebase, this project uses supabase. Supabase makes backend handling pretty straight forward and super easy. On top of that, this is one of the best BaaS available without needing a Card.
+
+  * **Shimmer** This package is used to implement shimmer effect across multiple pages.
+
+  * **shared_preferences** Shared preferences is used to store cart data in local storage so that the state persists even after the user quits the app during purchase.
+
+  * **internet_connection_checker_plus** This is used to check internet connection and provide necessary information to the user.
+
+  * **get_it** Getit used for dependency injection.
