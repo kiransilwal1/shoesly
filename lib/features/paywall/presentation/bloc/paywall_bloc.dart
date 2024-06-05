@@ -5,8 +5,6 @@ part 'paywall_state.dart';
 
 class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
   PaywallBloc() : super(PaywallInitial()) {
-    on<PaywallEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<PaywallEvent>((event, emit) {});
   }
 }

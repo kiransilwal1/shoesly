@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -91,10 +93,9 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ],
             leading: IconButton(
-              icon: SvgPicture.asset(
-                'assets/icons/back-arrow.svg',
-                color: Colors.black,
-              ),
+              icon: SvgPicture.asset('assets/icons/back-arrow.svg',
+                  colorFilter: const ColorFilter.mode(
+                      AppTheme.neutral500, BlendMode.srcIn)),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -427,7 +428,8 @@ class ProductDetailPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CartPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()),
                         );
                       },
                     )

@@ -8,7 +8,10 @@ class CurvedStar extends StatelessWidget {
   final int index;
 
   const CurvedStar(
-      {required this.size, required this.rating, required this.index});
+      {super.key,
+      required this.size,
+      required this.rating,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class CurvedStarPainter extends CustomPainter {
     const int points = 5;
     const double angle = 2 * pi / points;
 
-    //TODO: Neeeed to ange the pointy start to curved star
+    //TODO: Neeeed to change the pointy start to curved star
     for (int i = 0; i <= points; i++) {
       final double outerTheta = i * angle - pi / 2;
       final double innerTheta = outerTheta + angle / 2;

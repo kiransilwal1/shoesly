@@ -28,7 +28,7 @@ class ProductRepoImpl implements ProductRepo {
     } on ServerException catch (e) {
       return left(Failure(e.message));
     } on SocketException catch (e) {
-      return left(Failure('Please connect to the internet!'));
+      return left(Failure(e.message));
     }
   }
 

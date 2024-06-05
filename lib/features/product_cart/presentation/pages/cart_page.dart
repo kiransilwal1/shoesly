@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,7 @@ import '../bloc/product_cart_bloc.dart';
 import '../widgets/shimmer_cart_page.dart';
 
 class CartPage extends StatefulWidget {
-  CartPage({super.key});
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -23,6 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     context.read<ProductCartBloc>().add(ViewCartEvent());
+    super.initState();
   }
 
   final List<String> sortButtonText = [
@@ -37,7 +40,6 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BlocConsumer<ProductCartBloc, ProductCartState>(
       listener: (context, state) {
         if (state is ProductCartFailure) {
@@ -189,13 +191,11 @@ class _CartListViewState extends State<CartListView> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     debugPrint(uniqueItems.length.toString());
     return ListView.builder(
       itemCount: uniqueItems.length,
       itemExtent: 120,
       itemBuilder: (context, index) {
-        bool initialValue = false;
         return Dismissible(
           confirmDismiss: (DismissDirection direction) async {
             return await showDialog(
@@ -377,7 +377,6 @@ class _CartAddState extends State<CartAdd> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.productCount);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

@@ -31,12 +31,11 @@ class PrimaryButton extends StatelessWidget {
       content = Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(
-            (style as LeadingIconStyle).leadingIconImagePath,
-            width: 24,
-            height: 24,
-            color: Colors.white,
-          ),
+          SvgPicture.asset((style as LeadingIconStyle).leadingIconImagePath,
+              width: 24,
+              height: 24,
+              colorFilter:
+                  const ColorFilter.mode(AppTheme.neutral0, BlendMode.srcIn)),
           const SizedBox(width: 8),
           Text(
             (style as LeadingIconStyle).text,

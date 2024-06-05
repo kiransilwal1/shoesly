@@ -9,22 +9,18 @@ class TextFieldWithPlusMinus extends StatefulWidget {
   final Function(int) onChanged;
 
   @override
+  // ignore: library_private_types_in_public_api
   _TextFieldWithPlusMinusState createState() => _TextFieldWithPlusMinusState();
 }
 
 class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _controller = TextEditingController(text: '1');
-  bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      setState(() {
-        _isFocused = _focusNode.hasFocus;
-      });
-    });
+    _focusNode.addListener(() {});
   }
 
   @override
@@ -39,9 +35,7 @@ class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
       int currentValue = int.parse(_controller.text);
       _controller.text = (currentValue + 1).toString();
     });
-    if (widget.onChanged != null) {
-      widget.onChanged(int.parse(_controller.text));
-    }
+    widget.onChanged(int.parse(_controller.text));
   }
 
   void _decrementValue() {
@@ -51,9 +45,7 @@ class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
         _controller.text = (currentValue - 1).toString();
       }
     });
-    if (widget.onChanged != null) {
-      widget.onChanged(int.parse(_controller.text));
-    }
+    widget.onChanged(int.parse(_controller.text));
   }
 
   @override
@@ -71,7 +63,7 @@ class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
           borderSide: BorderSide(color: Colors.black),
         ),
         hintText: 'Enter number',
-        suffixIcon: Container(
+        suffixIcon: SizedBox(
           width: 150,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,

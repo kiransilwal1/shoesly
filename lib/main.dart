@@ -10,7 +10,7 @@ import 'package:shoesly/core/network/connection_checker.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/data/repositories/cart_repo_impl.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
-import 'package:shoesly/features/product_cart/domain/usecases/bulkAddToCart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/bulk_add_to_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/delete_from_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/remove_from_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
@@ -128,7 +128,7 @@ class Shoesly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Shoesly',
       debugShowCheckedModeBanner: false,
       home: ProductDiscoverPage(),

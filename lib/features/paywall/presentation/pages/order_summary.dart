@@ -21,7 +21,6 @@ class OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
         bottomSheet: Container(
           height: 90,
@@ -277,7 +276,7 @@ class ExpandableWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          //TODO: exapnd when pressed on arrow-right
+          //TODO: expand when pressed on arrow-right
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,10 +291,9 @@ class ExpandableWidget extends StatelessWidget {
               ),
             ],
           ),
-          SvgPicture.asset(
-            'assets/icons/arrow-right.svg',
-            color: AppTheme.neutral300,
-          )
+          SvgPicture.asset('assets/icons/arrow-right.svg',
+              colorFilter:
+                  const ColorFilter.mode(AppTheme.neutral300, BlendMode.srcIn)),
         ],
       ),
     );

@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard(
-      {Key? key,
+      {super.key,
       required this.height,
       required this.width,
       required this.imageUrl,

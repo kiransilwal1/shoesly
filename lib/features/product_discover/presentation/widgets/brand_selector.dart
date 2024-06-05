@@ -52,7 +52,8 @@ class _BrandSelectorViewState extends State<BrandSelectorView> {
                             padding: const EdgeInsets.all(16.0),
                             child: SvgPicture.network(
                               items.image,
-                              color: AppTheme.neutral500,
+                              colorFilter: const ColorFilter.mode(
+                                  AppTheme.neutral500, BlendMode.srcIn),
                             ),
                           ),
                         ),
