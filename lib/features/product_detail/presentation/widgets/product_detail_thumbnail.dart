@@ -50,6 +50,8 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
     List<String> colorString =
         widget.shoes.productVariations.map((e) => e.colorCode).toSet().toList();
     int variationCount = widget.shoes.productVariations.length;
+    int uniqueCount = getUniqueByProperty(
+        widget.shoes.productVariations, (shoe) => shoe.colorCode).length;
     return Container(
       height: widget.size.width * 0.8,
       width: double.infinity,
@@ -79,8 +81,7 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
                     widget.onSwiped(widget.shoes.productVariations[index]);
                   });
                 },
-                itemCount: getUniqueByProperty(widget.shoes.productVariations,
-                    (person) => person.colorCode).length,
+                itemCount: uniqueCount,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
                       imageUrl: widget.shoes.productVariations[index].image);
@@ -95,7 +96,7 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
-                  children: List.generate(variationCount, (index) {
+                  children: List.generate(uniqueCount, (index) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child: CircleAvatar(
