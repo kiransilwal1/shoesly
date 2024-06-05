@@ -8,4 +8,5 @@ class Constants {
   static String noConnectionErrorMessage = 'Not connected to the internet!';
 
   static double kDeliveryCharge = 20;
+  static String customerId = '5c19e010-df72-43c7-bdff-e17b119eb20b';
 }

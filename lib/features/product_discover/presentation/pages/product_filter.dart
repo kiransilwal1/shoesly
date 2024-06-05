@@ -65,7 +65,7 @@ class ProductFilterPage extends StatelessWidget {
                             //TODO: Need to remove hard coded reset
                             SecondaryButton(
                               isDisabled: false,
-                              style: const LabelButtonStyle(text: 'RESET (4)'),
+                              style: const LabelButtonStyle(text: 'RESET'),
                               onPressed: () {},
                             ),
                             PrimaryButton(

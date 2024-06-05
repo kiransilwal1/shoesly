@@ -18,6 +18,7 @@ import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../../../../core/widgets/buttons/secondary_buttons.dart';
 import '../../../../core/widgets/reviews.dart';
 import '../../../product_cart/presentation/pages/cart_page.dart';
+import '../../../product_discover/presentation/pages/product_discover_page.dart';
 import '../../../product_discover/presentation/widgets/product_rating.dart';
 import '../widgets/text_field_plus_minus.dart';
 import '../../../product_review/presentation/bloc/product_review_bloc.dart';
@@ -29,6 +30,7 @@ import '../widgets/size_option_view.dart';
 class ProductDetailPage extends StatelessWidget {
   ProductDetailPage({super.key});
   ProductVariation? _selectedShoe;
+  double? _selectedSize;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -109,6 +111,8 @@ class ProductDetailPage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is ProductDetailSuccess) {
+            _selectedSize =
+                state.productDetailEntity.productVariations.first.size;
             _selectedShoe = state.productDetailEntity.productVariations.first;
             double rating = state.productDetailEntity.productReveiws
                     .map((m) => m.userRating)
@@ -162,7 +166,11 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      SizeOptionsView(sizes: sizes.toSet().toList()),
+                      SizeOptionsView(
+                          sizes: sizes.toSet().toList(),
+                          onSizeSelected: (double value) {
+                            _selectedSize = value;
+                          }),
                       const SizedBox(
                         height: 30,
                       ),
@@ -441,7 +449,16 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'BACK'),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) =>
+                                const ProductDiscoverPage(),
+                            transitionDuration: Duration(milliseconds: 100),
+                            transitionsBuilder: (_, anim, __, child) =>
+                                FadeTransition(opacity: anim, child: child),
+                          ),
+                        );
                       },
                     ),
                     PrimaryButton(

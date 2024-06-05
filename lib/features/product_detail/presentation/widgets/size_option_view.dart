@@ -2,71 +2,87 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
 
-class SizeOptionsView extends StatelessWidget {
+class SizeOptionsView extends StatefulWidget {
   const SizeOptionsView({
     super.key,
     required this.sizes,
+    //TODO: Oh My god, too many prop drilling, need to optimize it later. Hate to use state for everything.
+    required this.onSizeSelected,
   });
 
+  final Function(double value) onSizeSelected;
   final List<double> sizes;
+
+  @override
+  _SizeOptionsViewState createState() => _SizeOptionsViewState();
+}
+
+class _SizeOptionsViewState extends State<SizeOptionsView> {
+  double? _selectedSize;
+
+  void _handleSizeSelected(double size) {
+    setState(() {
+      _selectedSize = size;
+    });
+    widget.onSizeSelected(size);
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
-          for (double size in sizes)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: SizeButton(size: size),
+        children: widget.sizes.map((size) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: SizeButton(
+              size: size,
+              isSelected: _selectedSize == size,
+              onSelected: _handleSizeSelected,
             ),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
 }
 
-class SizeButton extends StatefulWidget {
+class SizeButton extends StatelessWidget {
   const SizeButton({
     super.key,
     required this.size,
+    required this.isSelected,
+    required this.onSelected,
   });
 
   final double size;
+  final bool isSelected;
+  final Function(double value) onSelected;
 
-  @override
-  State<SizeButton> createState() => _SizeButtonState();
-}
-
-class _SizeButtonState extends State<SizeButton> {
-  bool _isPressed = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _isPressed = !_isPressed;
-        });
+        onSelected(size);
       },
       child: Container(
         width: 40,
         height: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: _isPressed ? AppTheme.neutral500 : AppTheme.neutral100,
+          color: isSelected ? AppTheme.neutral500 : AppTheme.neutral100,
           border: Border.all(
-            color: !_isPressed ? AppTheme.neutral200 : AppTheme.neutral500,
+            color: isSelected ? AppTheme.neutral500 : AppTheme.neutral200,
             width: 2.0,
             style: BorderStyle.solid,
           ),
         ),
         child: Center(
           child: Text(
-            widget.size.toStringAsFixed(
-                widget.size.truncateToDouble() == widget.size ? 0 : 1),
+            size.toStringAsFixed(size.truncateToDouble() == size ? 0 : 1),
             style: AppTheme.headline300.copyWith(
-                color: !_isPressed ? AppTheme.neutral400 : AppTheme.neutral0),
+              color: isSelected ? AppTheme.neutral0 : AppTheme.neutral400,
+            ),
           ),
         ),
       ),

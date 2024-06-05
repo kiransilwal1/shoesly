@@ -65,6 +65,7 @@ class ProductReviewPage extends StatelessWidget {
                   },
                 ),
                 title: Text(
+                  textAlign: TextAlign.center,
                   'Review (${state.reviews.length})',
                   style:
                       AppTheme.headline400.copyWith(color: AppTheme.neutral500),

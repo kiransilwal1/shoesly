@@ -26,7 +26,8 @@ class StandardAppBar extends StatelessWidget {
       ),
       actions: action == null ? [] : [action!],
       title: Text(
-        'Cart',
+        textAlign: TextAlign.center,
+        title,
         style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),
       ),
       backgroundColor: Colors.transparent,

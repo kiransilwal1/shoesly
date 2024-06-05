@@ -78,7 +78,7 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           padding:
-              EdgeInsets.symmetric(vertical: 14, horizontal: padding ?? 40),
+              EdgeInsets.symmetric(vertical: 16, horizontal: padding ?? 40),
         ),
         child: content,
       ),

@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
+import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 import 'package:shoesly/features/product_payment/presentation/pages/order_summary.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
 import '../../../../core/widgets/alert.dart';
@@ -105,7 +106,16 @@ class _CartPageState extends State<CartPage> {
                 child: StandardAppBar(
                   title: 'Cart',
                   onBack: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) =>
+                            const ProductDiscoverPage(),
+                        transitionDuration: Duration(milliseconds: 100),
+                        transitionsBuilder: (_, anim, __, child) =>
+                            FadeTransition(opacity: anim, child: child),
+                      ),
+                    );
                   },
                 )),
             body: Padding(
@@ -197,14 +207,24 @@ class _CartListViewState extends State<CartListView> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Confirm"),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                  title: Text(
+                    "Confirm",
+                    style:
+                        AppTheme.headline600.copyWith(color: AppTheme.error600),
+                  ),
+                  actionsPadding: EdgeInsets.all(16.0),
+                  contentTextStyle:
+                      AppTheme.body500.copyWith(color: AppTheme.neutral400),
                   actionsAlignment: MainAxisAlignment.spaceBetween,
                   content:
                       const Text("Are you sure you wish to delete this item?"),
                   actions: <Widget>[
-                    PrimaryButton(
+                    MinimalButton(
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'DELETE'),
+                      color: AppTheme.error600,
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                     MinimalButton(

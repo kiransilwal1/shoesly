@@ -6,23 +6,16 @@ import 'package:shoesly/core/entities/product_variation.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/standard_app_bar.dart';
+import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/alert.dart';
+import '../../../../core/widgets/buttons/minimal_buttons.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../bloc/paywall_bloc.dart';
 
 class OrderSummary extends StatelessWidget {
   OrderSummary({super.key});
-
-  final List<String> sortButtonText = [
-    'Most Recent',
-    'Lowest Price',
-    'Highest Price'
-  ];
-
-  final List<String> genderText = ['Man', 'Woman', 'Unisex'];
-  final List<String> colorText = ['Black', 'White', 'Red'];
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +23,62 @@ class OrderSummary extends StatelessWidget {
       listener: (context, state) {
         if (state is ProductPaymentFailure) {
           showErrorPopup(context, state.errorMessage, 'BACK');
+        }
+        if (state is ProductPaymentSuccess) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                ),
+                title: Text(
+                  "Congratulations!!",
+                  style:
+                      AppTheme.headline600.copyWith(color: AppTheme.error600),
+                ),
+                actionsPadding: const EdgeInsets.all(16.0),
+                contentTextStyle:
+                    AppTheme.body500.copyWith(color: AppTheme.neutral400),
+                actionsAlignment: MainAxisAlignment.spaceBetween,
+                content: Text(
+                  "Order successful please save your tracking id: ${state.trackingId}",
+                ),
+                actions: <Widget>[
+                  MinimalButton(
+                    isDisabled: false,
+                    style: const LabelButtonStyle(text: 'GO BACK'),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) =>
+                              const ProductDiscoverPage(),
+                          transitionDuration: const Duration(milliseconds: 100),
+                          transitionsBuilder: (_, anim, __, child) =>
+                              FadeTransition(opacity: anim, child: child),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          // showErrorPopup(
+          //     context,
+          //     'Order successful please save your tracking id: ${state.trackingId}',
+          //     'BACK', onTap: () {
+          // Navigator.pushReplacement(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (_, __, ___) => const ProductDiscoverPage(),
+          //     transitionDuration: Duration(milliseconds: 100),
+          //     transitionsBuilder: (_, anim, __, child) =>
+          //         FadeTransition(opacity: anim, child: child),
+          //   ),
+          // );
+          // }, title: 'Congratulations!');
         }
       },
       builder: (context, state) {
@@ -65,10 +114,74 @@ class OrderSummary extends StatelessWidget {
                       PrimaryButton(
                         isDisabled: false,
                         style: const LabelButtonStyle(text: 'PAYMENT'),
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => DiscoverPage()),
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(16.0))),
+                                title: Text(
+                                  "Confirm",
+                                  style: AppTheme.headline600
+                                      .copyWith(color: AppTheme.error600),
+                                ),
+                                actionsPadding: EdgeInsets.all(16.0),
+                                contentTextStyle: AppTheme.body500
+                                    .copyWith(color: AppTheme.neutral400),
+                                actionsAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                content: const Text(
+                                    "Are you sure you wish to make the payments?"),
+                                actions: <Widget>[
+                                  MinimalButton(
+                                    isDisabled: false,
+                                    style: const LabelButtonStyle(text: 'NO'),
+                                    color: AppTheme.error600,
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                  ),
+                                  MinimalButton(
+                                      isDisabled: false,
+                                      style:
+                                          const LabelButtonStyle(text: 'YES'),
+                                      onPressed: () {
+                                        context.read<ProductPaymentBloc>().add(
+                                            PaymentInitiated(cart: state.cart));
+                                      }),
+                                ],
+                              );
+                            },
+                          );
+
+                          // await showDialog(
+                          //   context: context,
+                          //   builder: (BuildContext context) {
+                          //     return AlertDialog(
+                          //       title: const Text("Confirm"),
+                          //       actionsAlignment:
+                          //           MainAxisAlignment.spaceBetween,
+                          //       content: const Text(
+                          //           "Are you sure you wish to make the payments?"),
+                          //       actions: <Widget>[
+                          //         PrimaryButton(
+                          //           isDisabled: false,
+                          //           style: const LabelButtonStyle(text: 'No'),
+                          //           onPressed: () =>
+                          //               Navigator.of(context).pop(true),
+                          //         ),
+                          //         MinimalButton(
+                          //             isDisabled: false,
+                          //             style: const LabelButtonStyle(
+                          //                 text: 'Continue'),
+                          //             onPressed: () {
+                          // context.read<ProductPaymentBloc>().add(
+                          //     PaymentInitiated(cart: state.cart));
+                          //             }),
+                          //       ],
+                          //     );
+                          //   },
                           // );
                         },
                       )
@@ -134,7 +247,7 @@ class OrderSummary extends StatelessWidget {
                             OrderDetailWidget(
                               itemTitle: items.title,
                               itemDescription:
-                                  '${items.brandname} . ${items.colorName} . ${items.size}}',
+                                  '${items.brandname} . ${items.colorName} . ${items.size}',
                               itemQuantity: state.cart.products
                                   .where((element) => element.id == items.id)
                                   .length,

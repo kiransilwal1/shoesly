@@ -7,9 +7,9 @@ sealed class ProductPaymentState {
 class ProductPaymentInitial extends ProductPaymentState {}
 
 final class ProductPaymentSuccess extends ProductPaymentState {
-  final Cart cart;
+  final String trackingId;
 
-  ProductPaymentSuccess({required this.cart});
+  ProductPaymentSuccess({required this.trackingId});
 }
 
 final class CheckoutSuccess extends ProductPaymentState {

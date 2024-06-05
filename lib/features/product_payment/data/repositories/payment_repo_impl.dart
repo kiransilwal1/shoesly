@@ -15,9 +15,16 @@ class PaymentRepoImpl implements PaymentRepo {
   PaymentRepoImpl(
       {required this.connectionChecker, required this.paymentRemoteDataSource});
   @override
-  Future<Either<Failure, Cart>> initiatePayment({required Cart cart}) async {
-    // TODO: implement initiatePayment
-    throw UnimplementedError();
+  Future<Either<Failure, String>> initiatePayment({required Cart cart}) async {
+    try {
+      if (!await (connectionChecker.isConnected)) {
+        return left(Failure(Constants.noConnectionErrorMessage));
+      }
+
+      return right(await paymentRemoteDataSource.initiatePayment(cart));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 
   @override

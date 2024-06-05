@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/checkout_usecase.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/product_payment_initiate_useecase.dart';
@@ -25,7 +25,11 @@ class ProductPaymentBloc
   }
 
   FutureOr<void> _intiatePayment(
-      PaymentInitiated event, Emitter<ProductPaymentState> emit) {}
+      PaymentInitiated event, Emitter<ProductPaymentState> emit) async {
+    final res = await _productPaymentInitiateUseecase(event.cart);
+    res.fold((l) => emit(ProductPaymentFailure(errorMessage: l.message)),
+        (r) => emit(ProductPaymentSuccess(trackingId: r)));
+  }
 
   FutureOr<void> _initateCheckOut(
       CheckOut event, Emitter<ProductPaymentState> emit) async {

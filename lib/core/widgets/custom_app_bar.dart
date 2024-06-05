@@ -17,6 +17,7 @@ class CustomAppBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(30, 24, 30, 0),
       child: AppBar(
+        automaticallyImplyLeading: false,
         scrolledUnderElevation: 0.0,
         titleSpacing: 0,
         title: Align(

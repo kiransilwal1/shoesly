@@ -6,9 +6,11 @@ class MinimalButton extends StatelessWidget {
   final bool isDisabled;
   final AllButtonStyles style;
   final VoidCallback? onPressed;
+  Color? color;
 
-  const MinimalButton({
+  MinimalButton({
     Key? key,
+    this.color,
     required this.isDisabled,
     required this.style,
     this.onPressed,
@@ -17,6 +19,7 @@ class MinimalButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content;
+    color = color ?? AppTheme.neutral500;
     if (style is IconOnlyStyle) {
       content = Image.asset(
         (style as IconOnlyStyle).iconImagePath,
@@ -61,7 +64,7 @@ class MinimalButton extends StatelessWidget {
       content = Text(
         (style as LabelButtonStyle).text,
         style: AppTheme.headline600
-            .copyWith(color: isDisabled ? Colors.grey : AppTheme.neutral500),
+            .copyWith(color: isDisabled ? Colors.grey : color),
       );
     } else {
       throw ArgumentError('Invalid ButtonStyle');
