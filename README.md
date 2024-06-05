@@ -1,4 +1,4 @@
-# This branch is still under development
+# This is a first version of the Shoesly App.
 
 # Shoesly Project
 
@@ -94,18 +94,6 @@ Core folder contains all the classes, objects and codes that are shared across t
 
 
 
-   flutter_bloc: ^8.1.5
-   flutter_svg: ^2.0.10+1
-   expandable: ^5.0.1
-   fpdart: ^1.1.0
-   cached_network_image: ^3.3.1
-   path_provider: ^2.1.2
-   supabase_flutter: ^2.5.4
-   shimmer: ^3.0.0
-   shared_preferences: ^2.2.2
-   internet_connection_checker_plus: ^2.1.0
-   get_it: ^7.7.0
-
   * **flutter_bloc:** The app uses Flutter bloc for state management. Bloc and cubits are extenisvely used across all the features to manage the state of the App. 
   
   * **flutter_svg** Flutter SVG is used to render SVG icons.
@@ -127,3 +115,33 @@ Core folder contains all the classes, objects and codes that are shared across t
   * **internet_connection_checker_plus** This is used to check internet connection and provide necessary information to the user.
 
   * **get_it** Getit used for dependency injection.
+
+
+  # Major Assumptions
+
+    Following are the assumptions made before developing the App.
+
+    1. All the themes contained inside the figma are absolute and there are no customizations in the fonts, buttons and color that needs manual importing into themedata file.
+    2. The backend doesn't remove background of the thumbnail image. An image without background shall be uploaded since the design expects it.
+    3. Variations of products are not needed in landing page. They are only needed in detail and cart page.
+    4. Supabase can be used in place of firebase.
+    5. Brand Names and Brand Images are supposed to be imported from design file regardless of their performance and sizes.
+
+  # Challenges
+
+    1. Extracting UI components according to the theme in design file.
+    2. Some components need customizations from what flutter already has in the store.
+    3. Preparing dummy data was a major challenge. Used locally installed Llama3:8b to create reviews, ratings and other dummy data.
+    4. Though Fitler and Discover are supposed to be separate features, in this project they have a lot of components and states that are shared. Had to write the business logic twice.
+    5. One button in product detail page doesn't uses button theme available across the app. Manually  created the button. Easier instead of sending text theme to the button component :D
+    
+
+
+# Additional Features
+
+    1. Added pages for empty result.
+    2. Added Alerts for errors and notifications.
+    3. Added double support on ratings instead of int support. Rating 4.5 will paint 4 and half stars.
+    4. Added Shimmer for proper loading.
+
+Though the functionality of the app is in par with the initial thought process. The project is handled by a single person in 5 days. That included databse designs and setup Supabase from scratch. The code needs to be refactored massively. Some of the business logics are tightly coupled. In some usecases Data Layer directly access the Data Entity instead of Data Model. These needs to be sorted out in upcoming versions.
