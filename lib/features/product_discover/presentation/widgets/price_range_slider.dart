@@ -15,6 +15,7 @@ class PriceRangeSlider extends StatefulWidget {
   final void Function(double minValue, double maxValue) onPriceRangeChanged;
 
   @override
+  // ignore: library_private_types_in_public_api
   _PriceRangeSliderState createState() => _PriceRangeSliderState();
 }
 

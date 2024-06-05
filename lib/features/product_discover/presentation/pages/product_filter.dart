@@ -15,6 +15,7 @@ import '../widgets/color_selector.dart';
 import '../widgets/price_range_slider.dart';
 import '../widgets/shimmer_filter_page.dart';
 
+// ignore: must_be_immutable
 class ProductFilterPage extends StatelessWidget {
   ProductFilterPage({super.key});
 
@@ -40,7 +41,6 @@ class ProductFilterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BlocConsumer<ProductDiscoverBloc, ProductDiscoverState>(
       listener: (context, state) {
         if (state is ProductFilterFailure) {
@@ -99,6 +99,7 @@ class ProductFilterPage extends StatelessWidget {
                 ),
               ),
               appBar: AppBar(
+                scrolledUnderElevation: 0.0,
                 toolbarHeight: 60,
                 leading: _backButton(context),
                 title: Text(
@@ -179,7 +180,6 @@ class ProductFilterPage extends StatelessWidget {
                 ),
               ));
         } else {
-          print(state);
           return const Scaffold(
             body: FilterPageShimmer(),
           );

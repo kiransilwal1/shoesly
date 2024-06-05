@@ -18,3 +18,9 @@ class SocketException implements Exception {
 
   SocketException({required this.message});
 }
+
+class PaymentException implements Exception {
+  final String message;
+
+  PaymentException({required this.message});
+}

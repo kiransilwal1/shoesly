@@ -127,7 +127,7 @@ class _ProductDiscoverPageState extends State<ProductDiscoverPage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
           BlocBuilder<ProductDiscoverBloc, ProductDiscoverState>(
         builder: (context, state) {

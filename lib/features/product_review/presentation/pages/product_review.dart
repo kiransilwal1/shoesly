@@ -25,11 +25,10 @@ class ProductReviewPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        print(state);
         if (state is FilterReviewSuccess) {
           return Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size(0, 50),
+              preferredSize: const Size(0, 80),
               child: AppBar(
                 scrolledUnderElevation: 0.0,
                 toolbarHeight: 90,
@@ -48,7 +47,7 @@ class ProductReviewPage extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            '${state.averageRating.toStringAsFixed(2)}',
+                            state.averageRating.toStringAsFixed(2),
                             style: AppTheme.headline300.copyWith(
                                 color: AppTheme.neutral500, fontSize: 14),
                           )
@@ -59,7 +58,8 @@ class ProductReviewPage extends StatelessWidget {
                 ],
                 leading: MinimalButton(
                   isDisabled: false,
-                  style: IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+                  style: const IconOnlyStyle(
+                      iconImagePath: 'assets/icons/back.png'),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -110,7 +110,7 @@ class ProductReviewPage extends StatelessWidget {
                 state.reviews.isNotEmpty
                     ? Expanded(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Column(

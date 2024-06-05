@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +7,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/theme/app_theme.dart';
 import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
+import 'package:shoesly/features/product_payment/presentation/pages/order_summary.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../../../../core/widgets/standard_app_bar.dart';
+import '../../../product_payment/presentation/bloc/paywall_bloc.dart';
 import '../bloc/product_cart_bloc.dart';
 import '../widgets/shimmer_cart_page.dart';
 
@@ -84,6 +86,9 @@ class _CartPageState extends State<CartPage> {
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'CHECK OUT'),
                       onPressed: () {
+                        context
+                            .read<ProductPaymentBloc>()
+                            .add(CheckOut(cart: state.cart));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -95,24 +100,14 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
             ),
-            appBar: AppBar(
-              toolbarHeight: 60,
-              leading: MinimalButton(
-                isDisabled: false,
-                style:
-                    const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              title: Text(
-                'Cart',
-                style:
-                    AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
+            appBar: PreferredSize(
+                preferredSize: Size(0, 90),
+                child: StandardAppBar(
+                  title: 'Cart',
+                  onBack: () {
+                    Navigator.pop(context);
+                  },
+                )),
             body: Padding(
               padding: const EdgeInsets.fromLTRB(30, 24, 30, 100),
               child: CartListView(itemList: state.cart.products),
@@ -327,11 +322,7 @@ class CartProductWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          item.price.toStringAsFixed(2),
-                          style: AppTheme.headline600
-                              .copyWith(color: AppTheme.neutral500),
-                        ),
+                        // Remove the price from here
                         CartAdd(
                           product: item,
                           productCount: count,
@@ -350,35 +341,45 @@ class CartProductWidget extends StatelessWidget {
 }
 
 class CartAdd extends StatefulWidget {
-  CartAdd({super.key, required this.product, required this.productCount});
+  const CartAdd({super.key, required this.product, required this.productCount});
 
   @override
   _CartAddState createState() => _CartAddState();
   final ProductVariation product;
-  int productCount;
+  final int productCount;
 }
 
 class _CartAddState extends State<CartAdd> {
+  late int _productCount;
+
+  @override
+  void initState() {
+    super.initState();
+    _productCount = widget.productCount;
+  }
+
   void _incrementCounter() {
     context.read<ProductCartBloc>().add(AddToCart(product: widget.product));
     setState(() {
-      widget.productCount++;
+      _productCount++;
     });
   }
 
   void _decrementCounter() {
-    context.read<ProductCartBloc>().add(DeleteEvent(product: widget.product));
-    setState(() {
-      if (widget.productCount > 0) {
-        widget.productCount--;
-      }
-    });
+    if (_productCount > 0) {
+      context.read<ProductCartBloc>().add(DeleteEvent(product: widget.product));
+      setState(() {
+        _productCount--;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    double totalPrice = widget.product.price * _productCount;
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
           onPressed: _decrementCounter,
@@ -387,11 +388,11 @@ class _CartAddState extends State<CartAdd> {
             'assets/icons/minus-cirlce.png',
             width: 24,
             height: 24,
-            color: widget.productCount > 0 ? AppTheme.neutral500 : Colors.grey,
+            color: _productCount > 0 ? AppTheme.neutral500 : Colors.grey,
           ),
         ),
         Text(
-          '${widget.productCount}',
+          '$_productCount',
           style: const TextStyle(fontSize: 20),
         ),
         IconButton(
@@ -403,6 +404,10 @@ class _CartAddState extends State<CartAdd> {
             height: 24,
             color: AppTheme.neutral500,
           ),
+        ),
+        Text(
+          '\$${totalPrice.toStringAsFixed(2)}',
+          style: AppTheme.headline600.copyWith(color: AppTheme.neutral500),
         ),
       ],
     );

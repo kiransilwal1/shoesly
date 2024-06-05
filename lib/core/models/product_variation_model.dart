@@ -41,7 +41,7 @@ class ProductVariationModel extends ProductVariation {
         price: price ?? this.price,
         brandname: brandname ?? this.brandname,
         title: title ?? this.title,
-        brandimage: brandImageUrl ?? this.brandimage);
+        brandimage: brandImageUrl ?? brandimage);
   }
 
   Map<String, dynamic> toMap() {
@@ -75,6 +75,7 @@ class ProductVariationModel extends ProductVariation {
         brandimage: map['brand_image']);
   }
 
+  @override
   String toJson() => json.encode(toMap());
 
   factory ProductVariationModel.fromJson(String source) =>

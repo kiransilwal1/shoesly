@@ -80,7 +80,7 @@ class ProductDetailPage extends StatelessWidget {
         ),
       ),
       appBar: PreferredSize(
-        preferredSize: const Size(0, 50),
+        preferredSize: const Size(0, 80),
         child: AppBar(
             scrolledUnderElevation: 0.0,
             backgroundColor: Colors.transparent,
@@ -205,38 +205,42 @@ class ProductDetailPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context.read<ProductReviewBloc>().add(
+                                    FilterReviewEvent(
+                                        globalReviews: state
+                                            .productDetailEntity.productReveiws,
+                                        averageRating: rating,
+                                        reviews: state
+                                            .productDetailEntity.productReveiws,
+                                        filterValue: 0),
+                                  );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductReviewPage()),
+                              );
+                            },
                             child: Container(
+                              height: 50,
+                              width: size.width * 0.6,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: AppTheme.neutral200, width: 2),
                                   borderRadius: BorderRadius.circular(100)),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                child: MinimalButton(
-                                  isDisabled: false,
-                                  style: const LabelButtonStyle(
-                                      text: 'SEE ALL REVIEWS'),
-                                  onPressed: () {
-                                    context.read<ProductReviewBloc>().add(
-                                          FilterReviewEvent(
-                                              globalReviews: state
-                                                  .productDetailEntity
-                                                  .productReveiws,
-                                              averageRating: rating,
-                                              reviews: state.productDetailEntity
-                                                  .productReveiws,
-                                              filterValue: 0),
-                                        );
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProductReviewPage()),
-                                    );
-                                  },
+                                    const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                child: Center(
+                                  child: Text(
+                                    'SEE ALL REVIEWS',
+                                    style: AppTheme.headline300
+                                        .copyWith(color: AppTheme.neutral500),
+                                  ),
                                 ),
                               ),
                             ),
@@ -261,123 +265,141 @@ class ProductDetailPage extends StatelessWidget {
     required BuildContext context,
     required ProductVariation shoe,
   }) {
-    int value = 0;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.neutral500.withOpacity(0.3),
       builder: (context) {
-        return Container(
-          height: 350,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                height: 4,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: AppTheme.neutral500.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Add to cart',
-                          style: AppTheme.headline600
-                              .copyWith(color: AppTheme.neutral500),
-                        ),
-                        MinimalButton(
-                          isDisabled: false,
-                          style: const IconOnlyStyle(
-                              iconImagePath: 'assets/icons/cross.png'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Quantity',
-                          style: AppTheme.headline300
-                              .copyWith(color: AppTheme.neutral500),
-                        ),
-                        TextFieldWithPlusMinus(
-                          onChanged: (changedValue) {
-                            value = changedValue;
-                          },
-                        ),
-                        Container(
-                          height: 90,
-                          color: Colors.white,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'PRICE',
-                                    style: AppTheme.body100
-                                        .copyWith(color: AppTheme.neutral300),
-                                  ),
-                                  Text(
-                                    (shoe.price * value).toStringAsFixed(2),
-                                    style: AppTheme.headline600
-                                        .copyWith(color: AppTheme.neutral500),
-                                  ),
-                                ],
-                              ),
-                              PrimaryButton(
-                                isDisabled: false,
-                                style:
-                                    const LabelButtonStyle(text: 'ADD TO CART'),
-                                onPressed: () {
-                                  context.read<ProductCartBloc>().add(
-                                      BulkAddEvent(
-                                          product: shoe, quantity: value));
-                                  _showBottomSheetWithCart(context);
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
+        return AddToCartBottomSheet(shoe: shoe);
       },
       barrierColor: AppTheme.neutral500.withOpacity(0.3),
     );
   }
+}
 
-  void _showBottomSheetWithCart(BuildContext context) {
+class AddToCartBottomSheet extends StatefulWidget {
+  final ProductVariation shoe;
+
+  const AddToCartBottomSheet({Key? key, required this.shoe}) : super(key: key);
+
+  @override
+  _AddToCartBottomSheetState createState() => _AddToCartBottomSheetState();
+}
+
+class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
+  int value = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 350,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            height: 4,
+            width: 40,
+            decoration: BoxDecoration(
+              color: AppTheme.neutral500.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Add to cart',
+                      style: AppTheme.headline600
+                          .copyWith(color: AppTheme.neutral500),
+                    ),
+                    MinimalButton(
+                      isDisabled: false,
+                      style: const IconOnlyStyle(
+                          iconImagePath: 'assets/icons/cross.png'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Quantity',
+                      style: AppTheme.headline300
+                          .copyWith(color: AppTheme.neutral500),
+                    ),
+                    TextFieldWithPlusMinus(
+                      onChanged: (changedValue) {
+                        setState(() {
+                          value = changedValue;
+                        });
+                      },
+                    ),
+                    Container(
+                      height: 90,
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'PRICE',
+                                style: AppTheme.body100
+                                    .copyWith(color: AppTheme.neutral300),
+                              ),
+                              Text(
+                                (widget.shoe.price * value).toStringAsFixed(2),
+                                style: AppTheme.headline600
+                                    .copyWith(color: AppTheme.neutral500),
+                              ),
+                            ],
+                          ),
+                          PrimaryButton(
+                            isDisabled: false,
+                            style: const LabelButtonStyle(text: 'ADD TO CART'),
+                            onPressed: () {
+                              context.read<ProductCartBloc>().add(BulkAddEvent(
+                                  product: widget.shoe, quantity: value));
+                              _showBottomSheetWithCart(
+                                  quantity: value,
+                                  context); // Close the bottom sheet
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showBottomSheetWithCart(BuildContext context, {required int quantity}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.neutral500.withOpacity(0.3),
@@ -405,7 +427,7 @@ class ProductDetailPage extends StatelessWidget {
                       style: AppTheme.headline700,
                     ),
                     Text(
-                      '1 Item Total',
+                      '$quantity ${quantity == 1 ? 'Item' : 'Items'} Total',
                       style:
                           AppTheme.body200.copyWith(color: AppTheme.neutral400),
                     )

@@ -6,7 +6,7 @@ import '../../../../core/constants/constants.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/models/product_variation_model.dart';
-import '../models/cart_model.dart';
+import '../../../../core/models/cart_model.dart';
 
 abstract interface class ProductCartLocalData {
   Future<CartModel> addToCart(ProductVariationModel productModel);

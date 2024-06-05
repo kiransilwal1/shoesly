@@ -5,7 +5,7 @@ import 'package:shoesly/core/cubit/cart_status_cubit.dart';
 import 'package:shoesly/core/usecase/usecase.dart';
 import 'package:shoesly/features/product_cart/domain/entities/bulk_add_params.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
-import 'package:shoesly/features/product_cart/domain/usecases/bulkAddToCart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/bulk_add_to_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/remove_from_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
 

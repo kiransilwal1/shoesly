@@ -28,12 +28,12 @@ class CustomAppBar extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: CartStatusWidget(),
+            icon: const CartStatusWidget(),
             onPressed: () {
               context.read<ProductCartBloc>().add(ViewCartEvent());
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartPage()),
+                MaterialPageRoute(builder: (context) => const CartPage()),
               );
             },
           ),
@@ -55,7 +55,6 @@ class CartStatusWidget extends StatelessWidget {
     return BlocConsumer<CartStatusCubit, CartStatusState>(
       listener: (context, state) {},
       builder: (context, state) {
-        print('Cart State : $state');
         if (state is CartStatusInitial) {
           return SvgPicture.asset(
             'assets/icons/bag.svg',

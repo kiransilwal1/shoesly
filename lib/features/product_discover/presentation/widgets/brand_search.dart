@@ -16,14 +16,6 @@ class FilterByBrand extends StatefulWidget {
 class _FilterByBrandState extends State<FilterByBrand> {
   final ScrollController _scrollController = ScrollController();
 
-  void _scrollToPosition(double position) {
-    _scrollController.animateTo(
-      position,
-      duration: Duration(seconds: 1),
-      curve: Curves.easeInOut,
-    );
-  }
-
   String? selectedBrand = 'All';
   List<String> brandList = [
     'All',
@@ -37,8 +29,6 @@ class _FilterByBrandState extends State<FilterByBrand> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: Axis.horizontal,

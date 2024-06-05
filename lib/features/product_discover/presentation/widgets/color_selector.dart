@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/color_entites.dart';
@@ -86,7 +85,7 @@ class _ColorSelectorState extends State<ColorSelector> {
   Color hexStringToColor(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '').replaceAll('0X', '');
     if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor; // Add the alpha value if not provided
+      hexColor = 'FF$hexColor'; // Add the alpha value if not provided
     }
     return Color(int.parse(hexColor, radix: 16));
   }

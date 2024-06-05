@@ -32,6 +32,19 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
     _pageController = PageController();
   }
 
+  List<T> getUniqueByProperty<T, K>(List<T> items, K Function(T) keySelector) {
+    final Set<K> seenKeys = {};
+    return items.where((item) {
+      final key = keySelector(item);
+      if (seenKeys.contains(key)) {
+        return false;
+      } else {
+        seenKeys.add(key);
+        return true;
+      }
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<String> colorString =
@@ -49,7 +62,7 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            //TODO: Can have multiple products with the same color
+            //TODO: Can have multiple products with the same color.
             SizedBox(
               height: widget.size.width * 0.5,
               child: PageView.builder(
@@ -66,7 +79,8 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
                     widget.onSwiped(widget.shoes.productVariations[index]);
                   });
                 },
-                itemCount: widget.shoes.productVariations.length,
+                itemCount: getUniqueByProperty(widget.shoes.productVariations,
+                    (person) => person.colorCode).length,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
                       imageUrl: widget.shoes.productVariations[index].image);
@@ -154,7 +168,7 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
   Color hexStringToColor(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '').replaceAll('0X', '');
     if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
+      hexColor = 'FF$hexColor';
     }
     return Color(int.parse(hexColor, radix: 16));
   }
