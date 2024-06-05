@@ -4,11 +4,11 @@
 
 A Shoesly project created in flutter using Bloc. Shoesly supports web, mobile(iOS/Android),Linux, MacOS and web, clone the appropriate branches mentioned below:
 
-* [For Mobile: https://github.com/kiransilwal1/shoesly]
+* [HTTPS: [git@github.com:kiransilwal1/shoesly.git](https://github.com/kiransilwal1/shoesly.git)]
 
 ## Getting Started
 
-The Shoesly contains the minimal implementation required to create a new library or project. The repository code is preloaded with some basic components like basic app architecture, app theme, constants and required dependencies to create a new project. By using boiler plate code as standard initializer, we can have same patterns in all the projects that will inherit it. This will also help in reducing setup & development time by allowing you to use same code pattern and avoid re-writing from scratch.
+The Shoesly contains the minimal implementation required to create a new library or project. The repository code is preloaded with some basic components like basidc app architecture, app theme, constants and required dependencies to create a new project. By using boiler plate code as standard initializer, we can have same patterns in all the projects that will inherit it. This will also help in reducing setup & development time by allowing you to use same code pattern and avoid re-writing from scratch.
 
 ## How to Use 
 
@@ -17,7 +17,7 @@ The Shoesly contains the minimal implementation required to create a new library
 Download or clone this repo by using the link below:
 
 ```
-https://github.com/kiransilwal1/shoesly
+https://github.com/kiransilwal1/shoesy
 ```
 
 **Step 2:**
@@ -39,10 +39,8 @@ In addition to that, since there are less pages as of now, named routes are not 
 
 ```
 └── 📁lib 
-    └── .DS_Store
-    └── 📁core
-        └── .DS_Store
-        └── 📁constants
+    └── 📁core - ## Core common components and features used by all child features.
+        └── 📁constants - Contain constants
             └── constants.dart
         └── 📁cubit
             └── cart_status_cubit.dart
