@@ -18,4 +18,15 @@ final class RemoveFromCart extends ProductCartEvent {
 
 final class ViewCartEvent extends ProductCartEvent {}
 
-final class BulkAddEvent extends ProductCartEvent {}
+final class BulkAddEvent extends ProductCartEvent {
+  final ProductVariation product;
+  final int quantity;
+
+  BulkAddEvent({required this.product, required this.quantity});
+}
+
+final class DeleteEvent extends ProductCartEvent {
+  final ProductVariation product;
+
+  DeleteEvent({required this.product});
+}

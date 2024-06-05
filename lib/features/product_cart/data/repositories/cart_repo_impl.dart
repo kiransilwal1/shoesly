@@ -1,6 +1,5 @@
-import 'package:fpdart/src/either.dart';
-
-import 'package:shoesly/core/entities/product_discover_entity.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:shoesly/core/error/exceptions.dart';
 
 import 'package:shoesly/core/error/failures.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
@@ -50,7 +49,7 @@ class ProductCartRepoImpl implements ProductCartRepo {
   }
 
   @override
-  Future<Either<Failure, List<Product>>> bulkAddToCart({
+  Future<Either<Failure, Cart>> bulkAddToCart({
     required String id,
     required String colorCode,
     required String colorName,
@@ -63,31 +62,66 @@ class ProductCartRepoImpl implements ProductCartRepo {
     required String title,
     required String brandImageUrl,
     required int quantity,
-  }) {
-    // TODO: implement bulkAddToCart
-    throw UnimplementedError();
+  }) async {
+    try {
+      ProductVariationModel productModel = ProductVariationModel(
+        id: id,
+        colorCode: colorCode,
+        colorName: colorName,
+        image: image,
+        size: size,
+        createdAt: createdAt,
+        price: price,
+        productId: productId,
+        brandname: brandname,
+        title: title,
+        brandimage: brandImageUrl,
+      );
+
+      return right(await cartLocalData.bulkAddToCart(
+          productModel: productModel, quantity: quantity));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 
   @override
-  Future<Either<Failure, List<Product>>> bulkDeleteFromCart(
-      {required String id,
-      required String colorCode,
-      required String colorName,
-      required String image,
-      required double size,
-      required DateTime createdAt,
-      required String productId,
-      required double price,
-      required String brandname,
-      required String title,
-      required String brandImageUrl,
-      required int quantity}) {
-    // TODO: implement bulkDeleteFromCart
-    throw UnimplementedError();
+  Future<Either<Failure, Cart>> bulkDeleteFromCart({
+    required String id,
+    required String colorCode,
+    required String colorName,
+    required String image,
+    required double size,
+    required DateTime createdAt,
+    required String productId,
+    required double price,
+    required String brandname,
+    required String title,
+    required String brandImageUrl,
+  }) async {
+    try {
+      ProductVariationModel product = ProductVariationModel(
+          id: id,
+          colorCode: colorCode,
+          colorName: colorName,
+          image: image,
+          size: size,
+          createdAt: createdAt,
+          price: price,
+          productId: productId,
+          brandname: brandname,
+          title: title,
+          brandimage: brandImageUrl);
+      return right(await cartLocalData.bulkDeleteFromCart(
+        productModel: product,
+      ));
+    } on CacheException catch (e) {
+      return left(Failure(e.message));
+    }
   }
 
   @override
-  Future<Either<Failure, List<Product>>> deleteFromCart({
+  Future<Either<Failure, Cart>> deleteFromCart({
     required String id,
     required String colorCode,
     required String colorName,
@@ -99,9 +133,24 @@ class ProductCartRepoImpl implements ProductCartRepo {
     required String title,
     required String brandImageUrl,
     required double price,
-  }) {
-    // TODO: implement deleteFromCart
-    throw UnimplementedError();
+  }) async {
+    try {
+      ProductVariationModel product = ProductVariationModel(
+          id: id,
+          colorCode: colorCode,
+          colorName: colorName,
+          image: image,
+          size: size,
+          createdAt: createdAt,
+          price: price,
+          productId: productId,
+          brandname: brandname,
+          title: title,
+          brandimage: brandImageUrl);
+      return right(await cartLocalData.deleteFromCart(product));
+    } on CacheException catch (e) {
+      return left(Failure(e.message));
+    }
   }
 
   @override

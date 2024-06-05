@@ -2,11 +2,17 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoesly/core/constants/constants.dart';
+import 'package:shoesly/core/cubit/cart_status_cubit.dart';
+import 'package:shoesly/core/network/connection_checker.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/data/repositories/cart_repo_impl.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/bulkAddToCart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/delete_from_cart.dart';
+import 'package:shoesly/features/product_cart/domain/usecases/remove_from_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 import 'package:shoesly/features/product_detail/data/datasources/product_detail_remote.dart';
@@ -37,8 +43,10 @@ void main() async {
     url: Constants.kApiUrl,
     anonKey: Constants.kKey,
   );
+  final cartStatusCubit = CartStatusCubit();
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider(create: (_) => cartStatusCubit),
       BlocProvider(
           create: (_) => ProductDetailBloc(
                   productDetailLoadUseCase: ProductDetailLoadUseCase(
@@ -50,6 +58,19 @@ void main() async {
               )))))),
       BlocProvider(
         create: (_) => ProductCartBloc(
+          cartStatusCubit: cartStatusCubit,
+          removeFromCartUseCase: RemoveFromCartUseCase(
+              productCartRepo: ProductCartRepoImpl(
+                  cartLocalData:
+                      ProductCartLocalDataImpl(db: sharedPreferences))),
+          deleteFromCartUseCase: DeleteFromCartUseCase(
+              productCartRepo: ProductCartRepoImpl(
+                  cartLocalData:
+                      ProductCartLocalDataImpl(db: sharedPreferences))),
+          bulkAddToCartUseCase: BulkAddToCartUseCase(
+              productCartRepo: ProductCartRepoImpl(
+                  cartLocalData:
+                      ProductCartLocalDataImpl(db: sharedPreferences))),
           viewCartUseCase: ViewCartUseCase(
               productCartRepo: ProductCartRepoImpl(
                   cartLocalData:
@@ -68,20 +89,25 @@ void main() async {
         create: (_) => ProductDiscoverBloc(
           filterProductPageUseCase: FilterProductPageUseCase(
               productRepo: ProductRepoImpl(
+                  connectionChecker:
+                      ConnectionCheckerImpl(InternetConnection()),
                   productRemoteDataSource: ProductRemoteDataSourceImpl(
                       db: SupabaseClient(
-            Constants.kApiUrl,
-            Constants.kKey,
-          )))),
+                    Constants.kApiUrl,
+                    Constants.kKey,
+                  )))),
           filterParamsCollectUseCase: FilterParamsCollectUseCase(
               productRepo: ProductRepoImpl(
+                  connectionChecker:
+                      ConnectionCheckerImpl(InternetConnection()),
                   productRemoteDataSource: ProductRemoteDataSourceImpl(
                       db: SupabaseClient(
-            Constants.kApiUrl,
-            Constants.kKey,
-          )))),
+                    Constants.kApiUrl,
+                    Constants.kKey,
+                  )))),
           productDiscoverUsecase: ProductDiscoverUsecase(
             productRepo: ProductRepoImpl(
+              connectionChecker: ConnectionCheckerImpl(InternetConnection()),
               productRemoteDataSource: ProductRemoteDataSourceImpl(
                 db: SupabaseClient(
                   Constants.kApiUrl,

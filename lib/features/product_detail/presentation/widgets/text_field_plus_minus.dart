@@ -4,7 +4,9 @@ import '../../../../core/widgets/buttons/button_styles.dart';
 import '../../../../core/widgets/buttons/minimal_buttons.dart';
 
 class TextFieldWithPlusMinus extends StatefulWidget {
-  const TextFieldWithPlusMinus({Key? key}) : super(key: key);
+  const TextFieldWithPlusMinus({Key? key, required this.onChanged})
+      : super(key: key);
+  final Function(int) onChanged;
 
   @override
   _TextFieldWithPlusMinusState createState() => _TextFieldWithPlusMinusState();
@@ -37,6 +39,9 @@ class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
       int currentValue = int.parse(_controller.text);
       _controller.text = (currentValue + 1).toString();
     });
+    if (widget.onChanged != null) {
+      widget.onChanged(int.parse(_controller.text));
+    }
   }
 
   void _decrementValue() {
@@ -46,6 +51,9 @@ class _TextFieldWithPlusMinusState extends State<TextFieldWithPlusMinus> {
         _controller.text = (currentValue - 1).toString();
       }
     });
+    if (widget.onChanged != null) {
+      widget.onChanged(int.parse(_controller.text));
+    }
   }
 
   @override

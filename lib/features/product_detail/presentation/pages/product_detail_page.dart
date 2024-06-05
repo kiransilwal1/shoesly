@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shoesly/core/widgets/custom_app_bar.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
 
@@ -15,7 +16,6 @@ import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../../../../core/widgets/buttons/secondary_buttons.dart';
 import '../../../../core/widgets/reviews.dart';
 import '../../../product_cart/presentation/pages/cart_page.dart';
-import '../../../product_discover/presentation/pages/product_discover_page.dart';
 import '../../../product_discover/presentation/widgets/product_rating.dart';
 import '../widgets/text_field_plus_minus.dart';
 import '../../../product_review/presentation/bloc/product_review_bloc.dart';
@@ -84,19 +84,10 @@ class ProductDetailPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 100,
-            actions: [
+            actions: const [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: IconButton(
-                  icon: SvgPicture.asset(
-                    'assets/icons/bag.svg',
-                    color: Colors.black,
-                    height: 24,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: CartStatusWidget(),
               ),
             ],
             leading: IconButton(
@@ -269,6 +260,7 @@ class ProductDetailPage extends StatelessWidget {
     required BuildContext context,
     required ProductVariation shoe,
   }) {
+    int value = 0;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.neutral500.withOpacity(0.3),
@@ -328,7 +320,11 @@ class ProductDetailPage extends StatelessWidget {
                           style: AppTheme.headline300
                               .copyWith(color: AppTheme.neutral500),
                         ),
-                        const TextFieldWithPlusMinus(),
+                        TextFieldWithPlusMinus(
+                          onChanged: (changedValue) {
+                            value = changedValue;
+                          },
+                        ),
                         Container(
                           height: 90,
                           color: Colors.white,
@@ -347,7 +343,7 @@ class ProductDetailPage extends StatelessWidget {
                                         .copyWith(color: AppTheme.neutral300),
                                   ),
                                   Text(
-                                    shoe.price.toStringAsFixed(2),
+                                    (shoe.price * value).toStringAsFixed(2),
                                     style: AppTheme.headline600
                                         .copyWith(color: AppTheme.neutral500),
                                   ),
@@ -358,9 +354,9 @@ class ProductDetailPage extends StatelessWidget {
                                 style:
                                     const LabelButtonStyle(text: 'ADD TO CART'),
                                 onPressed: () {
-                                  context
-                                      .read<ProductCartBloc>()
-                                      .add(AddToCart(product: shoe));
+                                  context.read<ProductCartBloc>().add(
+                                      BulkAddEvent(
+                                          product: shoe, quantity: value));
                                   _showBottomSheetWithCart(context);
                                 },
                               )
@@ -422,12 +418,7 @@ class ProductDetailPage extends StatelessWidget {
                       isDisabled: false,
                       style: const LabelButtonStyle(text: 'BACK'),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProductDiscoverPage()),
-                        );
+                        Navigator.pop(context);
                       },
                     ),
                     PrimaryButton(

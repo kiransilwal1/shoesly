@@ -7,7 +7,6 @@ import 'package:shoesly/core/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
 import 'package:shoesly/features/paywall/presentation/pages/order_summary.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
-import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 import '../../../../core/widgets/alert.dart';
 import '../../../../core/widgets/buttons/primary_buttons.dart';
 import '../bloc/product_cart_bloc.dart';
@@ -48,9 +47,8 @@ class _CartPageState extends State<CartPage> {
       builder: (context, state) {
         if (state is ProductCartSuccess) {
           if (state.cart.products.isEmpty) {
-            return const Scaffold(
-              body: Center(child: Text('Please add some items to cart first.')),
-            );
+            return const EmptyCart();
+            //TODO: Another shittiest way to do things. In v2, the bloc shall be removed from the scaffold.
           }
           double grandTotal =
               state.cart.products.fold(0, (sum, item) => sum + item.price);
@@ -102,11 +100,7 @@ class _CartPageState extends State<CartPage> {
                 style:
                     const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProductDiscoverPage()),
-                  );
+                  Navigator.pop(context);
                 },
               ),
               title: Text(
@@ -127,6 +121,52 @@ class _CartPageState extends State<CartPage> {
         }
       },
     );
+  }
+}
+
+class EmptyCart extends StatelessWidget {
+  const EmptyCart({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 60,
+          leading: MinimalButton(
+            isDisabled: false,
+            style: const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            'Cart',
+            style: AppTheme.headline400.copyWith(color: AppTheme.neutral500),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/icons/addtocart.gif',
+                height: size.width * 0.4,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Please add items to cart!',
+                style: AppTheme.headline600,
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -155,7 +195,33 @@ class _CartListViewState extends State<CartListView> {
       itemCount: uniqueItems.length,
       itemExtent: 120,
       itemBuilder: (context, index) {
+        bool initialValue = false;
         return Dismissible(
+          confirmDismiss: (DismissDirection direction) async {
+            return await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Confirm"),
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                  content:
+                      const Text("Are you sure you wish to delete this item?"),
+                  actions: <Widget>[
+                    PrimaryButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'DELETE'),
+                      onPressed: () => Navigator.of(context).pop(true),
+                    ),
+                    MinimalButton(
+                      isDisabled: false,
+                      style: const LabelButtonStyle(text: 'CANCEL'),
+                      onPressed: () => Navigator.of(context).pop(false),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           key: Key(
               'item_${uniqueItems[index].id}'), // Use a unique identifier from ProductVariation
           direction: DismissDirection.endToStart,
@@ -186,11 +252,12 @@ class _CartListViewState extends State<CartListView> {
             ),
           ),
           onDismissed: (direction) {
+            context
+                .read<ProductCartBloc>()
+                .add(RemoveFromCart(product: uniqueItems[index]));
             setState(() {
               uniqueItems.removeAt(index);
             });
-            // context.read<CartBloc>().add(SwipeToDeleteEvent(
-            //     shoe: uniqueItems[index].variations, quantity: 1));
           },
           child: CartProductWidget(
             item: uniqueItems[index],
@@ -300,6 +367,7 @@ class _CartAddState extends State<CartAdd> {
   }
 
   void _decrementCounter() {
+    context.read<ProductCartBloc>().add(DeleteEvent(product: widget.product));
     setState(() {
       if (widget.productCount > 0) {
         widget.productCount--;

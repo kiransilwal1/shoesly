@@ -12,7 +12,7 @@ class ShimmerProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 44, 30, 0),
+      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

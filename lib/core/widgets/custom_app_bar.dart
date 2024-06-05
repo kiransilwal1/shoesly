@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shoesly/core/cubit/cart_status_cubit.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 
 import '../theme/app_theme.dart';
@@ -14,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+      padding: const EdgeInsets.fromLTRB(30, 24, 30, 0),
       child: AppBar(
         scrolledUnderElevation: 0.0,
         titleSpacing: 0,
@@ -27,11 +28,7 @@ class CustomAppBar extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/bag.svg',
-              width: 24,
-              height: 24,
-            ),
+            icon: CartStatusWidget(),
             onPressed: () {
               context.read<ProductCartBloc>().add(ViewCartEvent());
               Navigator.push(
@@ -44,6 +41,50 @@ class CustomAppBar extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+    );
+  }
+}
+
+class CartStatusWidget extends StatelessWidget {
+  const CartStatusWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CartStatusCubit, CartStatusState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        print('Cart State : $state');
+        if (state is CartStatusInitial) {
+          return SvgPicture.asset(
+            'assets/icons/bag.svg',
+            width: 24,
+            height: 24,
+          );
+        } else {
+          return Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/bag.svg',
+                width: 24,
+                height: 24,
+              ),
+              Positioned(
+                  top: 4,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: AppTheme.error500,
+                      shape: BoxShape.circle,
+                    ),
+                  ))
+            ],
+          );
+        }
+      },
     );
   }
 }

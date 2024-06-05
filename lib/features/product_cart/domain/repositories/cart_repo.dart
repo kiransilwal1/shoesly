@@ -1,6 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-
-import '../../../../core/entities/product_discover_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/cart.dart';
 
@@ -18,7 +16,7 @@ abstract interface class ProductCartRepo {
     required String title,
     required String brandImageUrl,
   });
-  Future<Either<Failure, List<Product>>> deleteFromCart({
+  Future<Either<Failure, Cart>> deleteFromCart({
     required String id,
     required String colorCode,
     required String colorName,
@@ -31,20 +29,20 @@ abstract interface class ProductCartRepo {
     required String title,
     required String brandImageUrl,
   });
-  Future<Either<Failure, List<Product>>> bulkDeleteFromCart(
-      {required String id,
-      required String colorCode,
-      required String colorName,
-      required String image,
-      required double size,
-      required DateTime createdAt,
-      required String productId,
-      required double price,
-      required String brandname,
-      required String title,
-      required String brandImageUrl,
-      required int quantity});
-  Future<Either<Failure, List<Product>>> bulkAddToCart(
+  Future<Either<Failure, Cart>> bulkDeleteFromCart({
+    required String id,
+    required String colorCode,
+    required String colorName,
+    required String image,
+    required double size,
+    required DateTime createdAt,
+    required String productId,
+    required double price,
+    required String brandname,
+    required String title,
+    required String brandImageUrl,
+  });
+  Future<Either<Failure, Cart>> bulkAddToCart(
       {required String id,
       required String colorCode,
       required String colorName,

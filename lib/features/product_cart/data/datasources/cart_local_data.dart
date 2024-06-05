@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/constants.dart';
-import '../../../../core/error/cache_exceptions.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/models/product_variation_model.dart';
 import '../models/cart_model.dart';
 
@@ -14,7 +14,7 @@ abstract interface class ProductCartLocalData {
   Future<CartModel> bulkAddToCart(
       {required ProductVariationModel productModel, required int quantity});
   Future<CartModel> bulkDeleteFromCart(
-      {required ProductVariationModel productModel, required int quantity});
+      {required ProductVariationModel productModel});
   Future<CartModel> getCart();
 }
 
@@ -40,8 +40,10 @@ class ProductCartLocalDataImpl implements ProductCartLocalData {
   Future<CartModel> deleteFromCart(ProductVariationModel productModel) async {
     try {
       final cart = await getCart();
-      cart.products.removeWhere((p) => p.id == productModel.id);
-
+      int index = cart.products.indexWhere((p) => p.id == productModel.id);
+      if (index != -1) {
+        cart.products.removeAt(index);
+      }
       await _saveCart(cart);
       return cart;
     } catch (e) {
@@ -55,9 +57,12 @@ class ProductCartLocalDataImpl implements ProductCartLocalData {
       required int quantity}) async {
     try {
       final cart = await getCart();
-      for (int i = 0; i < quantity; i++) {
+      //TODO: Do while loop to handle the case where i = 1;
+      int i = 0;
+      do {
         cart.products.add(productModel);
-      }
+        i++;
+      } while (i < quantity);
 
       await _saveCart(cart);
       return cart;
@@ -68,13 +73,10 @@ class ProductCartLocalDataImpl implements ProductCartLocalData {
 
   @override
   Future<CartModel> bulkDeleteFromCart(
-      {required ProductVariationModel productModel,
-      required int quantity}) async {
+      {required ProductVariationModel productModel}) async {
     try {
       final cart = await getCart();
-      for (int i = 0; i < quantity; i++) {
-        cart.products.remove(productModel);
-      }
+      cart.products.removeWhere((p) => p.id == productModel.id);
 
       await _saveCart(cart);
       return cart;

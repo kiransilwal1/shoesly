@@ -34,7 +34,7 @@ class _ProductDiscoverPageState extends State<ProductDiscoverPage> {
     return Scaffold(
       // backgroundColor: Colors.white,
       appBar: const PreferredSize(
-        preferredSize: Size(0, 50),
+        preferredSize: Size(0, 80),
         child: CustomAppBar(),
       ),
       body: Padding(
