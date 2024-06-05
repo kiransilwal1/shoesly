@@ -39,188 +39,75 @@ In addition to that, since there are less pages as of now, named routes are not 
 
 ```
 └── 📁lib 
-    └── 📁core - ## Core common components and features used by all child features.
-        └── 📁constants - Contain constants
-            └── constants.dart
-        └── 📁cubit
-            └── cart_status_cubit.dart
-            └── cart_status_state.dart
+    └── 📁core 
+        └── 📁constants
+        └── 📁cubit 
         └── 📁entities
-            └── brands.dart
-            └── product_discover_entity.dart
-            └── product_variation.dart
         └── 📁error
-            └── exceptions.dart
-            └── failures.dart
         └── 📁models
-            └── brand_model.dart
-            └── cart_model.dart
-            └── product_model.dart
-            └── product_variation_model.dart
         └── 📁network
-            └── connection_checker.dart
         └── 📁theme
-            └── app_theme.dart
         └── 📁usecase
-            └── usecase.dart
         └── 📁utils
-            └── snackbar.dart
         └── 📁widgets
-            └── .DS_Store
-            └── alert.dart
-            └── 📁buttons
-                └── button_styles.dart
-                └── minimal_buttons.dart
-                └── primary_buttons.dart
-                └── secondary_buttons.dart
-            └── custom_app_bar.dart
-            └── rating_star.dart
-            └── reviews.dart
-            └── 📁shimmers
-                └── horizontal_buttons_shimmer.dart
-                └── horizontal_circular.dart
-                └── shimmer_container_hard.dart
-                └── shimmer_container_rounded.dart
-            └── thumb_selector.dart
     └── dependencies.dart
     └── 📁features
         └── .DS_Store
         └── 📁paywall
-            └── 📁data
-                └── 📁datasources
-                └── 📁models
-                ├── repositories
-            └── 📁domain
-                └── 📁entities
-                └── 📁repositories
-                ├── usecases
-            └── 📁presentation
-                └── 📁bloc
-                    └── paywall_bloc.dart
-                    └── paywall_event.dart
-                    └── paywall_state.dart
-                └── 📁pages
-                    └── order_summary.dart
-                ├── widgets
         └── 📁product_cart
-            └── 📁data
-                └── 📁datasources
-                    └── cart_local_data.dart
-                └── 📁models
-                └── 📁repositories
-                    └── cart_repo_impl.dart
-            └── 📁domain
-                └── 📁entities
-                    └── bulk_add_params.dart
-                    └── cart.dart
-                └── 📁repositories
-                    └── cart_repo.dart
-                └── 📁usecases
-                    └── add_product_to_cart.dart
-                    └── bulk_add_to_cart.dart
-                    └── delete_from_cart.dart
-                    └── remove_from_cart.dart
-                    └── view_cart.dart
-            └── 📁presentation
-                └── 📁bloc
-                    └── product_cart_bloc.dart
-                    └── product_cart_event.dart
-                    └── product_cart_state.dart
-                └── 📁pages
-                    └── cart_page.dart
-                └── 📁widgets
-                    └── shimmer_cart_page.dart
         └── 📁product_detail
-            └── 📁data
-                └── 📁datasources
-                    └── product_detail_remote.dart
-                └── 📁models
-                    └── product_detail_model.dart
-                    └── product_model.dart
-                    └── product_review_mode.dart
-                └── 📁repositories
-                    └── product_detail_repo_impl.dart
-            └── 📁domain
-                └── 📁entities
-                    └── product_detail_entity.dart
-                    └── product_entity.dart
-                    └── product_review.dart
-                └── 📁repositories
-                    └── product_detail_rep.dart
-                └── 📁usecases
-                    └── product_detail_load_usecase.dart
-            └── 📁presentation
-                └── 📁bloc
-                    └── product_detail_bloc.dart
-                    └── product_detail_event.dart
-                    └── product_detail_state.dart
-                └── 📁pages
-                    └── product_detail_page.dart
-                └── 📁widgets
-                    └── product_detail_thumbnail.dart
-                    └── shimmer_product_detail.dart
-                    └── size_option_view.dart
-                    └── text_field_plus_minus.dart
         └── 📁product_discover
-            └── .DS_Store
-            └── 📁data
-                └── 📁datasources
-                    └── product_remote_datasource.dart
-                └── 📁models
-                    └── filter_params_model.dart
-                    └── product_data_model.dart
-                    └── variation_model.dart
-                └── 📁repositories
-                    └── product_repo_impl.dart
-            └── 📁domain
-                └── 📁entities
-                    └── color_entites.dart
-                    └── filter_entity.dart
-                    └── filter_params.dart
-                    └── product_data_entity.dart
-                    └── variation_entities.dart
-                └── 📁repositories
-                    └── product_discover_repo.dart
-                └── 📁usecases
-                    └── filter_params_collect.dart
-                    └── filter_product_page_usecase.dart
-                    └── product_discover_usecase.dart
-            └── 📁presentation
-                └── .DS_Store
-                └── 📁bloc
-                    └── product_discover_bloc.dart
-                    └── product_discover_event.dart
-                    └── product_discover_state.dart
-                └── 📁pages
-                    └── product_discover_page.dart
-                    └── product_filter.dart
-                └── 📁widgets
-                    └── brand_search.dart
-                    └── brand_selector.dart
-                    └── chip_selector.dart
-                    └── color_selector.dart
-                    └── price_range_slider.dart
-                    └── product_card.dart
-                    └── product_rating.dart
-                    └── shimmer_discover_page.dart
-                    └── shimmer_filter_page.dart
         └── 📁product_review
-            └── 📁data
-                └── 📁datasources
-                └── 📁models
-                ├── repositories
-            └── 📁domain
-                └── 📁entities
-                └── 📁repositories
-                ├── usecases
-            └── 📁presentation
-                └── 📁bloc
-                    └── product_review_bloc.dart
-                    └── product_review_event.dart
-                    └── product_review_state.dart
-                └── 📁pages
-                    └── product_review.dart
-                ├── widgets
     └── firebase_options.dart
     └── main.dart
 ```
+
+The folder structure for the project is illustrate above. The code is divided into two main parts.
+
+* Core
+* Features
+
+### Features
+
+Feature folder contains all the high level features the app has. For example the current app has, Product discover from where user can view the shoes. The Product detail feature is the feature that encompases all the details of the product and their variations and so on and so forth. The Features folder is divided more into subfolders.
+
+* Data Folder: This layer is responsible for mainting incoming and outgoing of data that are relevant for the feature. If it is a product discover feature then this domain will want to connect to APIs across the internet, fetch data and prepares the data.
+
+* Domain Folder: This is the major layer and acts as a proxy between data and presentation. Domain layers contains abstract interfaces that act as contracts for the state and data. Both data layer and presentation layer shall follow what the domain says. This will loosely couple data and UI. 
+
+Presentation Layer: This layer contains all the UI and states that are relevant for the feature. 
+
+```
+└── 📁product_discover
+    └── 📁data
+    └── 📁domain
+    └── 📁presentation
+```
+
+
+### Core
+
+Core folder contains all the classes, objects and codes that are shared across the app. They are accessible from everywhere inside the project. Whenever two or more features need to access the same class, objects or helpers, such codes are moved upward in the tree to core features. The main purpose is, the app shall work perfectly even if we delete one feature. Helper classes, Error classes, Constants, Themedata, Buttons are some important files that are used across multiple features.
+
+
+## Libraries and tools used:
+
+
+   cupertino_icons: ^1.0.2
+   flutter_bloc: ^8.1.5
+   flutter_svg: ^2.0.10+1
+   expandable: ^5.0.1
+   firebase_core: ^2.24.2
+   fpdart: ^1.1.0
+   cloud_firestore: ^4.14.0
+   cached_network_image: ^3.3.1
+   path_provider: ^2.1.2
+   supabase_flutter: ^2.5.4
+   shimmer: ^3.0.0
+   shared_preferences: ^2.2.2
+   internet_connection_checker_plus: ^2.1.0
+   get_it: ^7.7.0
+
+  * The app uses Flutter bloc for state management. Bloc and cubits are extenisvely used across all the features to manage the state of the App. 
+  
+  * Flutter SVG is used to render SVG icons.
