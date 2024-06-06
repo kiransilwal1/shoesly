@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoesly/core/common/theme/app_theme.dart';
 import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/common/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/core/common/widgets/reviews.dart';
-import 'package:shoesly/features/product_detail/domain/entities/product_review.dart';
 
 import '../../../../core/common/widgets/alert.dart';
 import '../bloc/product_review_bloc.dart';
+import '../widgets/empty_review.dart';
+import '../widgets/review_filter.dart';
+import '../widgets/review_section.dart';
 
 class ProductReviewPage extends StatelessWidget {
   ProductReviewPage({super.key});
@@ -80,77 +81,13 @@ class ProductReviewPage extends StatelessWidget {
               children: [
                 // Filter buttons
                 // TODO: Display something when there is no review for some filters.
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (int stars in filterText)
-                        MinimalButton(
-                          isDisabled: stars != state.filterValue,
-                          style: LabelButtonStyle(
-                              text: stars != 0 ? '$stars Star' : 'All'),
-                          onPressed: () {
-                            context.read<ProductReviewBloc>().add(
-                                  FilterReviewEvent(
-                                    globalReviews: state.globalReviews,
-                                    reviews: state.reviews,
-                                    averageRating: state.averageRating,
-                                    filterValue: stars,
-                                  ),
-                                );
-                          },
-                        ),
-                    ],
-                  ),
-                ),
+                SatrFilters(filterText: filterText),
                 const SizedBox(
                   height: 20,
                 ),
                 state.reviews.isNotEmpty
-                    ? Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              children: [
-                                for (ProductReview userReview in state.reviews)
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                                    child: Reviews(
-                                        name: userReview.userName,
-                                        rating: userReview.userRating,
-                                        description: userReview.userDescription,
-                                        imageUrl: userReview.imageUrl),
-                                  )
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    : Expanded(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/404.gif',
-                                height: size.width * 0.4,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'No Ratings!',
-                                style: AppTheme.headline600,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    ? UserReviews(reviews: state.reviews)
+                    : const EmptyReviewPage(),
               ],
             ),
           );
