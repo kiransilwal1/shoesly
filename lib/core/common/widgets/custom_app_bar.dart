@@ -63,24 +63,29 @@ class CartStatusWidget extends StatelessWidget {
             height: 24,
           );
         } else {
-          return Stack(
-            alignment: Alignment.topRight,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/icons/bag.svg',
-                width: 24,
-                height: 24,
+              Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/bag.svg',
+                    width: 24,
+                    height: 24,
+                  ),
+                  Positioned(
+                      top: 4,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppTheme.error500,
+                          shape: BoxShape.circle,
+                        ),
+                      ))
+                ],
               ),
-              Positioned(
-                  top: 4,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: AppTheme.error500,
-                      shape: BoxShape.circle,
-                    ),
-                  ))
             ],
           );
         }
