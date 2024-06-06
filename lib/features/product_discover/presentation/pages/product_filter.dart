@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/core/entities/brands.dart';
+import 'package:shoesly/core/common/widgets/standard_app_bar.dart';
 import 'package:shoesly/features/product_discover/presentation/bloc/product_discover_bloc.dart';
 import 'package:shoesly/core/common/theme/app_theme.dart';
-import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
-import 'package:shoesly/core/common/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/core/common/widgets/buttons/secondary_buttons.dart';
 import 'package:shoesly/features/product_discover/domain/entities/color_entites.dart';
+import 'package:shoesly/features/product_discover/presentation/widgets/bottom_sheet.dart';
 import '../../../../core/common/widgets/alert.dart';
-import '../../../../core/common/widgets/buttons/primary_buttons.dart';
 import '../widgets/brand_selector.dart';
 import '../widgets/chip_selector.dart';
 import '../widgets/color_selector.dart';
@@ -50,65 +47,24 @@ class ProductFilterPage extends StatelessWidget {
       builder: (context, state) {
         if (state is FilterParamSuccess) {
           return Scaffold(
-              bottomSheet: Container(
-                height: 90,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: BlocBuilder<ProductDiscoverBloc, ProductDiscoverState>(
-                    builder: (context, state) {
-                      if (state is FilterParamSuccess) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //TODO: Need to remove hard coded reset
-                            SecondaryButton(
-                              isDisabled: false,
-                              style: const LabelButtonStyle(text: 'RESET'),
-                              onPressed: () {},
-                            ),
-                            PrimaryButton(
-                              isDisabled: false,
-                              style: const LabelButtonStyle(text: 'APPLY'),
-                              onPressed: () {
-                                context.read<ProductDiscoverBloc>().add(
-                                      FilterButtonPressed(
-                                        shoeBrand: _selectedId ?? 'All',
-                                        color: _selectedColor == null
-                                            ? 'All'
-                                            : _selectedColor!.colorCode,
-                                        gender: _selectedGender,
-                                        maxPrice: _maxPrice,
-                                        minPrice: _minPrice,
-                                        sortBy: _selectedSortBy,
-                                        globalData: state.globalData,
-                                        stateData: state.localData,
-                                      ),
-                                    );
-                                Navigator.pop(context);
-                              },
-                            )
-                          ],
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
+              bottomSheet: BottomSheetFilterPage(
+                  selectedId: _selectedId,
+                  selectedColor: _selectedColor,
+                  selectedGender: _selectedGender,
+                  maxPrice: _maxPrice,
+                  minPrice: _minPrice,
+                  selectedSortBy: _selectedSortBy),
+              appBar: PreferredSize(
+                preferredSize: Size(0, 80),
+                child: StandardAppBar(
+                  title: 'Filter',
+                  onBack: () {
+                    context
+                        .read<ProductDiscoverBloc>()
+                        .add(ProductDiscoverInitiated());
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              appBar: AppBar(
-                scrolledUnderElevation: 0.0,
-                toolbarHeight: 60,
-                leading: _backButton(context),
-                title: Text(
-                  'Filter',
-                  style:
-                      AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
               ),
               body: Padding(
                 padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
@@ -214,74 +170,6 @@ class ProductFilterPage extends StatelessWidget {
             body: FilterPageShimmer(),
           );
         }
-      },
-    );
-  }
-
-  SizedBox _colorSelector({required List<ColorEntity> colorCodes}) {
-    return SizedBox(
-      height: 60,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: ColorSelector(
-          colorList: colorCodes,
-          onColorSelected: (ColorEntity? selectedColor) {
-            _selectedColor = selectedColor;
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _sortyBySelector() {
-    return ChipSelector(
-      chipText: sortButtonText,
-      onTextSelected: (String? selectedSortBy) {
-        _selectedSortBy = selectedSortBy;
-      },
-    );
-  }
-
-  Widget _genderSelector() {
-    return ChipSelector(
-      chipText: genderText,
-      onTextSelected: (String? selectedGender) {
-        _selectedGender = selectedGender;
-      },
-    );
-  }
-
-  PriceRangeSlider _priceRangeSelector(
-      {required double maxPrice, required double minPrice}) {
-    return PriceRangeSlider(
-      maxPrice: maxPrice,
-      minPrice: minPrice,
-      onPriceRangeChanged: (double minPrice, double maxPrice) {
-        _minPrice = minPrice;
-        _maxPrice = maxPrice;
-      },
-    );
-  }
-
-  Widget _brandSelector({required List<Brand> brands}) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: BrandSelectorView(
-          brands: brands,
-          onSelected: (value) {
-            _selectedId = value;
-            debugPrint(_selectedId);
-          }),
-    );
-  }
-
-  Widget _backButton(BuildContext context) {
-    return MinimalButton(
-      isDisabled: false,
-      style: const IconOnlyStyle(iconImagePath: 'assets/icons/back.png'),
-      onPressed: () {
-        context.read<ProductDiscoverBloc>().add(ProductDiscoverInitiated());
-        Navigator.pop(context);
       },
     );
   }

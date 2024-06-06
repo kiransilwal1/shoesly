@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +8,6 @@ import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 
 import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 import 'package:shoesly/features/product_payment/presentation/pages/order_summary.dart';
-import 'package:shoesly/core/entities/product_variation.dart';
 import '../../../../core/common/widgets/alert.dart';
 import '../../../../core/common/widgets/buttons/primary_buttons.dart';
 import '../../../../core/common/widgets/standard_app_bar.dart';

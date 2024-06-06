@@ -49,7 +49,6 @@ class _ProductDetailThumbnailState extends State<ProductDetailThumbnail> {
   Widget build(BuildContext context) {
     List<String> colorString =
         widget.shoes.productVariations.map((e) => e.colorCode).toSet().toList();
-    int variationCount = widget.shoes.productVariations.length;
     int uniqueCount = getUniqueByProperty(
         widget.shoes.productVariations, (shoe) => shoe.colorCode).length;
     return Container(
