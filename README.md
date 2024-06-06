@@ -152,8 +152,3 @@ https://github.com/kiransilwal1/shoesly/assets/88090804/b278b779-5967-4e17-8855-
 
 
 
-
-
-
-https://github.com/kiransilwal1/shoesly/assets/88090804/934dd48d-5f47-481d-aeb8-b44332ab0532
-
