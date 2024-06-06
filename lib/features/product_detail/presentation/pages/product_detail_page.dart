@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shoesly/core/common/widgets/custom_app_bar.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
 import 'package:shoesly/features/product_detail/presentation/widgets/product_detail_thumbnail.dart';
 import 'package:shoesly/features/product_detail/presentation/widgets/shimmer_product_detail.dart';
@@ -11,13 +9,15 @@ import '../../../../core/common/theme/app_theme.dart';
 import '../../../../core/common/widgets/alert.dart';
 import '../../../../core/common/widgets/buttons/button_styles.dart';
 import '../../../../core/common/widgets/buttons/primary_buttons.dart';
-import '../../../../core/common/widgets/reviews.dart';
 import '../../../product_discover/presentation/widgets/product_rating.dart';
 import '../widgets/add_to_cart_bottom_sheet.dart';
 import '../../../product_review/presentation/bloc/product_review_bloc.dart';
 import '../../../product_review/presentation/pages/product_review.dart';
 import '../../domain/entities/product_review.dart';
 import '../bloc/product_detail_bloc.dart';
+import '../widgets/product_detail_app_bar.dart';
+import '../widgets/review_section.dart';
+import '../widgets/see_reviews_button.dart';
 import '../widgets/size_option_view.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -73,27 +73,9 @@ class ProductDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: const Size(0, 80),
-        child: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 100,
-            actions: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: CartStatusWidget(),
-              ),
-            ],
-            leading: IconButton(
-              icon: SvgPicture.asset('assets/icons/back-arrow.svg',
-                  colorFilter: const ColorFilter.mode(
-                      AppTheme.neutral500, BlendMode.srcIn)),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )),
+        child: AppBarProductDetailPage(),
       ),
       body: BlocConsumer<ProductDetailBloc, ProductDetailState>(
         listener: (context, state) {
@@ -123,6 +105,7 @@ class ProductDetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //Thumbnail to display swipable product variant.
                       ProductDetailThumbnail(
                           size: size,
                           shoes: state.productDetailEntity,
@@ -184,65 +167,26 @@ class ProductDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      Column(
-                        children: [
-                          for (var review in reviewCounts)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                              child: Reviews(
-                                description: review.userDescription,
-                                name: review.userName,
-                                rating: review.userRating,
-                                imageUrl: review.imageUrl,
-                              ),
-                            )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              context.read<ProductReviewBloc>().add(
-                                    FilterReviewEvent(
-                                        globalReviews: state
-                                            .productDetailEntity.productReveiws,
-                                        averageRating: rating,
-                                        reviews: state
-                                            .productDetailEntity.productReveiws,
-                                        filterValue: 0),
-                                  );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductReviewPage()),
-                              );
-                            },
-                            child: Container(
-                              height: 50,
-                              width: size.width * 0.6,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppTheme.neutral200, width: 2),
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                child: Center(
-                                  child: Text(
-                                    'SEE ALL REVIEWS',
-                                    style: AppTheme.headline300
-                                        .copyWith(color: AppTheme.neutral500),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      ReviewSection(reviewCounts: reviewCounts),
+                      SeeReviewsButton(
+                          rating: rating,
+                          size: size,
+                          onTap: () {
+                            context.read<ProductReviewBloc>().add(
+                                  FilterReviewEvent(
+                                      globalReviews: state
+                                          .productDetailEntity.productReveiws,
+                                      averageRating: rating,
+                                      reviews: state
+                                          .productDetailEntity.productReveiws,
+                                      filterValue: 0),
+                                );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductReviewPage()),
+                            );
+                          }),
                       const SizedBox(
                         height: 100,
                       )

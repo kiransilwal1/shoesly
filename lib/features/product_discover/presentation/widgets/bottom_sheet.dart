@@ -7,8 +7,8 @@ import '../../../../core/common/widgets/buttons/secondary_buttons.dart';
 import '../../domain/entities/color_entites.dart';
 import '../bloc/product_discover_bloc.dart';
 
-class BottomSheet extends StatelessWidget {
-  const BottomSheet({
+class BottomSheetFilterPage extends StatelessWidget {
+  const BottomSheetFilterPage({
     super.key,
     required String? selectedId,
     required ColorEntity? selectedColor,
