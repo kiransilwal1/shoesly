@@ -1,5 +1,5 @@
 import 'product_variation_model.dart';
-import '../../features/product_cart/domain/entities/cart.dart';
+import '../entities/cart.dart';
 
 class CartModel extends Cart {
   CartModel({required List<ProductVariationModel> products})

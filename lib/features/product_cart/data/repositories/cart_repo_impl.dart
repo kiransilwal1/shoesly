@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:shoesly/core/error/exceptions.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
 
-import 'package:shoesly/core/error/failures.dart';
+import 'package:shoesly/core/common/error/failures.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
-import 'package:shoesly/features/product_cart/domain/entities/cart.dart';
+import 'package:shoesly/core/entities/cart.dart';
 
 import '../../../../core/models/product_variation_model.dart';
 import '../../domain/repositories/cart_repo.dart';

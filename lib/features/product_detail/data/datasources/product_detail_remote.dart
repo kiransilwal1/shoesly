@@ -1,4 +1,4 @@
-import 'package:shoesly/core/error/exceptions.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
 import 'package:shoesly/features/product_detail/data/models/product_detail_model.dart';
 import 'package:shoesly/features/product_detail/data/models/product_review_mode.dart';
 import 'package:shoesly/core/models/product_variation_model.dart';

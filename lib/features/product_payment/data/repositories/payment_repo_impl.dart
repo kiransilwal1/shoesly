@@ -1,12 +1,12 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:shoesly/core/error/failures.dart';
-import 'package:shoesly/features/product_cart/domain/entities/cart.dart';
+import 'package:shoesly/core/common/error/failures.dart';
+import 'package:shoesly/core/entities/cart.dart';
 import 'package:shoesly/features/product_payment/data/datasources/payment_remote_datasource.dart';
 
 import 'package:shoesly/features/product_payment/domain/repositories/payment_repo.dart';
 
 import '../../../../core/constants/constants.dart';
-import '../../../../core/network/connection_checker.dart';
+import '../../../../core/common/network/connection_checker.dart';
 
 class PaymentRepoImpl implements PaymentRepo {
   final PaymentRemoteDatasource paymentRemoteDataSource;

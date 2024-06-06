@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shoesly/core/widgets/shimmers/shimmer_container_rounded.dart';
+import 'package:shoesly/core/common/widgets/shimmers/shimmer_container_rounded.dart';
 
-import '../../../../core/theme/app_theme.dart';
-import '../../../../core/widgets/buttons/button_styles.dart';
-import '../../../../core/widgets/buttons/minimal_buttons.dart';
+import '../../../../core/common/theme/app_theme.dart';
+import '../../../../core/common/widgets/buttons/button_styles.dart';
+import '../../../../core/common/widgets/buttons/minimal_buttons.dart';
 
 class ShimmerCartPage extends StatelessWidget {
   const ShimmerCartPage({

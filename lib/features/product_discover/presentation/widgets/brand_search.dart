@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoesly/features/product_discover/presentation/bloc/product_discover_bloc.dart';
-import '../../../../core/widgets/buttons/button_styles.dart';
-import '../../../../core/widgets/buttons/minimal_buttons.dart';
+import '../../../../core/common/widgets/buttons/button_styles.dart';
+import '../../../../core/common/widgets/buttons/minimal_buttons.dart';
 
 class FilterByBrand extends StatefulWidget {
   const FilterByBrand({

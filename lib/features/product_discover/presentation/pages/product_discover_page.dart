@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
 import 'package:shoesly/features/product_discover/presentation/widgets/product_card.dart';
 import 'package:shoesly/features/product_detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:shoesly/features/product_detail/presentation/pages/product_detail_page.dart';
 import '../bloc/product_discover_bloc.dart';
-import '../../../../core/widgets/alert.dart';
-import '../../../../core/widgets/buttons/button_styles.dart';
-import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../../../../core/common/widgets/alert.dart';
+import '../../../../core/common/widgets/buttons/button_styles.dart';
+import '../../../../core/common/widgets/buttons/primary_buttons.dart';
 import 'product_filter.dart';
 import '../widgets/brand_search.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/common/widgets/custom_app_bar.dart';
 import '../widgets/shimmer_discover_page.dart';
 
 class ProductDiscoverPage extends StatefulWidget {

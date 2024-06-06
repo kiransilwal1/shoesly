@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 
 class PrimaryButton extends StatelessWidget {
   final bool isDisabled;

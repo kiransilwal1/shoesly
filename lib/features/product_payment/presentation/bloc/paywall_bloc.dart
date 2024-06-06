@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/checkout_usecase.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/product_payment_initiate_useecase.dart';
 
-import '../../../product_cart/domain/entities/cart.dart';
+import '../../../../core/entities/cart.dart';
 
 part 'paywall_event.dart';
 part 'paywall_state.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_theme.dart';
+import '../../../../core/common/theme/app_theme.dart';
 import '../../domain/entities/color_entites.dart';
 
 class ColorSelector extends StatefulWidget {

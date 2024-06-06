@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:shoesly/core/error/failures.dart';
-import 'package:shoesly/core/usecase/usecase.dart';
+import 'package:shoesly/core/common/error/failures.dart';
+import 'package:shoesly/core/common/usecase/usecase.dart';
 
 import '../../../../core/entities/product_variation.dart';
-import '../entities/cart.dart';
+import '../../../../core/entities/cart.dart';
 import '../repositories/cart_repo.dart';
 
 class ProductAddToCartUseCase implements UseCase<Cart, ProductVariation> {

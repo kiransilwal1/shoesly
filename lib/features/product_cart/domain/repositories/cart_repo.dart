@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import '../../../../core/error/failures.dart';
-import '../entities/cart.dart';
+import '../../../../core/common/error/failures.dart';
+import '../../../../core/entities/cart.dart';
 
 abstract interface class ProductCartRepo {
   Future<Either<Failure, Cart>> addToCart({

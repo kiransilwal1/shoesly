@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 
 class SecondaryButton extends StatelessWidget {
   final bool isDisabled;
@@ -79,7 +79,7 @@ class SecondaryButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             padding:
-                EdgeInsets.symmetric(vertical: 14, horizontal: padding ?? 30),
+                EdgeInsets.symmetric(vertical: 16, horizontal: padding ?? 30),
             elevation: 1),
         child: content,
       ),

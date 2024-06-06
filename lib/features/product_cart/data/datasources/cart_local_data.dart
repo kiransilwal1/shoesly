@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/constants.dart';
 
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/common/error/exceptions.dart';
 import '../../../../core/models/product_variation_model.dart';
 import '../../../../core/models/cart_model.dart';
 

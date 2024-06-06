@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/widgets/shimmers/horizontal_buttons_shimmer.dart';
-import '../../../../core/widgets/shimmers/horizontal_circular.dart';
+import '../../../../core/common/widgets/shimmers/horizontal_buttons_shimmer.dart';
+import '../../../../core/common/widgets/shimmers/horizontal_circular.dart';
 
 class FilterPageShimmer extends StatelessWidget {
   const FilterPageShimmer({

@@ -1,10 +1,10 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
-import 'package:shoesly/core/error/failures.dart';
-import 'package:shoesly/core/usecase/usecase.dart';
+import 'package:shoesly/core/common/error/failures.dart';
+import 'package:shoesly/core/common/usecase/usecase.dart';
 import 'package:shoesly/features/product_cart/domain/repositories/cart_repo.dart';
 
-import '../entities/cart.dart';
+import '../../../../core/entities/cart.dart';
 
 class RemoveFromCartUseCase implements UseCase<Cart, ProductVariation> {
   final ProductCartRepo productCartRepo;

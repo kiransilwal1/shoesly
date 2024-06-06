@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../product_cart/domain/entities/cart.dart';
+import '../../../../core/common/error/failures.dart';
+import '../../../../core/entities/cart.dart';
 
 abstract interface class PaymentRepo {
   Future<Either<Failure, String>> initiatePayment({required Cart cart});

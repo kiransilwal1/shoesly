@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shoesly/features/product_detail/domain/entities/product_detail_entity.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
-import '../../../../core/theme/app_theme.dart';
+import '../../../../core/common/theme/app_theme.dart';
 
 class ProductDetailThumbnail extends StatefulWidget {
   const ProductDetailThumbnail({

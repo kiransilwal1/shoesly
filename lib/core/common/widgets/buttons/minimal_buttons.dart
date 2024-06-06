@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 
+// ignore: must_be_immutable
 class MinimalButton extends StatelessWidget {
   final bool isDisabled;
   final AllButtonStyles style;

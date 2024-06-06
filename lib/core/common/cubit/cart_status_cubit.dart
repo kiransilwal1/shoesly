@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/product_cart/domain/entities/cart.dart';
+import '../../entities/cart.dart';
 
 part 'cart_status_state.dart';
 

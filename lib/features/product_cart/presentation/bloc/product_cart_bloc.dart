@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/core/cubit/cart_status_cubit.dart';
-import 'package:shoesly/core/usecase/usecase.dart';
+import 'package:shoesly/core/common/usecase/usecase.dart';
 import 'package:shoesly/features/product_cart/domain/entities/bulk_add_params.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/bulk_add_to_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/remove_from_cart.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/view_cart.dart';
 
+import '../../../../core/common/cubit/cart_status_cubit.dart';
 import '../../../../core/entities/product_variation.dart';
-import '../../domain/entities/cart.dart';
+import '../../../../core/entities/cart.dart';
 import '../../domain/usecases/delete_from_cart.dart';
 part 'product_cart_event.dart';
 part 'product_cart_state.dart';

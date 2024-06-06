@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoesly/core/error/exceptions.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
 import 'package:shoesly/core/models/product_variation_model.dart';
-import 'package:shoesly/features/product_cart/domain/entities/cart.dart';
+import 'package:shoesly/core/entities/cart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/constants/constants.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_theme.dart';
-import '../../../../core/widgets/rating_star.dart';
+import '../../../../core/common/theme/app_theme.dart';
+import '../../../../core/common/widgets/rating_star.dart';
 
 class RatingView extends StatelessWidget {
   const RatingView({

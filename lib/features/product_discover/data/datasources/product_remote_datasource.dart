@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:shoesly/core/error/exceptions.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
 import 'package:shoesly/core/models/brand_model.dart';
 import 'package:shoesly/features/product_discover/data/models/product_data_model.dart';
 import 'package:shoesly/features/product_discover/data/models/variation_model.dart';

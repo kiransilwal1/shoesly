@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoesly/core/widgets/thumb_selector.dart';
-import '../../../../core/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/thumb_selector.dart';
+import '../../../../core/common/theme/app_theme.dart';
 
 class PriceRangeSlider extends StatefulWidget {
   const PriceRangeSlider({

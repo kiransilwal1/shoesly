@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shoesly/core/cubit/cart_status_cubit.dart';
 import 'package:shoesly/features/product_cart/presentation/bloc/product_cart_bloc.dart';
 
+import '../cubit/cart_status_cubit.dart';
 import '../theme/app_theme.dart';
-import '../../features/product_cart/presentation/pages/cart_page.dart';
+import '../../../features/product_cart/presentation/pages/cart_page.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({

@@ -4,6 +4,7 @@ import '../theme/app_theme.dart';
 import 'buttons/button_styles.dart';
 import 'buttons/minimal_buttons.dart';
 
+// ignore: must_be_immutable
 class StandardAppBar extends StatelessWidget {
   StandardAppBar({
     super.key,

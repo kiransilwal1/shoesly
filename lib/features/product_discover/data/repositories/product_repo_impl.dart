@@ -1,13 +1,13 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:shoesly/core/error/exceptions.dart';
-import 'package:shoesly/core/error/failures.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
+import 'package:shoesly/core/common/error/failures.dart';
 import 'package:shoesly/features/product_discover/data/datasources/product_remote_datasource.dart';
 import 'package:shoesly/features/product_discover/domain/entities/filter_entity.dart';
 import 'package:shoesly/features/product_discover/domain/entities/product_data_entity.dart';
 import 'package:shoesly/features/product_discover/domain/repositories/product_discover_repo.dart';
 
 import '../../../../core/constants/constants.dart';
-import '../../../../core/network/connection_checker.dart';
+import '../../../../core/common/network/connection_checker.dart';
 import '../../domain/entities/filter_params.dart';
 import '../models/product_data_model.dart';
 

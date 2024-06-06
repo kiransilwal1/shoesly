@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/widgets/buttons/button_styles.dart';
-import '../../../../core/widgets/buttons/minimal_buttons.dart';
+import '../../../../core/common/widgets/buttons/button_styles.dart';
+import '../../../../core/common/widgets/buttons/minimal_buttons.dart';
 
 class TextFieldWithPlusMinus extends StatefulWidget {
   const TextFieldWithPlusMinus({Key? key, required this.onChanged})

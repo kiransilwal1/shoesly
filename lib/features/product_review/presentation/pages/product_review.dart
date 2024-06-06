@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
-import 'package:shoesly/core/widgets/buttons/minimal_buttons.dart';
-import 'package:shoesly/core/widgets/reviews.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/common/widgets/buttons/minimal_buttons.dart';
+import 'package:shoesly/core/common/widgets/reviews.dart';
 import 'package:shoesly/features/product_detail/domain/entities/product_review.dart';
 
-import '../../../../core/widgets/alert.dart';
+import '../../../../core/common/widgets/alert.dart';
 import '../bloc/product_review_bloc.dart';
 
 class ProductReviewPage extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/shimmers/horizontal_circular.dart';
-import '../../../../core/widgets/shimmers/shimmer_container_hard.dart';
-import '../../../../core/widgets/shimmers/shimmer_container_rounded.dart';
+import '../../../../core/common/widgets/shimmers/horizontal_circular.dart';
+import '../../../../core/common/widgets/shimmers/shimmer_container_hard.dart';
+import '../../../../core/common/widgets/shimmers/shimmer_container_rounded.dart';
 
 class ShimmerProductDetail extends StatelessWidget {
   const ShimmerProductDetail({

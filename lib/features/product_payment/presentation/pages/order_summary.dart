@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
 
-import 'package:shoesly/core/theme/app_theme.dart';
-import 'package:shoesly/core/widgets/buttons/button_styles.dart';
-import 'package:shoesly/core/widgets/standard_app_bar.dart';
+import 'package:shoesly/core/common/theme/app_theme.dart';
+import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
+import 'package:shoesly/core/common/widgets/standard_app_bar.dart';
 import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
 
 import '../../../../core/constants/constants.dart';
-import '../../../../core/widgets/alert.dart';
-import '../../../../core/widgets/buttons/minimal_buttons.dart';
-import '../../../../core/widgets/buttons/primary_buttons.dart';
+import '../../../../core/common/widgets/alert.dart';
+import '../../../../core/common/widgets/buttons/minimal_buttons.dart';
+import '../../../../core/common/widgets/buttons/primary_buttons.dart';
 import '../bloc/paywall_bloc.dart';
 
 class OrderSummary extends StatelessWidget {

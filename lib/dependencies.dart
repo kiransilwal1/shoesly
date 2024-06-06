@@ -2,8 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoesly/core/constants/constants.dart';
-import 'package:shoesly/core/cubit/cart_status_cubit.dart';
-import 'package:shoesly/core/network/connection_checker.dart';
+import 'package:shoesly/core/common/network/connection_checker.dart';
 import 'package:shoesly/features/product_cart/data/datasources/cart_local_data.dart';
 import 'package:shoesly/features/product_cart/data/repositories/cart_repo_impl.dart';
 import 'package:shoesly/features/product_cart/domain/usecases/add_product_to_cart.dart';
@@ -27,6 +26,7 @@ import 'package:shoesly/features/product_payment/domain/usecases/product_payment
 import 'package:shoesly/features/product_payment/presentation/bloc/paywall_bloc.dart';
 import 'package:shoesly/features/product_review/presentation/bloc/product_review_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/common/cubit/cart_status_cubit.dart';
 import 'features/product_cart/presentation/bloc/product_cart_bloc.dart';
 import 'features/product_detail/presentation/bloc/product_detail_bloc.dart';
 

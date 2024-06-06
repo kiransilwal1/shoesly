@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:shoesly/core/error/failures.dart';
-import 'package:shoesly/core/usecase/usecase.dart';
+import 'package:shoesly/core/common/error/failures.dart';
+import 'package:shoesly/core/common/usecase/usecase.dart';
 
-import '../../../product_cart/domain/entities/cart.dart';
+import '../../../../core/entities/cart.dart';
 import '../repositories/payment_repo.dart';
 
 class ProductPaymentInitiateUsecase implements UseCase<String, Cart> {
