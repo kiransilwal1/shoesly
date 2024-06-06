@@ -22,63 +22,69 @@ class _ColorSelectorState extends State<ColorSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (ColorEntity color in widget.colorList)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedColor = (_selectedColor == color) ? null : color;
-                  // context.read<FilterCountBloc>().add(AddFilterEvent(1));
-                  widget.onColorSelected(_selectedColor);
-                });
-              },
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: _selectedColor == color
-                        ? AppTheme.neutral500
-                        : AppTheme.neutral200,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                          color: hexStringToColor(color.colorCode),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppTheme.neutral200,
-                            width: 1,
+    return SizedBox(
+      height: 60,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (ColorEntity color in widget.colorList)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedColor = (_selectedColor == color) ? null : color;
+                      // context.read<FilterCountBloc>().add(AddFilterEvent(1));
+                      widget.onColorSelected(_selectedColor);
+                    });
+                  },
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: _selectedColor == color
+                            ? AppTheme.neutral500
+                            : AppTheme.neutral200,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              color: hexStringToColor(color.colorCode),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppTheme.neutral200,
+                                width: 1,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            color.name,
+                            style: AppTheme.headline400.copyWith(
+                              color: AppTheme.neutral500,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        color.name,
-                        style: AppTheme.headline400.copyWith(
-                          color: AppTheme.neutral500,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-      ],
+          ],
+        ),
+      ),
     );
   }
 

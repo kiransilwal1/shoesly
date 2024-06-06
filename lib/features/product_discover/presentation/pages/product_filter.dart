@@ -124,7 +124,15 @@ class ProductFilterPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      _brandSelector(brands: state.filterEntity.brands),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: BrandSelectorView(
+                            brands: state.filterEntity.brands,
+                            onSelected: (value) {
+                              _selectedId = value;
+                              debugPrint(_selectedId);
+                            }),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -136,9 +144,15 @@ class ProductFilterPage extends StatelessWidget {
                         height: 16,
                       ),
                       //TODO: The design needs to be changed according to the actual design
-                      _priceRangeSelector(
-                          maxPrice: state.filterEntity.maxPrice,
-                          minPrice: state.filterEntity.minPrice),
+                      PriceRangeSlider(
+                        maxPrice: state.filterEntity.maxPrice,
+                        minPrice: state.filterEntity.minPrice,
+                        onPriceRangeChanged:
+                            (double minPrice, double maxPrice) {
+                          _minPrice = minPrice;
+                          _maxPrice = maxPrice;
+                        },
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -149,7 +163,12 @@ class ProductFilterPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      _sortyBySelector(),
+                      ChipSelector(
+                        chipText: sortButtonText,
+                        onTextSelected: (String? selectedSortBy) {
+                          _selectedSortBy = selectedSortBy;
+                        },
+                      ),
 
                       const SizedBox(
                         height: 30,
@@ -162,7 +181,12 @@ class ProductFilterPage extends StatelessWidget {
                         height: 24,
                       ),
                       //TODO: Need to add gender in Supabase
-                      _genderSelector(),
+                      ChipSelector(
+                        chipText: genderText,
+                        onTextSelected: (String? selectedGender) {
+                          _selectedGender = selectedGender;
+                        },
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -173,7 +197,13 @@ class ProductFilterPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      _colorSelector(colorCodes: state.filterEntity.colorCodes),
+                      // _colorSelector(colorCodes: state.filterEntity.colorCodes),
+                      ColorSelector(
+                        colorList: state.filterEntity.colorCodes,
+                        onColorSelected: (ColorEntity? selectedColor) {
+                          _selectedColor = selectedColor;
+                        },
+                      ),
                       const SizedBox(height: 80),
                     ],
                   ),
@@ -204,30 +234,20 @@ class ProductFilterPage extends StatelessWidget {
   }
 
   Widget _sortyBySelector() {
-    return SizedBox(
-      height: 60,
-      child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: ChipSelector(
-            chipText: sortButtonText,
-            onTextSelected: (String? selectedSortBy) {
-              _selectedSortBy = selectedSortBy;
-            },
-          )),
+    return ChipSelector(
+      chipText: sortButtonText,
+      onTextSelected: (String? selectedSortBy) {
+        _selectedSortBy = selectedSortBy;
+      },
     );
   }
 
   Widget _genderSelector() {
-    return SizedBox(
-      height: 60,
-      child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: ChipSelector(
-            chipText: genderText,
-            onTextSelected: (String? selectedGender) {
-              _selectedGender = selectedGender;
-            },
-          )),
+    return ChipSelector(
+      chipText: genderText,
+      onTextSelected: (String? selectedGender) {
+        _selectedGender = selectedGender;
+      },
     );
   }
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:fpdart/fpdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/checkout_usecase.dart';
 import 'package:shoesly/features/product_payment/domain/usecases/product_payment_initiate_useecase.dart';

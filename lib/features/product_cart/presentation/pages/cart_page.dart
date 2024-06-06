@@ -33,16 +33,6 @@ class _CartPageState extends State<CartPage> {
     super.initState();
   }
 
-  final List<String> sortButtonText = [
-    'Most Recent',
-    'Lowest Price',
-    'Highest Price'
-  ];
-
-  final List<String> genderText = ['Man', 'Woman', 'Unisex'];
-
-  final List<String> colorText = ['Black', 'White', 'Red'];
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductCartBloc, ProductCartState>(
