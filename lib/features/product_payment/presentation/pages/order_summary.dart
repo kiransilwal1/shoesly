@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:shoesly/core/entities/product_variation.dart';
-
 import 'package:shoesly/core/common/theme/app_theme.dart';
 import 'package:shoesly/core/common/widgets/buttons/button_styles.dart';
 import 'package:shoesly/core/common/widgets/standard_app_bar.dart';
 import 'package:shoesly/features/product_discover/presentation/pages/product_discover_page.dart';
-
 import '../../../../core/constants/constants.dart';
 import '../../../../core/common/widgets/alert.dart';
 import '../../../../core/common/widgets/buttons/minimal_buttons.dart';
 import '../../../../core/common/widgets/buttons/primary_buttons.dart';
 import '../bloc/paywall_bloc.dart';
+import '../widgets/expandable_row.dart';
+import '../widgets/item_detail_widget.dart';
+import '../widgets/total_order.dart';
 
 class OrderSummary extends StatelessWidget {
   OrderSummary({super.key});
@@ -65,20 +65,6 @@ class OrderSummary extends StatelessWidget {
               );
             },
           );
-          // showErrorPopup(
-          //     context,
-          //     'Order successful please save your tracking id: ${state.trackingId}',
-          //     'BACK', onTap: () {
-          // Navigator.pushReplacement(
-          //   context,
-          //   PageRouteBuilder(
-          //     pageBuilder: (_, __, ___) => const ProductDiscoverPage(),
-          //     transitionDuration: Duration(milliseconds: 100),
-          //     transitionsBuilder: (_, anim, __, child) =>
-          //         FadeTransition(opacity: anim, child: child),
-          //   ),
-          // );
-          // }, title: 'Congratulations!');
         }
       },
       builder: (context, state) {
@@ -154,35 +140,6 @@ class OrderSummary extends StatelessWidget {
                               );
                             },
                           );
-
-                          // await showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return AlertDialog(
-                          //       title: const Text("Confirm"),
-                          //       actionsAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       content: const Text(
-                          //           "Are you sure you wish to make the payments?"),
-                          //       actions: <Widget>[
-                          //         PrimaryButton(
-                          //           isDisabled: false,
-                          //           style: const LabelButtonStyle(text: 'No'),
-                          //           onPressed: () =>
-                          //               Navigator.of(context).pop(true),
-                          //         ),
-                          //         MinimalButton(
-                          //             isDisabled: false,
-                          //             style: const LabelButtonStyle(
-                          //                 text: 'Continue'),
-                          //             onPressed: () {
-                          // context.read<ProductPaymentBloc>().add(
-                          //     PaymentInitiated(cart: state.cart));
-                          //             }),
-                          //       ],
-                          //     );
-                          //   },
-                          // );
                         },
                       )
                     ],
@@ -266,14 +223,14 @@ class OrderSummary extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      PaymentDetailRowWidget(
+                      TotalOrderWidget(
                         title: 'Sub Total',
                         amount: '\$${grandTotal.toStringAsFixed(2)}',
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      PaymentDetailRowWidget(
+                      TotalOrderWidget(
                         title: 'Shipping',
                         amount:
                             '\$${Constants.kDeliveryCharge.toStringAsFixed(2)}',
@@ -285,7 +242,7 @@ class OrderSummary extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      PaymentDetailRowWidget(
+                      TotalOrderWidget(
                         title: 'Total Order',
                         amount:
                             '\$${(grandTotal + Constants.kDeliveryCharge).toStringAsFixed(2)}',
@@ -313,125 +270,6 @@ class OrderSummary extends StatelessWidget {
           );
         }
       },
-    );
-  }
-}
-
-class PaymentDetailRowWidget extends StatelessWidget {
-  const PaymentDetailRowWidget({
-    super.key,
-    required this.title,
-    required this.amount,
-  });
-
-  final String title;
-  final String amount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: AppTheme.body100.copyWith(color: Colors.grey[600]),
-            ),
-            Text(
-              amount,
-              style: AppTheme.headline300.copyWith(color: AppTheme.neutral500),
-            )
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class OrderDetailWidget extends StatelessWidget {
-  const OrderDetailWidget({
-    super.key,
-    required this.itemTitle,
-    required this.itemDescription,
-    required this.itemQuantity,
-    required this.itemPrice,
-  });
-  final String itemTitle;
-  final String itemDescription;
-  final int itemQuantity;
-  final String itemPrice;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                itemTitle,
-                style:
-                    AppTheme.headline400.copyWith(color: AppTheme.neutral500),
-              ),
-              Text(
-                '$itemDescription . Qty $itemQuantity',
-                style: AppTheme.body100.copyWith(color: Colors.grey[600]),
-              ),
-            ],
-          ),
-          Text(
-            itemPrice,
-            style: AppTheme.headline300.copyWith(color: AppTheme.neutral500),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class ExpandableWidget extends StatelessWidget {
-  const ExpandableWidget({
-    super.key,
-    required this.title,
-    required this.description,
-  });
-  final String title;
-  final String description;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 55,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //TODO: expand when pressed on arrow-right
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: AppTheme.headline300,
-              ),
-              Text(
-                description,
-                style: AppTheme.body200,
-              ),
-            ],
-          ),
-          SvgPicture.asset('assets/icons/arrow-right.svg',
-              colorFilter:
-                  const ColorFilter.mode(AppTheme.neutral300, BlendMode.srcIn)),
-        ],
-      ),
     );
   }
 }
