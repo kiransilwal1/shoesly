@@ -46,33 +46,38 @@ class _CartAddState extends State<CartAdd> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          onPressed: _decrementCounter,
-          padding: EdgeInsets.zero,
-          icon: Image.asset(
-            'assets/icons/minus-cirlce.png',
-            width: 24,
-            height: 24,
-            color: _productCount > 0 ? AppTheme.neutral500 : Colors.grey,
-          ),
-        ),
-        Text(
-          '$_productCount',
-          style: const TextStyle(fontSize: 20),
-        ),
-        IconButton(
-          onPressed: _incrementCounter,
-          padding: EdgeInsets.zero,
-          icon: Image.asset(
-            'assets/icons/add-circle.png',
-            width: 24,
-            height: 24,
-            color: AppTheme.neutral500,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: _decrementCounter,
+              padding: EdgeInsets.zero,
+              icon: Image.asset(
+                'assets/icons/minus-cirlce.png',
+                width: 24,
+                height: 24,
+                color: _productCount > 0 ? AppTheme.neutral500 : Colors.grey,
+              ),
+            ),
+            Text(
+              '$_productCount',
+              style: AppTheme.headline300,
+            ),
+            IconButton(
+              onPressed: _incrementCounter,
+              padding: EdgeInsets.zero,
+              icon: Image.asset(
+                'assets/icons/add-circle.png',
+                width: 24,
+                height: 24,
+                color: AppTheme.neutral500,
+              ),
+            ),
+          ],
         ),
         Text(
           '\$${totalPrice.toStringAsFixed(2)}',
-          style: AppTheme.headline600.copyWith(color: AppTheme.neutral500),
+          style: AppTheme.headline300.copyWith(color: AppTheme.neutral500),
         ),
       ],
     );

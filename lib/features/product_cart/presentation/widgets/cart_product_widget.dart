@@ -59,16 +59,9 @@ class CartProductWidget extends StatelessWidget {
                     style: AppTheme.body100.copyWith(color: Colors.grey[600]),
                   ),
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Remove the price from here
-                        CartAdd(
-                          product: item,
-                          productCount: count,
-                        ),
-                      ],
+                    child: CartAdd(
+                      product: item,
+                      productCount: count,
                     ),
                   ),
                 ],
