@@ -1,4 +1,6 @@
 import 'package:shoesly/core/common/error/exceptions.dart';
+import 'package:shoesly/core/common/network/connection_checker.dart';
+import 'package:shoesly/core/constants/constants.dart';
 import 'package:shoesly/features/product_detail/data/models/product_detail_model.dart';
 import 'package:shoesly/features/product_detail/data/models/product_review_mode.dart';
 import 'package:shoesly/core/models/product_variation_model.dart';
@@ -11,11 +13,15 @@ abstract interface class ProductDetailRemote {
 
 class ProudctDetailRemote implements ProductDetailRemote {
   final SupabaseClient db;
+  final ConnectionChecker connectionChecker;
 
-  ProudctDetailRemote({required this.db});
+  ProudctDetailRemote({required this.db, required this.connectionChecker});
   @override
   Future<ProductDetailModel> loadProductDetail({required String id}) async {
     try {
+      if (!await (connectionChecker.isConnected)) {
+        throw SocketException(message: Constants.noConnectionErrorMessage);
+      }
       final product = await db
           .from('product')
           .select('*')

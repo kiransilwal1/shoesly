@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:shoesly/core/common/error/exceptions.dart';
 import 'package:shoesly/core/common/error/failures.dart';
 import 'package:shoesly/features/product_detail/data/datasources/product_detail_remote.dart';
 import 'package:shoesly/features/product_detail/domain/entities/product_detail_entity.dart';
@@ -13,8 +14,10 @@ class ProductDetailRepoImpl implements ProductDetailRepo {
       String id) async {
     try {
       return right(await productDetailRemote.loadProductDetail(id: id));
-    } catch (e) {
+    } on ServerException catch (e) {
       return left(Failure(e.toString()));
+    } on SocketException catch (e) {
+      return left(Failure(e.message));
     }
   }
 }

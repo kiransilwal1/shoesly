@@ -52,6 +52,7 @@ Future<void> setupDependencies() async {
   getIt.registerFactory<ProductDetailRepoImpl>(() => ProductDetailRepoImpl(
         productDetailRemote: ProudctDetailRemote(
           db: getIt<SupabaseClient>(),
+          connectionChecker: ConnectionCheckerImpl(InternetConnection()),
         ),
       ));
 
