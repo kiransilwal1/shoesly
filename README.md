@@ -150,5 +150,3 @@ Though the functionality of the app is in par with the initial thought process *
 https://github.com/kiransilwal1/shoesly/assets/88090804/b278b779-5967-4e17-8855-ca656e47f840
 
 
-
-

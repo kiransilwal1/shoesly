@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/common/theme/app_theme.dart';
-import '../../../../core/common/widgets/cart_logo_with_status.dart';
+import '../../../../core/common/widgets/custom_app_bar.dart';
 
 class AppBarProductDetailPage extends StatelessWidget {
   const AppBarProductDetailPage({
