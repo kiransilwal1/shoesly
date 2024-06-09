@@ -30,7 +30,7 @@ flutter pub get
 
 **Step 3:**
 
-This project uses `vscode dart-dataclass generator` libpluginrary that works with code generation. It is recommended to use the package. Since the dataclass generates hashes for object comparisions, equatable is not used.
+This project uses `vscode dart-dataclass generator` library that works with code generation. It is recommended to use the package. Since the dataclass generates hashes for object comparisions, equatable is not used.
 In addition to that, since there are less pages as of now, named routes are not used. Since it is eCommerce App, go_router shall be used in upcoming versions. 
 
 
