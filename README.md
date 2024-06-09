@@ -17,7 +17,7 @@ The Shoesly contains the minimal implementation required to create a new library
 Download or clone this repo by using the link below:
 
 ```
-https://github.com/kiransilwal1/shoesy
+https://github.com/kiransilwal1/shoesly
 ```
 
 **Step 2:**
