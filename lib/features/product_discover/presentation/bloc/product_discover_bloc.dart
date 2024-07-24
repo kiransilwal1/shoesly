@@ -26,9 +26,7 @@ class ProductDiscoverBloc
         _filterParamsCollectUseCase = filterParamsCollectUseCase,
         _filterProductPageUseCase = filterProductPageUseCase,
         super(ProductDiscoverInitial()) {
-    on<ProductDiscoverEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<ProductDiscoverEvent>((event, emit) {});
     on<ProductDiscoverInitiated>(_productDiscover);
     on<PrepareFilterParams>(_prepareFilterParams);
     on<FilterButtonPressed>(_filterButtonPressed);

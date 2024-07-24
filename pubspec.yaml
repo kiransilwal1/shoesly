@@ -37,9 +37,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   flutter_svg: ^2.0.10+1
   expandable: ^5.0.1
-  firebase_core: ^2.24.2
   fpdart: ^1.1.0
-  cloud_firestore: ^4.14.0
   cached_network_image: ^3.3.1
   path_provider: ^2.1.2
   supabase_flutter: ^2.5.4
@@ -47,10 +45,12 @@ dependencies:
   shared_preferences: ^2.2.2
   internet_connection_checker_plus: ^2.1.0
   get_it: ^7.7.0
+  audioplayers: ^5.2.1
+  flutter_ffmpeg: ^0.4.2
+  ffmpeg_kit_flutter: ^6.0.3
 
 dependency_overrides:
   meta: ^1.7.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -96,6 +96,7 @@ flutter:
     - assets/icons/setting.svg
     - assets/icons/404.gif
     - assets/icons/addtocart.gif
+    - assets/mymusic.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

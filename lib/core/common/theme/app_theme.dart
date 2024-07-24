@@ -72,6 +72,18 @@ class AppTheme {
   static const Color secondary800 = Color(0xFF8c2216);
   static const Color secondary900 = Color(0xFF74100d);
 
+  static const Color plinko900 = Color(0xFF5b0138);
+  static const Color plinko800 = Color(0xFF7f0044);
+  static const Color plinko700 = Color(0xFF940049);
+  static const Color plinko600 = Color(0xFFa8004f);
+  static const Color plinko500 = Color(0xFFb80052);
+  static const Color plinko400 = Color(0xFFc02b6a);
+  static const Color plinko300 = Color(0xFFd881a5);
+  static const Color plinko200 = Color(0xFFe7b2c9);
+  static const Color plinko100 = Color(0xFFf5e0e9);
+
+  static const Color canvasPlinko = Color(0xFF262026);
+
   static const BoxShadow cardShadowSmall = BoxShadow(
     color: Color(0x1A465793),
     offset: Offset(4, 8),

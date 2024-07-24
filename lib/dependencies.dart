@@ -142,8 +142,13 @@ Future<void> setupDependencies() async {
       paymentRepo: getIt<PaymentRepoImpl>(),
     ),
   );
-  getIt.registerFactory<PaymentRepoImpl>(() => PaymentRepoImpl(
+  getIt.registerFactory<PaymentRepoImpl>(
+    () => PaymentRepoImpl(
       connectionChecker: ConnectionCheckerImpl(InternetConnection()),
       paymentRemoteDataSource: PaymentRemoteDataSourceImpl(
-          db: getIt<SupabaseClient>(), cache: getIt<SharedPreferences>())));
+        db: getIt<SupabaseClient>(),
+        cache: getIt<SharedPreferences>(),
+      ),
+    ),
+  );
 }
